@@ -1,0 +1,5 @@
+{
+  "hooks": {
+    "pre-push": "if git-branch-is develop; then npm run lint && npm test; else echo 'no test'; fi"
+  }
+}
