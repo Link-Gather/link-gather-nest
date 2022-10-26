@@ -1,6 +1,12 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
+import { CustomRepository } from '../../../libs/orm';
 import { Post } from '../domain/model';
 
-// FIXME: EntityRepository is deprecated.
-@EntityRepository(Post)
-export class PostRepository extends Repository<Post> {}
+@CustomRepository(Post)
+export class PostRepository extends Repository<Post> {
+  async findByTitle(title: string) {
+    return this.findOneBy({
+      title,
+    });
+  }
+}
