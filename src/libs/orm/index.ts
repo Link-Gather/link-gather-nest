@@ -1,13 +1,8 @@
-import { DataSource, FindOperator } from 'typeorm';
+import { FindOperator } from 'typeorm';
 import * as _ from 'lodash';
-import { getConfig } from '../../config';
 
 export * from './repository.decorator';
 export * from './typeorm.module';
-
-const ormConfig = getConfig('/ormConfig');
-
-export const dataSource = new DataSource(ormConfig);
 
 /**
  * Array는 or 조건
