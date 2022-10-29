@@ -1,5 +1,5 @@
-import { ormConfig } from './ormconfig';
 import { Store } from 'confidence';
+import { ormConfig } from './ormconfig';
 
 const doc = {
   ormConfig,

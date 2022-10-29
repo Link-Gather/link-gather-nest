@@ -1,7 +1,6 @@
-import { DataSource } from 'typeorm';
-import { getConfig } from '../../config';
-import { FindManyOptions, FindOperator } from 'typeorm';
+import { DataSource, FindManyOptions, FindOperator } from 'typeorm';
 import * as _ from 'lodash';
+import { getConfig } from '../../config';
 
 const ormConfig = getConfig('/ormConfig');
 

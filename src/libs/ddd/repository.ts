@@ -26,6 +26,7 @@ export abstract class Repository<T extends ObjectLiteral, ID> {
   public async save(entities: T[]) {
     await this.saveEntities(entities);
   }
+
   /**
    * @param entities
    */
@@ -96,8 +97,7 @@ export abstract class Repository<T extends ObjectLiteral, ID> {
     }
 
     const primaryColumnPropertyName = primaryColumns[0].propertyName;
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-expect-error
+    // @ts-expect-error
     return this.entityManager.findBy(this.entityClass, {
       [primaryColumnPropertyName]: In(ids),
     });
