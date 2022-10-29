@@ -1,4 +1,4 @@
-import { DataSource, FindManyOptions, FindOperator } from 'typeorm';
+import { DataSource, FindOperator } from 'typeorm';
 import * as _ from 'lodash';
 import { getConfig } from '../../config';
 
@@ -115,17 +115,22 @@ export interface FindOrder {
   };
 }
 
+export type PaginationOption = {
+  page?: number;
+  limit?: number;
+};
+
 /**
  * @param options
  */
-export const convertOptions = (options?: FindManyOptions) => {
+export const convertOptions = (options?: PaginationOption) => {
   let skip;
   let take;
-  if (options && options.skip) {
-    skip = ((options.skip || 1) - 1) * (options.take || 1);
+  if (options && options.page) {
+    skip = ((options.page || 1) - 1) * (options.limit || 1);
   }
-  if (options && options.take) {
-    take = options.take;
+  if (options && options.limit) {
+    take = options.limit;
   }
   return {
     skip,

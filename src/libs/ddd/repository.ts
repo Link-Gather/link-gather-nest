@@ -1,6 +1,13 @@
 import { Inject } from '@nestjs/common';
 import { EntityManager, FindManyOptions, In, ObjectLiteral, ObjectType } from 'typeorm';
-import { convertOptions, DuplicateEntityError, DuplicateEntryError, FindOrder, Specification } from '../orm';
+import {
+  convertOptions,
+  DuplicateEntityError,
+  DuplicateEntryError,
+  FindOrder,
+  PaginationOption,
+  Specification,
+} from '../orm';
 
 export abstract class Repository<T extends ObjectLiteral, ID> {
   protected abstract entityClass: ObjectType<T>;
@@ -48,7 +55,7 @@ export abstract class Repository<T extends ObjectLiteral, ID> {
    * @param options
    * @param order
    */
-  public async findAll(spec: Specification<T>, options?: FindManyOptions, order?: FindOrder): Promise<T[]> {
+  public async findAll(spec: Specification<T>, options?: PaginationOption, order?: FindOrder): Promise<T[]> {
     return this.getManager().find<T>(this.entityClass, {
       where: spec.where,
       ...convertOptions(options),
