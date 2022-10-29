@@ -1,11 +1,16 @@
-import { Repository } from 'typeorm';
-import { CustomRepository } from '../../../libs/orm';
+import { Inject, Injectable } from '@nestjs/common';
+import { EntityManager } from 'typeorm';
+import { Repository } from '../../../libs/ddd';
 import { Post } from '../domain/model';
 
-@CustomRepository(Post)
-export class PostRepository extends Repository<Post> {
+@Injectable()
+export class PostRepository extends Repository<Post, Post['id']> {
+  entityClass = Post;
+
+  @Inject('entityManager') entityManager!: EntityManager;
+
   async findByTitle(title: string) {
-    return this.findOneBy({
+    return this.entityManager.findOneBy(Post, {
       title,
     });
   }
