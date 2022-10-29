@@ -1,23 +1,11 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Inject,
-  Injectable,
-  Post,
-  Query,
-} from '@nestjs/common';
-import { EntityManager } from 'typeorm';
+import { Body, Controller, Get, Injectable, Post, Query } from '@nestjs/common';
 import { PostService } from '../application/service';
 import { CreatePostDto } from '../dto/createPostDto';
 
 @Controller('post')
 @Injectable()
 export class PostController {
-  constructor(
-    private readonly postService: PostService,
-    @Inject('entityManager') private readonly manager: EntityManager,
-  ) {}
+  constructor(private readonly postService: PostService) {}
 
   @Post('/')
   create(@Body() createPostDto: CreatePostDto): any {
