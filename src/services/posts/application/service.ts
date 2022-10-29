@@ -9,10 +9,11 @@ export class PostService {
 
   async create(createPostDto: CreatePostDto) {
     const post = new Post(createPostDto);
-    return this.postRepository.save([post]);
+    await this.postRepository.save([post]);
+    return post;
   }
 
   async findByTitle(title: string) {
-    return this.postRepository.findByTitle(title);
+    return this.postRepository.find({ title });
   }
 }
