@@ -26,8 +26,6 @@ export class PostController {
 
   @Get('/')
   get(@Query('title') title: string): any {
-    console.log(this.manager, 'manager');
-
     return this.postService.findByTitle(title);
   }
 }
