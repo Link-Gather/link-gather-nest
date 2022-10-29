@@ -14,6 +14,6 @@ export class PostService {
   }
 
   async findByTitle(title: string) {
-    return this.postRepository.findByTitle(title);
+    return this.postRepository.find({ title });
   }
 }

@@ -29,5 +29,15 @@ module.exports = {
     'no-useless-constructor': 'off',
     'max-classes-per-file': 'off',
     'no-shadow': 'off',
+    'prettier/prettier': 'error',
+    'no-param-reassign': 'off',
+    'no-use-before-define': [
+      'error',
+      {
+        functions: false,
+        classes: false,
+        variables: true,
+      },
+    ],
   },
 };

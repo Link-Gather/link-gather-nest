@@ -11,11 +11,7 @@ export const dataSource = new DataSource(ormConfig);
  * Object는 and 조건을 표현한것이다.
  */
 type Condition<T> = {
-  [P in keyof T]?:
-    | Condition<T>[]
-    | FindOperator<T | string | number>
-    | string
-    | number;
+  [P in keyof T]?: Condition<T>[] | FindOperator<T | string | number> | string | number;
 };
 
 export class Specification<T> {
@@ -29,16 +25,9 @@ export class Specification<T> {
   }
 
   // merge
-  constructor(
-    spec?:
-      | Specification<T>
-      | Condition<T>
-      | (Specification<T> | Condition<T>)[],
-  ) {
+  constructor(spec?: Specification<T> | Condition<T> | (Specification<T> | Condition<T>)[]) {
     if (spec) {
-      this.where = _.isArray(spec)
-        ? spec.map(Specification.specToCondition)
-        : Specification.specToCondition(spec);
+      this.where = _.isArray(spec) ? spec.map(Specification.specToCondition) : Specification.specToCondition(spec);
     }
   }
 
@@ -64,15 +53,9 @@ export class Specification<T> {
         if (_.isArray((src as any)[key])) {
           // dst도 여러 대상이면 그냥 합침
           if (_.isArray((spec.where as any)[key])) {
-            (src as any)[key] = [
-              ...(src as any)[key],
-              ...(spec.where as any)[key],
-            ];
+            (src as any)[key] = [...(src as any)[key], ...(spec.where as any)[key]];
           } else {
-            (src as any)[key] = [
-              ...(src as any)[key],
-              (spec.where as any)[key],
-            ];
+            (src as any)[key] = [...(src as any)[key], (spec.where as any)[key]];
           }
         } else if (_.isArray((spec.where as any)[key])) {
           // dst가 여러 조건을 담았을때
