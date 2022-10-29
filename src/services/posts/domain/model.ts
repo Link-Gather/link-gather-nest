@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { CreatePostDto } from '../dto/createPostDto';
 
 @Entity()
 export class Post {
@@ -10,4 +11,11 @@ export class Post {
 
   @Column()
   description!: string;
+
+  constructor(args: CreatePostDto) {
+    if (args) {
+      this.title = args.title;
+      this.description = args.description;
+    }
+  }
 }
