@@ -31,15 +31,12 @@ export abstract class Repository<T extends ObjectLiteral, ID> {
    * @param entities
    */
   private async saveEntities(entities: T[]) {
-    return this.entityManager
-      .save(entities, { reload: true })
-      .catch()
-      .catch((err) => {
-        if (err instanceof DuplicateEntryError) {
-          throw new DuplicateEntityError();
-        }
-        throw err;
-      });
+    return this.entityManager.save(entities, { reload: true }).catch((err) => {
+      if (err instanceof DuplicateEntryError) {
+        throw new DuplicateEntityError();
+      }
+      throw err;
+    });
   }
 
   /**
