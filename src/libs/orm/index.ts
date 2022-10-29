@@ -2,6 +2,9 @@ import { DataSource, FindOperator } from 'typeorm';
 import * as _ from 'lodash';
 import { getConfig } from '../../config';
 
+export * from './repository.decorator';
+export * from './typeorm.module';
+
 const ormConfig = getConfig('/ormConfig');
 
 export const dataSource = new DataSource(ormConfig);

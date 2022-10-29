@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
 import { convertOptions, FindOrder, PaginationOption } from '../../../libs';
 import { Repository } from '../../../libs/ddd';
+import { CustomRepository } from '../../../libs/orm';
 import { Post } from '../domain/model';
 
-@Injectable()
+@CustomRepository(Post)
 export class PostRepository extends Repository<Post, Post['id']> {
   entityClass = Post;
 

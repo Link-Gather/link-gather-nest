@@ -1,4 +1,3 @@
-import { Inject } from '@nestjs/common';
 import { EntityManager, FindManyOptions, In, ObjectLiteral, ObjectType } from 'typeorm';
 import {
   convertOptions,
@@ -12,7 +11,11 @@ import {
 export abstract class Repository<T extends ObjectLiteral, ID> {
   protected abstract entityClass: ObjectType<T>;
 
-  @Inject('entityManager') private entityManager!: EntityManager;
+  private entityManager!: EntityManager;
+
+  constructor(manager: EntityManager) {
+    this.entityManager = manager;
+  }
 
   protected getManager(): EntityManager {
     return this.entityManager;

@@ -31,6 +31,8 @@ module.exports = {
     'no-shadow': 'off',
     'prettier/prettier': 'error',
     'no-param-reassign': 'off',
+    'no-restricted-syntax': ['error', 'WithStatement'],
+    'no-continue': 'off',
     'no-use-before-define': [
       'error',
       {
