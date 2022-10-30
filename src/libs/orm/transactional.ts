@@ -11,8 +11,6 @@ export function Transactional() {
       const originalEntityManager = this.entityManager;
       let result: any;
       await dataSource.manager.transaction(async (entityManager) => {
-        // Replace entityManager set in DddContext
-        // We should use entityManger. see https://github.com/typeorm/typeorm/issues/2927
         thiz.entityManager = entityManager;
         result = await originalMethod.apply(thiz, args);
       });
