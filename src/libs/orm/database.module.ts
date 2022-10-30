@@ -1,4 +1,4 @@
-import { DynamicModule } from '@nestjs/common';
+import { DynamicModule, Scope } from '@nestjs/common';
 import { dataSource } from '.';
 
 export class DatabaseModule {
@@ -7,9 +7,11 @@ export class DatabaseModule {
       {
         provide: 'entityManager',
         useValue: dataSource.createEntityManager(),
+        scope: Scope.REQUEST,
       },
     ];
     return {
+      global: true,
       exports: providers,
       module: DatabaseModule,
       providers,
