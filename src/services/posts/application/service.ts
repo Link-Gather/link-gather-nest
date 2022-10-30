@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePostDto } from '../dto/createPostDto';
+import { CreatePostDto } from '../dto/create-post-dto';
 import { PostRepository } from '../infrastructure/repository';
 import { Post } from '../domain/model';
 import { Service } from '../../../libs/ddd/service';

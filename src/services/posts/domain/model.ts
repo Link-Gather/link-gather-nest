@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { CreatePostDto } from '../dto/createPostDto';
+import { CreatePostDto } from '../dto/create-post-dto';
 
 @Entity()
 export class Post {
