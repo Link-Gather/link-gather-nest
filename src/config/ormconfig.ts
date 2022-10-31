@@ -1,13 +1,12 @@
-import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import entities from '../entities';
 
-export const ormConfig: TypeOrmModuleOptions = {
+export const ormConfig = {
   type: 'mysql',
-  host: 'localhost',
-  port: 3306,
-  username: 'root',
-  password: '1234',
-  database: 'link_gather',
+  host: { $env: 'DB_HOST' },
+  port: { $env: 'DB_PORT' },
+  database: { $env: 'DB_NAME' },
+  username: { $env: 'DB_USER' },
+  password: { $env: 'DB_PASSWORD' },
   entities: [...entities],
   synchronize: true,
   logging: true,
