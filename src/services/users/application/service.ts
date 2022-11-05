@@ -2,14 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user-dto';
 import { UserRepository } from '../infrastructure/repository';
 import { User } from '../domain/model';
-import { Service } from '../../../libs/ddd/service';
 import { Transactional } from '../../../libs/orm/transactional';
 
 @Injectable()
-export class UserService extends Service {
-  constructor(private userRepository: UserRepository) {
-    super();
-  }
+export class UserService {
+  constructor(private userRepository: UserRepository) {}
 
   @Transactional()
   async create(createUserDto: CreateUserDto) {

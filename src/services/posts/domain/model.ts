@@ -1,8 +1,9 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Aggregate } from '../../../libs/ddd/aggregate';
 import { CreatePostDto } from '../dto/create-post-dto';
 
 @Entity()
-export class Post {
+export class Post extends Aggregate {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
@@ -13,6 +14,7 @@ export class Post {
   description!: string;
 
   constructor(args: CreatePostDto) {
+    super();
     if (args) {
       this.title = args.title;
       this.description = args.description;

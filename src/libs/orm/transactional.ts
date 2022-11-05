@@ -1,20 +1,29 @@
 import { dataSource } from '.';
-import { Service } from '../ddd/service';
 
+// HACK: 일단 이렇게라도 해서 entityManager를 통일시켜서 트랜젝션을 건다.
 export function Transactional() {
-  return function (target: Service, propertyKey: string, descriptor: PropertyDescriptor) {
+  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value;
-    descriptor.value = async function (this: Service) {
-      // eslint-disable-next-line @typescript-eslint/no-this-alias
-      const thiz = this;
+    descriptor.value = async function (this: any) {
       const args = arguments; // eslint-disable-line prefer-rest-params
-      const originalEntityManager = this.entityManager;
+      let originalEntityManager;
       let result: any;
       await dataSource.manager.transaction(async (entityManager) => {
-        thiz.entityManager = entityManager;
-        result = await originalMethod.apply(thiz, args);
+        for (const key of Object.keys(this)) {
+          const repository = this[key];
+          if (repository.entityManager) {
+            originalEntityManager = repository.entityManager;
+            repository.entityManager = entityManager;
+          }
+        }
+        result = await originalMethod.apply(this, args);
       });
-      thiz.entityManager = originalEntityManager;
+      for (const key of Object.keys(this)) {
+        const repository = this[key];
+        if (repository.entityManager) {
+          repository.entityManager = originalEntityManager;
+        }
+      }
       return result;
     };
     return descriptor;
