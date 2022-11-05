@@ -8,12 +8,12 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post('/')
-  create(@Body() createUserDto: CreateUserDto): any {
+  create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }
 
   @Get('/')
-  get(@Query('email') email: string): any {
+  get(@Query('email') email: string) {
     return this.userService.findByEmail(email);
   }
 }
