@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x, 18.x]
+        node-version: [16.x] # TODO: dockerfile 에서 node 버전이 바뀌면 같이 변경해야 한다.
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
