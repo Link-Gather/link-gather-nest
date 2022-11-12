@@ -26,5 +26,7 @@ else
   sudo docker rm ${CONTAINER_ID}
 fi
 
+sudo docker container prune -y
+
 sudo docker build -t linkgather .
 sudo docker run --name linkgather -d -e active=prod -p 3000:3000 linkgather
