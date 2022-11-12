@@ -18,7 +18,5 @@ else
   sudo docker rm ${CONTAINER_ID}
 fi
 
-echo "> $PORT"
-
 sudo docker build -t linkgather .
-sudo docker run --name linkgather -d -e active=prod -p $PORT:$PORT linkgather
+sudo docker run --name linkgather -d -e active=prod -p 3000:3000 linkgather
