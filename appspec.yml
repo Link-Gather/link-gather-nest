@@ -8,4 +8,6 @@ hooks:
   BeforeInstall:
     - location: /scripts/beforeInstall.sh
   AfterInstall:
+    - location: /scripts/afterInstall.sh
+  ApplicationStart:
     - location: /scripts/deploy.sh
