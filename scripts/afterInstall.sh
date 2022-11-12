@@ -26,7 +26,8 @@ else
   sudo docker rm ${CONTAINER_ID}
 fi
 
-sudo docker container prune -y
+sudo docker container prune -f # 쓰지않는 컨테이너 모두 삭제
+sudo docker image prune -f # 쓰지않는 이미지 모두 삭제
 
 sudo docker build -t linkgather .
 sudo docker run --name linkgather -d -e active=prod -p 3000:3000 linkgather
