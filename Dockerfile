@@ -2,7 +2,7 @@ FROM node:16-alpine
 
 WORKDIR /link-gather-nest
 
-COPY package*.json .npmrc ./
+COPY package*.json ./
 
 RUN npm ci
 
