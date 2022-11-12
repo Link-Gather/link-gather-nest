@@ -30,4 +30,4 @@ sudo docker container prune -f # 쓰지않는 컨테이너 모두 삭제
 sudo docker image prune -f # 쓰지않는 이미지 모두 삭제
 
 sudo docker build -t linkgather .
-sudo docker run --name linkgather -d -e active=prod -p 3000:3000 linkgather
+sudo docker run --name linkgather -d -p $PORT:$PORT linkgather
