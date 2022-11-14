@@ -2,6 +2,7 @@ import { Store } from 'confidence';
 import { ormConfig } from './ormconfig';
 
 const doc = {
+  port: { $env: 'PORT' },
   ormConfig,
 };
 

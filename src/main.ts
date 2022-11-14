@@ -1,8 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { getConfig } from './config';
 import { dataSource } from './libs/orm';
 
-const port = process.env.PORT;
+const port = getConfig('/port');
 
 async function bootstrap() {
   dataSource.initialize().then(() => console.log('DB Connected 🔥'));
