@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { CreatePostDto } from '../dto/create-post-dto';
 import { PostRepository } from '../infrastructure/repository';
 import { Post } from '../domain/model';
@@ -12,7 +12,7 @@ export class PostService {
   async create(createPostDto: CreatePostDto) {
     const post = new Post(createPostDto);
     await this.postRepository.save([post]);
-    return post;
+    throw new HttpException('gg', 403);
   }
 
   async findByTitle(title: string) {
