@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { getConfig } from './config';
-import { HttpExceptionFilter } from './libs/exceptionFilter';
+import { HttpExceptionFilter } from './libs/exception';
 import { dataSource } from './libs/orm';
 
 const port = getConfig('/port');

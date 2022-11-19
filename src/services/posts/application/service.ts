@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreatePostDto } from '../dto/create-post-dto';
 import { PostRepository } from '../infrastructure/repository';
 import { Post } from '../domain/model';
