@@ -1,22 +1,26 @@
-import { HttpException } from '@nestjs/common';
-import type { ErrorOption } from './index';
+import {
+  BadRequestException,
+  ForbiddenException,
+  NotImplementedException,
+  UnauthorizedException,
+} from '@nestjs/common';
+
+type ErrorOption = {
+  errorMessage: string;
+};
 
 export const badRequest = (message?: string, option?: ErrorOption) => {
-  message = message || 'Bad Request';
-  throw new HttpException({ message, errorMessage: option?.errorMessage }, 400);
+  return new BadRequestException({ message, errorMessage: option?.errorMessage });
 };
 
 export const forbidden = (message?: string, option?: ErrorOption) => {
-  message = message || 'Forbidden';
-  throw new HttpException({ message, errorMessage: option?.errorMessage }, 403);
+  return new ForbiddenException({ message, errorMessage: option?.errorMessage });
 };
 
 export const unauthorized = (message?: string, option?: ErrorOption) => {
-  message = message || 'Unauthorized';
-  throw new HttpException({ message, errorMessage: option?.errorMessage }, 401);
+  return new UnauthorizedException({ message, errorMessage: option?.errorMessage });
 };
 
 export const notImplemented = (message?: string, option?: ErrorOption) => {
-  message = message || 'Not Implemented';
-  throw new HttpException({ message, errorMessage: option?.errorMessage }, 501);
+  return new NotImplementedException({ message, errorMessage: option?.errorMessage });
 };
