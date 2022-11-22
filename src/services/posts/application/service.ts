@@ -12,7 +12,6 @@ export class PostService {
   async create(createPostDto: CreatePostDto) {
     const post = new Post(createPostDto);
     await this.postRepository.save([post]);
-    return post;
   }
 
   async findByTitle(title: string) {
