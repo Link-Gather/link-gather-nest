@@ -1,10 +1,10 @@
-import { Injectable, OnApplicationShutdown } from '@nestjs/common';
+import { Injectable, OnModuleDestroy } from '@nestjs/common';
 import { dataSource } from '../orm';
 
 @Injectable()
-export class GracefulShutdownService implements OnApplicationShutdown {
+export class GracefulShutdownService implements OnModuleDestroy {
   // eslint-disable-next-line class-methods-use-this
-  async onApplicationShutdown() {
+  async onModuleDestroy() {
     console.log('The server shuts down when the connection is cleaned up.');
 
     try {
