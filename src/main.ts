@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { getConfig } from './config';
+import { HttpExceptionFilter } from './libs/exception';
 import { GracefulShutdownService } from './libs/graceful-shutdown';
 import { dataSource } from './libs/orm';
 
@@ -10,6 +11,7 @@ async function bootstrap() {
   dataSource.initialize().then(() => console.log('DB Connected 🔥'));
 
   const app = await NestFactory.create(AppModule);
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   app.get(GracefulShutdownService);
   app.enableShutdownHooks(['SIGINT', 'SIGTERM']);
