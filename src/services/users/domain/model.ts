@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 import { customAlphabet } from 'nanoid';
 import { Aggregate } from '../../../libs/ddd/aggregate';
 import type { CreateUserDto } from '../dto/create-user-dto';

@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { convertOptions, FindOrder, PaginationOption } from '../../../libs';
 import { Repository } from '../../../libs/ddd';
-import { Post } from '../domain/model';
+import { Project } from '../domain/model';
 
 @Injectable()
-export class PostRepository extends Repository<Post, Post['id']> {
-  entityClass = Post;
+export class ProjectRepository extends Repository<Project, Project['id']> {
+  entityClass = Project;
 
-  async find(conditions: { title?: string }, options?: PaginationOption, order?: FindOrder): Promise<Post[]> {
-    return this.getManager().find(Post, {
+  async find(conditions: { title?: string }, options?: PaginationOption, order?: FindOrder): Promise<Project[]> {
+    return this.getManager().find(Project, {
       where: strip({
         title: conditions.title,
       }),

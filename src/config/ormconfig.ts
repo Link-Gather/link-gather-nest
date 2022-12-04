@@ -1,4 +1,4 @@
-import entities from '../entities';
+import { join } from 'path';
 
 export const ormConfig = {
   type: 'mysql',
@@ -7,7 +7,7 @@ export const ormConfig = {
   database: { $env: 'DB_NAME' },
   username: { $env: 'DB_USER' },
   password: { $env: 'DB_PASSWORD' },
-  entities: [...entities],
+  entities: [join(__dirname, '..', 'services', '**', 'domain', '*.{ts,js}')],
   synchronize: true,
   logging: true,
 };
