@@ -3,7 +3,7 @@ import { customAlphabet } from 'nanoid';
 import { Aggregate } from '../../../libs/ddd/aggregate';
 import type { CreateUserDto } from '../dto/create-user-dto';
 
-const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 20);
+const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_', 20);
 export const providerType = <const>['Kakao', 'Github', 'Google', 'Link-Gather'];
 export type ProviderType = typeof providerType[number];
 export const jobType = <const>['Developer', 'Designer', 'Product Manager', 'Other'];
