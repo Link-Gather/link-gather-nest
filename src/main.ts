@@ -4,6 +4,7 @@ import { getConfig } from './config';
 import { HttpExceptionFilter } from './libs/exception';
 import { GracefulShutdownService } from './libs/graceful-shutdown';
 import { dataSource } from './libs/orm';
+import { setupSwagger } from './libs/swagger';
 
 const port = getConfig('/port');
 
@@ -13,6 +14,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalFilters(new HttpExceptionFilter());
 
+  setupSwagger(app);
   app.get(GracefulShutdownService);
   app.enableShutdownHooks(['SIGINT', 'SIGTERM']);
 
