@@ -10,6 +10,7 @@ export class UserService {
 
   @Transactional()
   async create(createUserDto: CreateUserDto) {
+    console.log('!!!');
     const user = new User(createUserDto);
     await this.userRepository.save([user]);
     return user;
