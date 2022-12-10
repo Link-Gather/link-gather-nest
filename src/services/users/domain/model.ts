@@ -3,7 +3,6 @@ import { customAlphabet } from 'nanoid';
 import { Aggregate } from '../../../libs/ddd/aggregate';
 import type { CreateUserDto } from '../dto/create-user-dto';
 
-const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_', 20);
 export const providerType = <const>['Kakao', 'Github', 'Google', 'Link-Gather'];
 export type ProviderType = typeof providerType[number];
 export const jobType = <const>['Developer', 'Designer', 'Product Manager', 'Other'];
@@ -49,7 +48,7 @@ export class User extends Aggregate {
   constructor(args: CreateUserDto) {
     super();
     if (args) {
-      this.id = nanoid();
+      this.id = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_', 20)();
       this.email = args.email;
       this.password = args.password;
       this.nickname = args.nickname;

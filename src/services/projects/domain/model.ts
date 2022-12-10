@@ -3,7 +3,6 @@ import { customAlphabet } from 'nanoid';
 import { Aggregate } from '../../../libs/ddd/aggregate';
 import type { CreateProjectDto } from '../dto/create-project-dto';
 
-const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_', 20);
 export const statusType = <const>['recruiting', 'progressing', 'finish', 'close'];
 export type StatusType = typeof statusType[number];
 export const purposeType = <const>['For Improvement', 'For Practice', 'For Fun'];
@@ -53,7 +52,7 @@ export class Project extends Aggregate {
   constructor(args: CreateProjectDto) {
     super();
     if (args) {
-      this.id = nanoid();
+      this.id = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_', 20)();
       this.title = args.title;
       this.description = args.description;
       this.purpose = args.purpose;
