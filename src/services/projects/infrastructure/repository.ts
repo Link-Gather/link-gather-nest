@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { convertOptions, FindOrder, PaginationOption } from '../../../libs';
+import { convertOptions, FindOrder, PaginationOption } from '../../../libs/orm';
 import { Repository } from '../../../libs/ddd';
 import { Project } from '../domain/model';
+import { stripUndefined } from '../../../libs/common';
 
 @Injectable()
 export class ProjectRepository extends Repository<Project, Project['id']> {
@@ -9,20 +10,13 @@ export class ProjectRepository extends Repository<Project, Project['id']> {
 
   async find(conditions: { title?: string }, options?: PaginationOption, order?: FindOrder): Promise<Project[]> {
     return this.getManager().find(Project, {
-      where: strip({
-        title: conditions.title,
-      }),
+      where: {
+        ...stripUndefined({
+          title: conditions.title,
+        }),
+      },
       ...convertOptions(options),
       ...order,
     });
   }
-}
-
-function strip(obj: Record<string, any>) {
-  return Object.keys(obj).reduce((stripped, key) => {
-    if (typeof obj[key] !== 'undefined') {
-      stripped[key] = obj[key];
-    }
-    return stripped;
-  }, {} as Record<string, any>);
 }
