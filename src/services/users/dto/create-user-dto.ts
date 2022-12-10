@@ -38,7 +38,7 @@ export class CreateUserDto {
 
   @ApiProperty({ example: 'I am developer', description: '자기소개', required: false })
   @IsString()
-  description?: string;
+  introduction?: string;
 
   @ApiProperty({ example: ['node.js', 'react', 'spring'], description: '기술스택', required: false })
   @IsArray()

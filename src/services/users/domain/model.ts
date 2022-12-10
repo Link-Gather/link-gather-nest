@@ -29,7 +29,7 @@ export class User extends Aggregate {
   provider!: ProviderType;
 
   @Column()
-  description!: string;
+  introduction!: string;
 
   @Column()
   career!: number;
@@ -55,7 +55,7 @@ export class User extends Aggregate {
       this.nickname = args.nickname;
       this.profile = args.profile || 'linkgather image url';
       this.provider = args.provider;
-      this.description = args.description || '';
+      this.introduction = args.introduction || '';
       this.stacks = args.stacks;
       this.urls = args.urls;
     }
