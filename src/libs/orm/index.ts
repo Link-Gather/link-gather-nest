@@ -1,4 +1,4 @@
-import { DataSource, FindOperator } from 'typeorm';
+import { DataSource, FindOperator, In as TypeOrmIn } from 'typeorm';
 import * as _ from 'lodash';
 import { getConfig } from '../../config';
 
@@ -137,3 +137,7 @@ export const convertOptions = (options?: PaginationOption) => {
     take,
   };
 };
+
+export function In<T>(values?: T[]) {
+  return values && TypeOrmIn(values);
+}

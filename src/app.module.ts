@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { GracefulShutdownService } from './libs/graceful-shutdown';
 import { DatabaseModule } from './libs/orm/database.module';
-import { UserModule, PostModule } from './services';
+import { UserModule, ProjectModule } from './services';
 
 @Module({
-  imports: [DatabaseModule.manager(), PostModule, UserModule],
+  imports: [DatabaseModule.manager(), ProjectModule, UserModule],
   controllers: [AppController],
   providers: [GracefulShutdownService],
 })

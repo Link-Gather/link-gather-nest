@@ -32,6 +32,7 @@ module.exports = {
     'no-shadow': 'off',
     'prettier/prettier': 'error',
     'no-param-reassign': 'off',
+    'import/no-extraneous-dependencies': ['error', { devDependencies: ['**/*.spec.*', '**/*.test.*'] }],
     'no-use-before-define': [
       'error',
       {

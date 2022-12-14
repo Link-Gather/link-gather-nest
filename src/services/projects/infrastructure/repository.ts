@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { convertOptions, FindOrder, PaginationOption } from '../../../libs/orm';
 import { Repository } from '../../../libs/ddd';
-import { User } from '../domain/model';
+import { Project } from '../domain/model';
 import { stripUndefined } from '../../../libs/common';
 
 @Injectable()
-export class UserRepository extends Repository<User, User['id']> {
-  entityClass = User;
+export class ProjectRepository extends Repository<Project, Project['id']> {
+  entityClass = Project;
 
-  async find(conditions: { email?: string }, options?: PaginationOption, order?: FindOrder): Promise<User[]> {
-    return this.getManager().find(User, {
+  async find(conditions: { title?: string }, options?: PaginationOption, order?: FindOrder): Promise<Project[]> {
+    return this.getManager().find(Project, {
       where: {
         ...stripUndefined({
-          email: conditions.email,
+          title: conditions.title,
         }),
       },
       ...convertOptions(options),
