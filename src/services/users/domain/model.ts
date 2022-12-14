@@ -52,6 +52,7 @@ export class User extends Aggregate {
       this.email = args.email;
       this.password = args.password;
       this.nickname = args.nickname;
+      // TODO: 기본 이미지 url이 생기면 변경해야한다.
       this.profile = args.profile || 'linkgather image url';
       this.provider = args.provider;
       this.introduction = args.introduction || '';
