@@ -3,18 +3,6 @@ import { UserRepository } from '../infrastructure/repository';
 import { UserService } from './service';
 import { dataSource } from '../../../libs/orm';
 
-jest.mock('../../../libs/orm', () => ({
-  dataSource: {
-    manager: {
-      transaction: jest.fn(),
-    },
-    createEntityManager: jest.fn(() => ({
-      getManager: jest.fn(),
-      save: jest.fn(() => Promise.resolve()),
-    })),
-  },
-}));
-
 describe('UserService 테스트', () => {
   let userService: UserService;
   let userRepository: UserRepository;
