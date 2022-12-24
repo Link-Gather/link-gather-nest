@@ -25,7 +25,7 @@ export class Comment extends Aggregate {
   constructor(args: CtorType) {
     super();
     if (args) {
-      this.id = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_', 20)();
+      this.id = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_', 10)();
       this.userId = args.userId;
       this.projectId = args.projectId;
       this.content = args.content;

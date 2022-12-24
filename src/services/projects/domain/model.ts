@@ -52,7 +52,7 @@ export class Project extends Aggregate {
   constructor(args: CreateProjectDto) {
     super();
     if (args) {
-      this.id = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_', 20)();
+      this.id = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_', 10)();
       this.title = args.title;
       this.description = args.description;
       this.purpose = args.purpose;

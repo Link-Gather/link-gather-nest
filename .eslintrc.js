@@ -33,13 +33,10 @@ module.exports = {
     'prettier/prettier': 'error',
     'no-param-reassign': 'off',
     'import/no-extraneous-dependencies': ['error', { devDependencies: ['**/*.spec.*', '**/*.test.*'] }],
-    'no-use-before-define': [
+    'no-use-before-define': 'off',
+    '@typescript-eslint/no-use-before-define': [
       'error',
-      {
-        functions: false,
-        classes: false,
-        variables: true,
-      },
+      { typedefs: false, functions: false, classes: false, variables: true },
     ],
     'no-restricted-syntax': ['error', 'WithStatement'],
   },
