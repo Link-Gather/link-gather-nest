@@ -1,5 +1,5 @@
 import { customAlphabet } from 'nanoid';
-import { User } from './model';
+import { Profile, User } from './model';
 
 jest.mock('nanoid');
 
@@ -19,6 +19,13 @@ describe('User 테스트', () => {
       introduction: 'link-gather creator',
       stacks: ['node.js', 'typescript', 'react.js'],
       urls: ['https://github.com/changchanghwang'],
+      profiles: new Profile({
+        career: 1,
+        job: 'Developer',
+        introduction: 'link-gather creator',
+        stacks: ['node.js', 'typescript', 'react.js'],
+        urls: ['https://github.com/changchanghwang'],
+      }),
     });
 
     expect(user).toEqual({
@@ -27,10 +34,20 @@ describe('User 테스트', () => {
       introduction: 'link-gather creator',
       nickname: 'arthur',
       password: 'qhupr22qp3ir23qrn2-23rnj1p',
-      profile: 'linkgather image url',
+      profileImage: 'linkgather image url',
       provider: 'Link-Gather',
       stacks: ['node.js', 'typescript', 'react.js'],
       urls: ['https://github.com/changchanghwang'],
+      profiles: [
+        {
+          career: 1,
+          id: 'nanoid',
+          introduction: 'link-gather creator',
+          job: 'Developer',
+          stacks: ['node.js', 'typescript', 'react.js'],
+          urls: ['https://github.com/changchanghwang'],
+        },
+      ],
     });
   });
 });

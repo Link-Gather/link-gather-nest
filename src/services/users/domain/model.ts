@@ -60,7 +60,6 @@ export class User extends Aggregate {
   @Column({ nullable: true })
   refreshToken?: string;
 
-  @Column()
   @OneToMany(() => Profile, (profile) => profile.user, { cascade: true, eager: true })
   profiles!: Profile[];
 
@@ -82,6 +81,7 @@ export class User extends Aggregate {
   }
 }
 
+@Entity()
 export class Profile {
   @PrimaryColumn()
   id!: string;
@@ -101,7 +101,6 @@ export class Profile {
   @Column('simple-array')
   stacks!: string[];
 
-  @Column()
   @ManyToOne(() => User, (user) => user.profiles)
   user!: never;
 
