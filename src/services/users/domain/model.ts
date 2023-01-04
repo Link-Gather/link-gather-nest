@@ -95,7 +95,7 @@ export class Profile {
   @Column()
   introduction!: string;
 
-  @Column('simple-array', { nullable: true })
+  @Column('simple-array')
   urls!: string[];
 
   @Column('simple-array')
