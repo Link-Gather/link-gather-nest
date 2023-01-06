@@ -1,5 +1,6 @@
 import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
 import { customAlphabet } from 'nanoid';
+import { Exclude } from 'class-transformer';
 import { Aggregate } from '../../../libs/ddd/aggregate';
 
 export const providerType = <const>['Kakao', 'Github', 'Google', 'Link-Gather'];
@@ -30,6 +31,7 @@ export class User extends Aggregate {
   email!: string;
 
   @Column()
+  @Exclude()
   password!: string;
 
   @Column()
@@ -39,6 +41,7 @@ export class User extends Aggregate {
   profileImage!: string;
 
   @Column()
+  @Exclude()
   provider!: ProviderType;
 
   @Column()
