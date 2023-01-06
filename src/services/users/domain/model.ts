@@ -54,7 +54,7 @@ export class User extends Aggregate {
   @Column('simple-array')
   stacks!: string[];
 
-  @Column('simple-array', { nullable: true })
+  @Column('simple-array')
   urls!: string[];
 
   @Column({ nullable: true })
