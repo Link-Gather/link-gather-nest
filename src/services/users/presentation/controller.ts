@@ -20,4 +20,9 @@ export class UserController {
   get(@Query('email') email: string) {
     return this.userService.findByEmail(email);
   }
+
+  @Get('/profiles')
+  getProfiles() {
+    return this.userService.findProfiles();
+  }
 }

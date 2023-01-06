@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { convertOptions, FindOrder, PaginationOption } from '../../../libs/orm';
 import { Repository } from '../../../libs/ddd';
-import { User } from '../domain/model';
+import { Profile, User } from '../domain/model';
 import { stripUndefined } from '../../../libs/common';
 
 @Injectable()
@@ -18,5 +18,9 @@ export class UserRepository extends Repository<User, User['id']> {
       ...convertOptions(options),
       ...order,
     });
+  }
+
+  async findProfiles() {
+    return this.getManager().find(Profile, {});
   }
 }

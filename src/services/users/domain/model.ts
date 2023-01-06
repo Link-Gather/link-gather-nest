@@ -105,11 +105,13 @@ export class Profile {
   user!: never;
 
   constructor(args: { career: number; job: JobType; introduction: string; urls?: string[]; stacks: string[] }) {
-    this.id = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_', 10)();
-    this.career = args.career;
-    this.job = args.job;
-    this.introduction = args.introduction;
-    this.urls = args.urls ?? [];
-    this.stacks = args.stacks;
+    if (args) {
+      this.id = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_', 10)();
+      this.career = args.career;
+      this.job = args.job;
+      this.introduction = args.introduction;
+      this.urls = args.urls ?? [];
+      this.stacks = args.stacks;
+    }
   }
 }

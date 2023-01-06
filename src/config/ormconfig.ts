@@ -7,7 +7,7 @@ export const ormConfig = {
   database: { $env: 'DB_NAME' },
   username: { $env: 'DB_USER' },
   password: { $env: 'DB_PASSWORD' },
-  entities: [join(__dirname, '..', 'services', '**', 'domain', '*.{ts,js}')],
+  entities: [join(__dirname, '..', 'services', '**', 'domain', 'model.{ts,js}')],
   synchronize: true,
   logging: true,
 };
