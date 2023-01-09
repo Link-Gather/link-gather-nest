@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user-dto';
 import { UserRepository } from '../infrastructure/repository';
-import { Profile, User } from '../domain/model';
+import { JobType, Profile, User } from '../domain/model';
 import { Transactional } from '../../../libs/orm/transactional';
 
 @Injectable()
@@ -24,11 +24,7 @@ export class UserService {
     return user;
   }
 
-  async findByEmail(email: string) {
-    return this.userRepository.find({ email });
-  }
-
-  async findProfiles() {
-    return this.userRepository.findProfiles();
+  async list({ email, profiles }: { email?: string; profiles?: { jobs: JobType[] } }) {
+    return this.userRepository.find({ email, profiles });
   }
 }

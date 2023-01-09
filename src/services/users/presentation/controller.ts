@@ -10,7 +10,8 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { UserService } from '../application/service';
-import { CreateUserDto } from '../dto/create-user-dto';
+import type { JobType } from '../domain/model';
+import type { CreateUserDto } from '../dto/create-user-dto';
 
 @Controller('users')
 @ApiTags('User')
@@ -25,14 +26,10 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
-  @Get('/')
-  @ApiOperation({ summary: '유저 조회', description: '유저 조회 API' })
-  get(@Query('email') email: string) {
-    return this.userService.findByEmail(email);
-  }
-
   @Get('/profiles')
-  getProfiles() {
-    return this.userService.findProfiles();
+  async getProfiles(@Query('job') jobs: JobType[]) {
+    const users = await this.userService.list({ profiles: { jobs } });
+    const profiles = users.flatMap((user) => user.profiles);
+    return profiles;
   }
 }
