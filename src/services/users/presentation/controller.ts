@@ -27,7 +27,7 @@ export class UserController {
   }
 
   @Get('/profiles')
-  async getProfiles(@Query('job') jobs: JobType[]) {
+  async getProfiles(@Query('jobs') jobs: JobType[]) {
     const users = await this.userService.list({ profiles: { jobs } });
     const profiles = users.flatMap((user) => user.profiles);
     return profiles;
