@@ -36,14 +36,14 @@ export class CreateUserDto {
   @IsIn(jobType)
   job!: JobType;
 
-  @ApiProperty({ example: 'I am developer', description: '자기소개', required: false })
+  @ApiProperty({ example: 'I am developer', description: '자기소개', required: true })
   @IsString()
-  introduction?: string;
+  introduction!: string;
 
-  @ApiProperty({ example: ['node.js', 'react', 'spring'], description: '기술스택', required: false })
+  @ApiProperty({ example: ['node.js', 'react', 'spring'], description: '기술스택', required: true })
   @IsArray()
   @IsString({ each: true })
-  stacks?: string[];
+  stacks!: string[];
 
   @ApiProperty({
     example: ['https://github.com/changchanghwang'],
@@ -56,5 +56,5 @@ export class CreateUserDto {
 
   @ApiProperty({ example: 'url', description: '프로필 사진 url', required: false })
   @IsString()
-  profile?: string;
+  profileImage?: string;
 }
