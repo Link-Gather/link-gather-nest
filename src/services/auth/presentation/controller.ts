@@ -20,9 +20,9 @@ export class AuthController {
           'https://oauth2.googleapis.com/token',
           {
             grant_type: 'authorization_code',
-            client_id: '309882686963-6b4njgfm8o6f6gets6c7a3djcbvi59qg.apps.googleusercontent.com',
-            client_secret: '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',
-            redirect_uri: 'http://localhost:3001/google1',
+            client_id: process.env.GOOGLE_CLIENT_ID,
+            client_secret: process.env.GOOGLE_CLIENT_SECRET,
+            redirect_uri: process.env.REDIRECT_URI,
             code,
           },
           { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
