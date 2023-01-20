@@ -4,9 +4,9 @@ import { Exclude } from 'class-transformer';
 import { Aggregate } from '../../../libs/ddd/aggregate';
 
 export const providerType = <const>['Kakao', 'Github', 'Google', 'Link-Gather'];
-export type ProviderType = typeof providerType[number];
+export type ProviderType = (typeof providerType)[number];
 export const jobType = <const>['Developer', 'Designer', 'Product Manager', 'Other'];
-export type JobType = typeof jobType[number];
+export type JobType = (typeof jobType)[number];
 
 type CtorType = {
   email: string;
@@ -80,6 +80,12 @@ export class User extends Aggregate {
       this.stacks = args.stacks;
       this.urls = args.urls ?? [];
       this.profiles = [args.profiles];
+    }
+  }
+
+  update(args?: { refreshToken?: string }) {
+    if (args) {
+      this.refreshToken = args.refreshToken;
     }
   }
 }
