@@ -12,7 +12,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('/oauth/:provider')
-  @ApiOperation({ summary: 'Oauth', description: 'Oauth authorization code handling' })
+  @ApiOperation({ summary: 'Oauth', description: 'Oauth API' })
   async oauth(@Param('provider') provider: 'google' | 'kakao' | 'github', @Body('code') code: string) {
     if (provider === 'google') {
       const { access_token } = await axios
