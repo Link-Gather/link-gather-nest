@@ -39,7 +39,7 @@ describe('AuthService 테스트', () => {
 
       const result = await authService.login('test@email.com');
 
-      expect(result).toEqual('test@email.com');
+      expect(result).toEqual({ email: 'test@email.com' });
     });
 
     test('email 과 일치하는 유저가 있으면 accessToken 과 refreshToken 을 리턴한다.', async () => {

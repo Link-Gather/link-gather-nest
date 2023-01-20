@@ -35,7 +35,7 @@ describe('User 테스트', () => {
       nickname: 'arthur',
       password: 'qhupr22qp3ir23qrn2-23rnj1p',
       profileImage: 'linkgather image url',
-      provider: 'Link-Gather',
+      provider: 'link-gather',
       stacks: ['node.js', 'typescript', 'react.js'],
       urls: ['https://github.com/changchanghwang'],
       profiles: [
