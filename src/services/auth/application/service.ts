@@ -29,6 +29,6 @@ export class AuthService {
       return { accessToken, refreshToken };
     }
 
-    return email;
+    return { email };
   }
 }

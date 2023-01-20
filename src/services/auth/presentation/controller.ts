@@ -3,6 +3,7 @@ import { Body, ClassSerializerInterceptor, Controller, Injectable, Param, Post, 
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import axios from 'axios';
 import { AuthService } from '../application/service';
+import { RequestBodyDto, RequestParamDto, ResponseDto } from '../dto';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -13,8 +14,8 @@ export class AuthController {
 
   @Post('/oauth/:provider')
   @ApiOperation({ summary: 'Oauth', description: 'Oauth API' })
-  async oauth(@Param('provider') provider: 'google' | 'kakao' | 'github', @Body('code') code: string) {
-    if (provider === 'google') {
+  async oauth(@Param() param: RequestParamDto, @Body() body: RequestBodyDto): Promise<ResponseDto> {
+    if (param.provider === 'google') {
       const { access_token } = await axios
         .post(
           'https://oauth2.googleapis.com/token',
@@ -23,7 +24,7 @@ export class AuthController {
             client_id: process.env.GOOGLE_CLIENT_ID,
             client_secret: process.env.GOOGLE_CLIENT_SECRET,
             redirect_uri: process.env.REDIRECT_URI,
-            code,
+            code: body.code,
           },
           { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
         )
@@ -36,7 +37,7 @@ export class AuthController {
       return this.authService.login(data.email);
     }
 
-    // TODO: 여기선 무엇을 리턴해야하지?
-    return '??';
+    // TODO: 임시 리턴
+    return { email: '??' };
   }
 }

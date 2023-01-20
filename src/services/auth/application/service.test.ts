@@ -48,7 +48,7 @@ describe('AuthService 테스트', () => {
         email: 'test@email.com',
         password: 'qhupr22qp3ir23qrn2-23rnj1p',
         nickname: 'windy',
-        provider: 'Google',
+        provider: 'google',
         career: 1,
         job: 'Developer',
         introduction: 'Hello world!',

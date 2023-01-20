@@ -3,7 +3,7 @@ import { customAlphabet } from 'nanoid';
 import { Exclude } from 'class-transformer';
 import { Aggregate } from '../../../libs/ddd/aggregate';
 
-export const providerType = <const>['Kakao', 'Github', 'Google', 'Link-Gather'];
+export const providerType = <const>['kakao', 'github', 'google', 'link-gather'];
 export type ProviderType = (typeof providerType)[number];
 export const jobType = <const>['Developer', 'Designer', 'Product Manager', 'Other'];
 export type JobType = (typeof jobType)[number];
