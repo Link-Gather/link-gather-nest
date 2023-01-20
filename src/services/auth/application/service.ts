@@ -11,8 +11,7 @@ export class AuthService {
   async login(email: string) {
     const [user] = await this.userRepository.find({ email });
     if (user) {
-      // TODO: 어떤 정보로 payload 를 만들지?
-      const payload = { email: user.email, nickname: user.nickname, job: user.job };
+      const payload = { id: user.id };
 
       const accessToken = this.jwtService.sign(payload, {
         expiresIn: '1h',
