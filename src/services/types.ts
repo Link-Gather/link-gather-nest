@@ -1,0 +1,1 @@
+type CalendarDate = string;

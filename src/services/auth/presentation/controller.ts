@@ -13,8 +13,8 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('/oauth/:provider')
-  @ApiOperation({ summary: 'Oauth', description: 'Oauth API' })
-  async oauth(@Param() param: RequestParamDto, @Body() body: RequestBodyDto): Promise<ResponseDto> {
+  @ApiOperation({ summary: 'auth', description: 'auth API' })
+  async auth(@Param() param: RequestParamDto, @Body() body: RequestBodyDto): Promise<ResponseDto> {
     if (param.provider === 'google') {
       const { access_token } = await axios
         .post(
@@ -34,10 +34,12 @@ export class AuthController {
         headers: { Authorization: `Bearer ${access_token}` },
       });
 
-      return this.authService.login(data.email);
+      const { email, accessToken, refreshToken } = await this.authService.login(data.email);
+
+      return { email, accessToken, refreshToken };
     }
 
     // TODO: 임시 리턴
-    return { email: '??' };
+    return { email: '??', accessToken: '??', refreshToken: '??' };
   }
 }

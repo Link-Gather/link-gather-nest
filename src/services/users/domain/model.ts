@@ -63,6 +63,9 @@ export class User extends Aggregate {
   @Column({ nullable: true })
   refreshToken?: string;
 
+  @Column({ nullable: true })
+  nicknameUpdatedOn?: CalendarDate;
+
   @OneToMany(() => Profile, (profile) => profile.user, { cascade: true, eager: true })
   profiles!: Profile[];
 
