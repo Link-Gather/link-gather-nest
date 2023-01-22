@@ -12,7 +12,7 @@ import { RequestBodyDto, RequestParamDto, ResponseDto } from '../dto';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('/oauth/:provider')
+  @Post('/:provider')
   @ApiOperation({ summary: 'auth', description: 'auth API' })
   async auth(@Param() param: RequestParamDto, @Body() body: RequestBodyDto): Promise<ResponseDto> {
     if (param.provider === 'google') {
