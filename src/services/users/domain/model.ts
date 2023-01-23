@@ -86,10 +86,8 @@ export class User extends Aggregate {
     }
   }
 
-  update(args?: { refreshToken?: string }) {
-    if (args) {
-      this.refreshToken = args.refreshToken;
-    }
+  update(args: { refreshToken?: string }) {
+    this.refreshToken = args.refreshToken;
   }
 }
 
