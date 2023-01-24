@@ -74,6 +74,12 @@ describe('AuthService 테스트', () => {
 
       const result = await authService.login('test@email.com');
 
+      expect(userRepository.save).toHaveBeenCalledWith([
+        {
+          ...user,
+          refreshToken: 'TOKEN',
+        },
+      ]);
       expect(user.refreshToken).toEqual('TOKEN');
       expect(result).toEqual({
         accessToken: 'TOKEN',
