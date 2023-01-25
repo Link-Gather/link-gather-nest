@@ -4,7 +4,6 @@ import { ProviderType, providerType } from '../../users/domain/model';
 
 export class RequestParamDto {
   @ApiProperty({ example: 'kakao', description: '회원가입 정보 제공자', required: true })
-  @IsNotEmpty()
   @IsIn(providerType)
   provider!: ProviderType;
 }
