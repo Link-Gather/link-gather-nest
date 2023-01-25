@@ -36,10 +36,12 @@ describe('AuthService 테스트', () => {
   describe('login 테스트', () => {
     test('email 과 일치하는 유저가 없으면 해당 email 을 그대로 리턴한다.', async () => {
       jest.spyOn(userRepository, 'find').mockResolvedValueOnce([]);
+      jest.spyOn(userRepository, 'save').mockResolvedValue();
 
       const result = await authService.login('test@email.com');
 
       expect(result).toEqual({ email: 'test@email.com' });
+      expect(userRepository.save).not.toBeCalled();
     });
 
     test('email 과 일치하는 유저가 있으면 accessToken 과 refreshToken 을 리턴한다.', async () => {
