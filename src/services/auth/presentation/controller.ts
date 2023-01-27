@@ -36,10 +36,10 @@ export class AuthController {
 
       const { email, accessToken, refreshToken } = await this.authService.login(data.email);
 
-      return { email, accessToken, refreshToken };
+      return !accessToken || !refreshToken ? { email, name: data.name } : { accessToken, refreshToken };
     }
 
     // TODO: 임시 리턴
-    return { email: '??', accessToken: '??', refreshToken: '??' };
+    return { email: '??', name: '??', accessToken: '??', refreshToken: '??' };
   }
 }
