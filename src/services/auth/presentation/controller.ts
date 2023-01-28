@@ -36,7 +36,7 @@ export class AuthController {
 
       const { email, accessToken, refreshToken } = await this.authService.login(data.email);
 
-      return !accessToken || !refreshToken ? { email, name: data.name } : { accessToken, refreshToken };
+      return { email, name: data.name, accessToken, refreshToken };
     }
 
     // TODO: 임시 리턴
