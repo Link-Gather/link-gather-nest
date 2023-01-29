@@ -26,7 +26,7 @@ describe('UserService 테스트', () => {
       email: 'email@test.com',
       password: 'qhupr22qp3ir23qrn2-23rnj1p',
       nickname: 'arthur',
-      provider: 'Link-Gather',
+      provider: 'link-gather',
       career: 1,
       job: 'Developer',
       introduction: 'link-gather creator',

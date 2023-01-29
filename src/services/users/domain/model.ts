@@ -3,7 +3,7 @@ import { customAlphabet } from 'nanoid';
 import { Exclude } from 'class-transformer';
 import { Aggregate } from '../../../libs/ddd/aggregate';
 
-export const providerType = <const>['Kakao', 'Github', 'Google', 'Link-Gather'];
+export const providerType = <const>['kakao', 'github', 'google', 'link-gather'];
 export type ProviderType = typeof providerType[number];
 export const jobType = <const>['Developer', 'Designer', 'Product Manager', 'Other'];
 export type JobType = typeof jobType[number];
@@ -63,6 +63,9 @@ export class User extends Aggregate {
   @Column({ nullable: true })
   refreshToken?: string;
 
+  @Column({ nullable: true })
+  nicknameUpdatedOn?: CalendarDate;
+
   @OneToMany(() => Profile, (profile) => profile.user, { cascade: true, eager: true })
   profiles!: Profile[];
 
@@ -81,6 +84,11 @@ export class User extends Aggregate {
       this.urls = args.urls ?? [];
       this.profiles = [args.profiles];
     }
+  }
+
+  update(args: { refreshToken?: string }) {
+    // TODO: stripUnchanged 구현해서 적용하기
+    Object.assign(this, args);
   }
 }
 
