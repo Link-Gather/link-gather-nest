@@ -1,11 +1,10 @@
 import { IsIn, IsNotEmpty, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { ProviderType, providerType } from '../../users/domain/model';
 
 export class RequestParamDto {
   @ApiProperty({ example: 'kakao', description: '회원가입 정보 제공자', required: true })
-  @IsIn(providerType)
-  provider!: ProviderType;
+  @IsIn(['kakao', 'github', 'google'])
+  provider!: 'kakao' | 'github' | 'google';
 }
 
 export class RequestBodyDto {

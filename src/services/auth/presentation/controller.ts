@@ -12,9 +12,9 @@ import { RequestBodyDto, RequestParamDto, ResponseDto } from '../dto';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('/:provider')
-  @ApiOperation({ summary: 'auth', description: 'auth API' })
-  async auth(@Param() param: RequestParamDto, @Body() body: RequestBodyDto): Promise<ResponseDto> {
+  @Post('/oauth/:provider')
+  @ApiOperation({ summary: 'oauth', description: 'oauth 로그인 및 회원가입 API' })
+  async oauth(@Param() param: RequestParamDto, @Body() body: RequestBodyDto): Promise<ResponseDto> {
     if (param.provider === 'google') {
       const { access_token } = await axios
         .post(
