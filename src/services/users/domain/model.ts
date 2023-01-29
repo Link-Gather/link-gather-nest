@@ -87,7 +87,8 @@ export class User extends Aggregate {
   }
 
   update(args: { refreshToken?: string }) {
-    this.refreshToken = args.refreshToken;
+    // TODO: stripUnchanged 구현해서 적용하기
+    Object.assign(this, args);
   }
 }
 
