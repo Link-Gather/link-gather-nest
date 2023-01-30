@@ -3,7 +3,7 @@ import { Body, ClassSerializerInterceptor, Controller, Injectable, Param, Post, 
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import axios from 'axios';
 import { AuthService } from '../application/service';
-import { RequestBodyDto, RequestParamDto, ResponseDto } from '../dto';
+import { RequestBodyDto, RequestParamDto, ResponseDto } from '../dto/oauth/_provider/post-dto';
 
 @Controller('auth')
 @ApiTags('Auth')
