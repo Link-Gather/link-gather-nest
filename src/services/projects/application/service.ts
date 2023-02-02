@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateProjectDto } from '../dto/create-project-dto';
+import { PostRequestBodyDto } from '../dto/post-dto';
 import { ProjectRepository } from '../infrastructure/repository';
 import { Project } from '../domain/model';
 import { Transactional } from '../../../libs/orm/transactional';
@@ -9,8 +9,8 @@ export class ProjectService {
   constructor(private projectRepository: ProjectRepository) {}
 
   @Transactional()
-  async create(createProjectDto: CreateProjectDto) {
-    const project = new Project(createProjectDto);
+  async create(args: PostRequestBodyDto) {
+    const project = new Project(args);
     await this.projectRepository.save([project]);
     return project;
   }

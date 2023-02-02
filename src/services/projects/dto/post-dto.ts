@@ -17,7 +17,7 @@ class RecruitMemberDto {
   productManager!: number;
 }
 
-export class CreateProjectDto {
+export class PostRequestBodyDto {
   @ApiProperty({ example: 'title', description: '프로젝트 제목' })
   @IsNotEmpty()
   @IsString()

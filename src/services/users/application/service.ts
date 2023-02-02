@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from '../dto/create-user-dto';
 import { UserRepository } from '../infrastructure/repository';
 import { JobType, Profile, User } from '../domain/model';
 import { Transactional } from '../../../libs/orm/transactional';
+import { PostRequestBodyDto } from '../dto/post-dto';
 
 @Injectable()
 export class UserService {
   constructor(private userRepository: UserRepository) {}
 
   @Transactional()
-  async create(args: CreateUserDto) {
+  async create(args: PostRequestBodyDto) {
     const user = new User({
       ...args,
       profiles: new Profile({

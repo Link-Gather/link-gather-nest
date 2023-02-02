@@ -2,7 +2,7 @@ import { IsArray, IsEmail, IsIn, IsNotEmpty, IsNumber, IsString, Min, MinLength 
 import { ApiProperty } from '@nestjs/swagger';
 import { jobType, JobType, ProviderType, providerType } from '../domain/model';
 
-export class CreateUserDto {
+export class PostRequestBodyDto {
   @ApiProperty({ example: 'test@test.com', description: '이메일', required: true })
   @IsNotEmpty()
   @IsEmail()
