@@ -3,7 +3,7 @@ import { Body, ClassSerializerInterceptor, Controller, Injectable, Param, Post, 
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import axios from 'axios';
 import { AuthService } from '../application/service';
-import { PostRequestBodyDto, PostRequestParamDto, PostResponseDto } from '../dto/oauth/_provider/post-dto';
+import { OauthBodyDto, OauthParamDto, OauthResponseDto } from '../dto';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -14,7 +14,7 @@ export class AuthController {
 
   @Post('/oauth/:provider')
   @ApiOperation({ summary: 'oauth', description: 'oauth 로그인 및 회원가입 API' })
-  async oauth(@Param() param: PostRequestParamDto, @Body() body: PostRequestBodyDto): Promise<PostResponseDto> {
+  async oauth(@Param() param: OauthParamDto, @Body() body: OauthBodyDto): Promise<OauthResponseDto> {
     if (param.provider === 'google') {
       const { access_token } = await axios
         .post(
