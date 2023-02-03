@@ -3,12 +3,13 @@ import { customAlphabet } from 'nanoid';
 import { Aggregate } from '../../../libs/ddd/aggregate';
 
 export const statusType = <const>['recruiting', 'progressing', 'finish', 'close'];
-export type StatusType = (typeof statusType)[number];
+export type StatusType = typeof statusType[number];
 export const purposeType = <const>['For Improvement', 'For Practice', 'For Fun'];
-export type PurposeType = (typeof purposeType)[number];
+export type PurposeType = typeof purposeType[number];
 
 type RecruitMember = {
-  developer: number;
+  frontendDeveloper: number;
+  backendDeveloper: number;
   designer: number;
   productManager: number;
 };
