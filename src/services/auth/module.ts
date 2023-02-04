@@ -5,11 +5,12 @@ import { UserRepository } from '../users/infrastructure/repository';
 import { AuthService } from './application/service';
 import { AuthController } from './presentation/controller';
 
-const jetSecret = getConfig('/jetSecret');
+const jwtSecret = getConfig('/jwtSecret');
+
 @Module({
   imports: [
     JwtModule.register({
-      secret: jetSecret,
+      secret: jwtSecret,
     }),
   ],
   controllers: [AuthController],
