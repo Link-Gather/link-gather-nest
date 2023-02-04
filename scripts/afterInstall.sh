@@ -43,4 +43,8 @@ sudo docker run --name linkgather -d -p $PORT:$PORT \
 -e DB_USER=$DB_USER \
 -e DB_PASSWORD=$DB_PASSWORD \
 -e JWT_SECRET=$JWT_SECRET \
+-e JWT_SECRET=$GOOGLE_CLIENT_ID \
+-e JWT_SECRET=$GOOGLE_CLIENT_SECRET \
+-e JWT_SECRET=$GOOGLE_REDIRECT_URI \
+
 linkgather
