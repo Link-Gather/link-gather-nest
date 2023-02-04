@@ -2,8 +2,11 @@
 import { Body, ClassSerializerInterceptor, Controller, Injectable, Param, Post, UseInterceptors } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import axios from 'axios';
+import { getConfig } from '../../../config';
 import { AuthService } from '../application/service';
-import { RequestBodyDto, RequestParamDto, ResponseDto } from '../dto';
+import { OauthBodyDto, OauthParamDto, OauthResponseDto } from '../dto';
+
+const oauthConfig = getConfig('/oauth');
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -14,16 +17,16 @@ export class AuthController {
 
   @Post('/oauth/:provider')
   @ApiOperation({ summary: 'oauth', description: 'oauth 로그인 및 회원가입 API' })
-  async oauth(@Param() param: RequestParamDto, @Body() body: RequestBodyDto): Promise<ResponseDto> {
+  async oauth(@Param() param: OauthParamDto, @Body() body: OauthBodyDto): Promise<OauthResponseDto> {
     if (param.provider === 'google') {
       const { access_token } = await axios
         .post(
           'https://oauth2.googleapis.com/token',
           {
             grant_type: 'authorization_code',
-            client_id: process.env.GOOGLE_CLIENT_ID,
-            client_secret: process.env.GOOGLE_CLIENT_SECRET,
-            redirect_uri: process.env.REDIRECT_URI,
+            client_id: oauthConfig.google.clientId,
+            client_secret: oauthConfig.google.clientSecret,
+            redirect_uri: oauthConfig.google.redirectUri,
             code: body.code,
           },
           { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },

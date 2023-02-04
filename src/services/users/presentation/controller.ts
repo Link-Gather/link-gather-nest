@@ -11,7 +11,7 @@ import {
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { UserService } from '../application/service';
 import type { JobType } from '../domain/model';
-import type { CreateUserDto } from '../dto/create-user-dto';
+import type { CreateDto } from '../dto';
 
 @Controller('users')
 @ApiTags('User')
@@ -22,8 +22,8 @@ export class UserController {
 
   @Post('/')
   @ApiOperation({ summary: '유저 생성', description: '유저 생성 API' })
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  create(@Body() createDto: CreateDto) {
+    return this.userService.create(createDto);
   }
 
   @Get('/profiles')

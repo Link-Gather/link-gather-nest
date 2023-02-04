@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Injectable, Post, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { ProjectService } from '../application/service';
-import { CreateProjectDto } from '../dto/create-project-dto';
+import { CreateDto } from '../dto';
 
 @Controller('projects')
 @ApiTags('Project')
@@ -11,8 +11,8 @@ export class ProjectController {
 
   @Post('/')
   @ApiOperation({ summary: '프로젝트 생성', description: '프로젝트 생성 API' })
-  create(@Body() createProjectDto: CreateProjectDto) {
-    return this.postService.create(createProjectDto);
+  create(@Body() createDto: CreateDto) {
+    return this.postService.create(createDto);
   }
 
   @Get('/')
