@@ -8,6 +8,9 @@ export DB_PASSWORD=$(aws ssm get-parameters --region ap-northeast-2 --names /env
 export PORT=$(aws ssm get-parameters --region ap-northeast-2 --names /env/PORT --query Parameters[0].Value | sed 's/"//g')
 export NODE_ENV=$(aws ssm get-parameters --region ap-northeast-2 --names /env/NODE_ENV --query Parameters[0].Value | sed 's/"//g')
 export JWT_SECRET=$(aws ssm get-parameters --region ap-northeast-2 --names /env/JWT_SECRET --query Parameters[0].Value | sed 's/"//g')
+export GOOGLE_CLIENT_ID=$(aws ssm get-parameters --region ap-northeast-2 --names /env/GOOGLE_CLIENT_ID --query Parameters[0].Value | sed 's/"//g')
+export GOOGLE_CLIENT_SECRET=$(aws ssm get-parameters --region ap-northeast-2 --names /env/GOOGLE_CLIENT_SECRET --query Parameters[0].Value | sed 's/"//g')
+export GOOGLE_REDIRECT_URI=$(aws ssm get-parameters --region ap-northeast-2 --names /env/GOOGLE_REDIRECT_URI --query Parameters[0].Value | sed 's/"//g')
 
 cd /home/ubuntu/link-gather-nest/
 
