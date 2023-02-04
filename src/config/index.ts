@@ -5,14 +5,6 @@ const doc = {
   port: { $env: 'PORT' },
   jwtSecret: { $env: 'JWT_SECRET' },
   oauth: {
-    google: {
-      clientId: { $env: 'GOOGLE_CLIENT_ID' },
-      clientSecret: { $env: 'GOOGLE_CLIENT_SECRET' },
-      redirectUri: { $env: 'GOOGLE_REDIRECT_URI' },
-    },
-  },
-  ormConfig,
-  oauth: {
     github: {
       clientId: { $env: 'GITHUB_CLIENT_ID' },
       clientSecret: { $env: 'GITHUB_CLIENT_SECRET' },
@@ -20,8 +12,10 @@ const doc = {
     google: {
       clientId: { $env: 'GOOGLE_CLIENT_ID' },
       clientSecret: { $env: 'GOOGLE_CLIENT_SECRET' },
+      redirectUri: { $env: 'GOOGLE_REDIRECT_URI' },
     },
   },
+  ormConfig,
 };
 
 const store = new Store(doc);
