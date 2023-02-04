@@ -7,6 +7,7 @@ import { AuthService } from '../application/service';
 import { OauthBodyDto, OauthParamDto, OauthResponseDto } from '../dto';
 
 const oauthConfig = getConfig('/oauth');
+const { clientId, clientSecret, redirectUri } = getConfig('/oauth/google');
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -24,9 +25,9 @@ export class AuthController {
           'https://oauth2.googleapis.com/token',
           {
             grant_type: 'authorization_code',
-            client_id: process.env.GOOGLE_CLIENT_ID,
-            client_secret: process.env.GOOGLE_CLIENT_SECRET,
-            redirect_uri: process.env.REDIRECT_URI,
+            client_id: clientId,
+            client_secret: clientSecret,
+            redirect_uri: redirectUri,
             code: body.code,
           },
           { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },

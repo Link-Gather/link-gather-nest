@@ -6,7 +6,11 @@ import { purposeType, PurposeType } from '../domain/model';
 class RecruitMemberDto {
   @IsNumber()
   @Min(0)
-  developer!: number;
+  frontendDeveloper!: number;
+
+  @IsNumber()
+  @Min(0)
+  backendDeveloper!: number;
 
   @IsNumber()
   @Min(0)
@@ -33,7 +37,10 @@ export class CreateDto {
   @IsIn(purposeType)
   purpose!: PurposeType;
 
-  @ApiProperty({ example: { developer: 3, designer: 1, productManager: 1 }, description: '프로젝트 정원' })
+  @ApiProperty({
+    example: { frontendDeveloper: 2, backendDeveloper: 2, designer: 1, productManager: 1 },
+    description: '프로젝트 정원',
+  })
   @IsNotEmpty()
   @ValidateNested()
   @Type(() => RecruitMemberDto)
