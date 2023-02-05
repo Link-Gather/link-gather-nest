@@ -41,6 +41,30 @@ export class AuthController {
 
       return { email, nickname: data.name, accessToken, refreshToken };
     }
+    if (param.provider === 'github') {
+      const { access_token } = await axios
+        .post(
+          'https://github.com/login/oauth/access_token',
+          {
+            client_id: oauthConfig.github.clientId,
+            client_secret: oauthConfig.github.clientSecret,
+            code: body.code,
+          },
+          {
+            headers: {
+              accept: 'application/json',
+            },
+          },
+        )
+        .then(({ data }) => data);
+
+      const { data } = await axios.get('https://api.github.com/user', {
+        headers: { Authorization: `Token ${access_token}` },
+      });
+      const { email, accessToken, refreshToken } = await this.authService.login(data.email);
+
+      return { email, nickname: data.name, accessToken, refreshToken };
+    }
 
     // TODO: 임시 리턴
     return { email: '??', nickname: '??', accessToken: '??', refreshToken: '??' };
