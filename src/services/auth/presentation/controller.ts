@@ -66,6 +66,30 @@ export class AuthController {
       return { email, nickname: data.name, accessToken, refreshToken };
     }
 
+    if (param.provider === 'kakao') {
+      const { access_token } = await axios
+        .post(
+          'https://kauth.kakao.com/oauth/token',
+          {
+            grant_type: 'authorization_code',
+            client_id: oauthConfig.kakao.clientId,
+            // TODO: client_secret 은 보안을 강화하기 위해 사용한다. 제대로 된 카카오 어플리케이션 키를 만들고 나서 주입하도록 한다. (지금은 개인 계정이라 의미없음)
+            redirect_uri: oauthConfig.kakao.redirectUri,
+            code: body.code,
+          },
+          { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
+        )
+        .then(({ data }) => data);
+
+      const { data } = await axios.get('https://kapi.kakao.com/v2/user/me', {
+        headers: { Authorization: `Bearer ${access_token}` },
+      });
+
+      const { email, accessToken, refreshToken } = await this.authService.login(data.kakao_account.email);
+
+      return { email, nickname: data.properties.nickname, accessToken, refreshToken };
+    }
+
     // TODO: 임시 리턴
     return { email: '??', nickname: '??', accessToken: '??', refreshToken: '??' };
   }
