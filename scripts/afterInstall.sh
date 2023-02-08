@@ -56,5 +56,4 @@ sudo docker run --name linkgather -d -p $PORT:$PORT \
 -e KAKAO_CLIENT_ID=$KAKAO_CLIENT_ID \
 -e KAKAO_CLIENT_SECRET=$KAKAO_CLIENT_SECRET \
 -e KAKAO_REDIRECT_URI=$KAKAO_REDIRECT_URI \
-
 linkgather
