@@ -13,6 +13,9 @@ export GITHUB_CLIENT_SECRET=$(aws ssm get-parameters --region ap-northeast-2 --n
 export GOOGLE_CLIENT_ID=$(aws ssm get-parameters --region ap-northeast-2 --names /env/GOOGLE_CLIENT_ID --query Parameters[0].Value | sed 's/"//g')
 export GOOGLE_CLIENT_SECRET=$(aws ssm get-parameters --region ap-northeast-2 --names /env/GOOGLE_CLIENT_SECRET --query Parameters[0].Value | sed 's/"//g')
 export GOOGLE_REDIRECT_URI=$(aws ssm get-parameters --region ap-northeast-2 --names /env/GOOGLE_REDIRECT_URI --query Parameters[0].Value | sed 's/"//g')
+export KAKAO_CLIENT_ID=$(aws ssm get-parameters --region ap-northeast-2 --names /env/KAKAO_CLIENT_ID --query Parameters[0].Value | sed 's/"//g')
+export KAKAO_CLIENT_SECRET=$(aws ssm get-parameters --region ap-northeast-2 --names /env/KAKAO_CLIENT_SECRET --query Parameters[0].Value | sed 's/"//g')
+export KAKAO_REDIRECT_URI=$(aws ssm get-parameters --region ap-northeast-2 --names /env/KAKAO_REDIRECT_URI --query Parameters[0].Value | sed 's/"//g')
 
 cd /home/ubuntu/link-gather-nest/
 
@@ -50,4 +53,7 @@ sudo docker run --name linkgather -d -p $PORT:$PORT \
 -e GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID \
 -e GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET \
 -e GOOGLE_REDIRECT_URI=$GOOGLE_REDIRECT_URI \
+-e KAKAO_CLIENT_ID=$KAKAO_CLIENT_ID \
+-e KAKAO_CLIENT_SECRET=$KAKAO_CLIENT_SECRET \
+-e KAKAO_REDIRECT_URI=$KAKAO_REDIRECT_URI \
 linkgather

@@ -14,6 +14,11 @@ const doc = {
       clientSecret: { $env: 'GOOGLE_CLIENT_SECRET' },
       redirectUri: { $env: 'GOOGLE_REDIRECT_URI' },
     },
+    kakao: {
+      clientId: { $env: 'KAKAO_CLIENT_ID' },
+      clientSecret: { $env: 'KAKAO_CLIENT_SECRET' },
+      redirectUri: { $env: 'KAKAO_REDIRECT_URI' },
+    },
   },
   ormConfig,
 };
