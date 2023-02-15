@@ -39,7 +39,7 @@ export class AuthController {
 
       const { email, accessToken, refreshToken } = await this.authService.login(data.email);
 
-      return { email, nickname: data.name, accessToken, refreshToken };
+      return { email, nickname: data.name, provider: 'google', accessToken, refreshToken };
     }
     if (param.provider === 'github') {
       const { access_token } = await axios
@@ -63,7 +63,7 @@ export class AuthController {
       });
       const { email, accessToken, refreshToken } = await this.authService.login(data.email);
 
-      return { email, nickname: data.name, accessToken, refreshToken };
+      return { email, nickname: data.name, provider: 'github', accessToken, refreshToken };
     }
 
     const { access_token } = await axios
@@ -86,6 +86,6 @@ export class AuthController {
 
     const { email, accessToken, refreshToken } = await this.authService.login(data.kakao_account.email);
 
-    return { email, nickname: data.properties.nickname, accessToken, refreshToken };
+    return { email, nickname: data.properties.nickname, provider: 'kakao', accessToken, refreshToken };
   }
 }
