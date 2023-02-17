@@ -1,5 +1,6 @@
 import { DynamicModule } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { AuthService } from '../../services/auth/application/service';
 import { UserRepository } from '../../services/users/infrastructure/repository';
 import { AuthGuard } from './guard';
 
@@ -12,6 +13,7 @@ export class GuardModule {
       },
       JwtService,
       UserRepository,
+      AuthService,
     ];
     return {
       global: true,

@@ -6,9 +6,14 @@ import {
   Injectable,
   Post,
   Query,
+  Request,
+  Response,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { getConfig } from '../../../config';
+import { AuthGuard } from '../../../libs/auth/guard';
 import { UserService } from '../application/service';
 import type { JobType } from '../domain/model';
 import type { CreateDto } from '../dto';
@@ -31,5 +36,13 @@ export class UserController {
     const users = await this.userService.list({ profiles: { jobs } });
     const profiles = users.flatMap((user) => user.profiles);
     return profiles;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  @Get('/')
+  @UseGuards(AuthGuard)
+  async get() {
+    const users = await this.userService.list({});
+    return users;
   }
 }
