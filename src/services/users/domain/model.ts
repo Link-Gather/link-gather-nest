@@ -5,21 +5,20 @@ import { Aggregate } from '../../../libs/ddd/aggregate';
 
 export const providerType = <const>['kakao', 'github', 'google', 'link-gather'];
 export type ProviderType = typeof providerType[number];
-export const jobType = <const>['Developer', 'Designer', 'Product Manager', 'Other'];
+export const jobType = <const>['Frontend Developer', 'Backend Developer', 'Designer', 'Product Manager', 'Other'];
 export type JobType = typeof jobType[number];
 
 type CtorType = {
   email: string;
   password: string;
   nickname: string;
-  profileImage?: string;
+  profileImage: string;
   provider: ProviderType;
-  introduction?: string;
+  introduction: string;
   career: number;
   job: JobType;
   stacks: string[];
   urls?: string[];
-  profiles: Profile;
 };
 
 @Entity()
@@ -74,15 +73,25 @@ export class User extends Aggregate {
     if (args) {
       this.id = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_', 10)();
       this.email = args.email;
+      // FIXME: 소셜일 경우 프론트에서 password 를 채워서 주나? 안채워주나? 안채워주면 optional 이어야 하니까 채워주나?
       this.password = args.password;
       this.nickname = args.nickname;
-      // TODO: 기본 이미지 url이 생기면 변경해야한다.
-      this.profileImage = args.profileImage ?? 'linkgather image url';
+      this.profileImage = args.profileImage;
       this.provider = args.provider;
-      this.introduction = args.introduction ?? '';
+      this.introduction = args.introduction;
+      this.career = args.career;
+      this.job = args.job;
       this.stacks = args.stacks;
       this.urls = args.urls ?? [];
-      this.profiles = [args.profiles];
+      this.profiles = [
+        new Profile({
+          career: args.career,
+          job: args.job,
+          introduction: args.introduction,
+          stacks: args.stacks,
+          urls: args.urls,
+        }),
+      ];
     }
   }
 

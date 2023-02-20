@@ -11,7 +11,7 @@ import {
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { UserService } from '../application/service';
 import type { JobType } from '../domain/model';
-import type { CreateDto } from '../dto';
+import { SignUpBodyDto } from '../dto';
 
 @Controller('users')
 @ApiTags('User')
@@ -20,10 +20,10 @@ import type { CreateDto } from '../dto';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post('/')
-  @ApiOperation({ summary: '유저 생성', description: '유저 생성 API' })
-  create(@Body() createDto: CreateDto) {
-    return this.userService.create(createDto);
+  @Post('/sign-up')
+  @ApiOperation({ summary: '회원가입', description: '회원가입 API' })
+  async signUp(@Body() body: SignUpBodyDto): Promise<void> {
+    return this.userService.signUp(body);
   }
 
   @Get('/profiles')

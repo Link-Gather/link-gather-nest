@@ -1,27 +1,31 @@
 import { Injectable } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 import { UserRepository } from '../infrastructure/repository';
-import { JobType, Profile, User } from '../domain/model';
+import { JobType, User } from '../domain/model';
 import { Transactional } from '../../../libs/orm/transactional';
-import { CreateDto } from '../dto';
+import type { SignUpBodyDto } from '../dto';
+import { unauthorized } from '../../../libs/exception';
 
 @Injectable()
 export class UserService {
   constructor(private userRepository: UserRepository) {}
 
   @Transactional()
-  async create(args: CreateDto) {
+  async signUp(args: SignUpBodyDto) {
+    const [newUser] = await this.userRepository.find({ email: args.email });
+
+    if (newUser) {
+      throw unauthorized('이미 존재하는 이메일입니다.');
+    }
+
+    // TODO: salt 를 환경변수로 주입?
+    const password = await bcrypt.hash(args.password, 10);
+
     const user = new User({
       ...args,
-      profiles: new Profile({
-        career: args.career,
-        job: args.job,
-        introduction: args.introduction,
-        stacks: args.stacks,
-        urls: args.urls,
-      }),
+      password,
     });
     await this.userRepository.save([user]);
-    return user;
   }
 
   async list({ email, profiles }: { email?: string; profiles?: { jobs: JobType[] } }) {
