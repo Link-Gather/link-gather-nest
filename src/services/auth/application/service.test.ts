@@ -52,7 +52,7 @@ describe('AuthService 테스트', () => {
         nickname: 'windy',
         provider: 'google',
         career: 1,
-        job: 'Developer',
+        job: 'Backend Developer',
         introduction: 'Hello world!',
         stacks: ['node.js', 'typescript', 'react.js'],
         urls: ['https://github.com/yoon-bomi'],
@@ -61,7 +61,7 @@ describe('AuthService 테스트', () => {
           plainToClass(Profile, {
             id: '1',
             career: 1,
-            job: 'Developer',
+            job: 'Backend Developer',
             introduction: 'Hello world!',
             urls: ['https://github.com/yoon-bomi'],
             stacks: ['node.js', 'typescript', 'react.js'],
