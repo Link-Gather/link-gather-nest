@@ -66,6 +66,30 @@ export class AuthController {
       return { email, nickname: data.name, accessToken, refreshToken };
     }
 
+    if (param.provider === 'kakao') {
+      const { access_token } = await axios
+        .post(
+          'https://kauth.kakao.com/oauth/token',
+          {
+            grant_type: 'authorization_code',
+            client_id: oauthConfig.kakao.clientId,
+            client_secret: oauthConfig.kakao.clientSecret,
+            redirect_uri: oauthConfig.kakao.redirectUri,
+            code: body.code,
+          },
+          { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
+        )
+        .then(({ data }) => data);
+
+      const { data } = await axios.get('https://kapi.kakao.com/v2/user/me', {
+        headers: { Authorization: `Bearer ${access_token}` },
+      });
+
+      const { email, accessToken, refreshToken } = await this.authService.login(data.kakao_account.email);
+
+      return { email, nickname: data.properties.nickname, accessToken, refreshToken };
+    }
+
     // TODO: 임시 리턴
     return { email: '??', nickname: '??', accessToken: '??', refreshToken: '??' };
   }
