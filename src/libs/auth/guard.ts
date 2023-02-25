@@ -45,15 +45,9 @@ export class AuthGuard implements CanActivate {
       }
       const data = await this.authService.revise(token);
       req.state = { user: data.user };
-      // HACK: 왜 안되지..?
-      req.res.setHeader('set-cookie', [
-        `accessToken=${data.accessToken} Path=/`,
-        `refreshToken=${data.refreshToken} Path=/`,
-      ]);
-      res.setHeader('set-cookie', [
-        `accessToken=${data.accessToken} Path=/`,
-        `refreshToken=${data.refreshToken} Path=/`,
-      ]);
+
+      res.cookie('accessToken', data.accessToken);
+      res.cookie('refreshToken', data.refreshToken);
       return true;
     }
     return false;

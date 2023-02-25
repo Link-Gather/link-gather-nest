@@ -8,14 +8,14 @@ import { GracefulShutdownService } from './libs/graceful-shutdown';
 import { dataSource } from './libs/orm';
 import { setupSwagger } from './libs/swagger';
 
-const port = getConfig('/port');
+const PORT = getConfig('/port');
+const ORIGIN = getConfig('/origin');
 
 async function bootstrap() {
   dataSource.initialize().then(() => console.log('DB Connected 🔥'));
 
   const app = await NestFactory.create(AppModule);
-  // FIXME: 옵션추가
-  app.enableCors();
+  app.enableCors({ credentials: true, origin: ORIGIN });
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new HttpExceptionFilter());
 
@@ -23,6 +23,6 @@ async function bootstrap() {
   app.get(GracefulShutdownService);
   app.enableShutdownHooks(['SIGINT', 'SIGTERM']);
 
-  await app.listen(Number(port)).then(() => console.log('Server Connected 🙏'));
+  await app.listen(Number(PORT)).then(() => console.log('Server Connected 🙏'));
 }
 bootstrap();
