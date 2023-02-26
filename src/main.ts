@@ -9,13 +9,13 @@ import { dataSource } from './libs/orm';
 import { setupSwagger } from './libs/swagger';
 
 const PORT = getConfig('/port');
-const ORIGIN = getConfig('/origin');
+const CORS_ORIGIN = getConfig('/corsOrigin');
 
 async function bootstrap() {
   dataSource.initialize().then(() => console.log('DB Connected 🔥'));
 
   const app = await NestFactory.create(AppModule);
-  app.enableCors({ credentials: true, origin: ORIGIN });
+  app.enableCors({ credentials: true, origin: CORS_ORIGIN });
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new HttpExceptionFilter());
 

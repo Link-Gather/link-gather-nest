@@ -16,7 +16,7 @@ export GOOGLE_REDIRECT_URI=$(aws ssm get-parameters --region ap-northeast-2 --na
 export KAKAO_CLIENT_ID=$(aws ssm get-parameters --region ap-northeast-2 --names /env/KAKAO_CLIENT_ID --query Parameters[0].Value | sed 's/"//g')
 export KAKAO_CLIENT_SECRET=$(aws ssm get-parameters --region ap-northeast-2 --names /env/KAKAO_CLIENT_SECRET --query Parameters[0].Value | sed 's/"//g')
 export KAKAO_REDIRECT_URI=$(aws ssm get-parameters --region ap-northeast-2 --names /env/KAKAO_REDIRECT_URI --query Parameters[0].Value | sed 's/"//g')
-export ORIGIN=$(aws ssm get-parameters --region ap-northeast-2 --names /env/ORIGIN --query Parameters[0].Value | sed 's/"//g')
+export CORS_ORIGIN=$(aws ssm get-parameters --region ap-northeast-2 --names /env/CORS_ORIGIN --query Parameters[0].Value | sed 's/"//g')
 
 cd /home/ubuntu/link-gather-nest/
 
@@ -57,5 +57,5 @@ sudo docker run --name linkgather -d -p $PORT:$PORT \
 -e KAKAO_CLIENT_ID=$KAKAO_CLIENT_ID \
 -e KAKAO_CLIENT_SECRET=$KAKAO_CLIENT_SECRET \
 -e KAKAO_REDIRECT_URI=$KAKAO_REDIRECT_URI \
--e ORIGIN=$ORIGIN \
+-e CORS_ORIGIN=$CORS_ORIGIN \
 linkgather

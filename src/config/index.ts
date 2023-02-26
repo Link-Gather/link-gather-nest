@@ -3,7 +3,7 @@ import { ormConfig } from './ormconfig';
 
 const doc = {
   port: { $env: 'PORT' },
-  origin: { $env: 'ORIGIN' },
+  corsOrigin: { $env: 'CORS_ORIGIN' },
   jwtSecret: { $env: 'JWT_SECRET' },
   oauth: {
     github: {
