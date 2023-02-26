@@ -5,7 +5,7 @@ import { AuthService } from '../../services/auth/application/service';
 import { UserRepository } from '../../services/users/infrastructure/repository';
 import { unauthorized } from '../exception';
 
-const jwtSecret = getConfig('/jwtSecret');
+const JWT_SECRET = getConfig('/jwtSecret');
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -27,7 +27,7 @@ export class AuthGuard implements CanActivate {
         throw unauthorized('Token type is not `Bearer`', { errorMessage: '토큰 타입이 잘못 되었습니다.' });
       }
       try {
-        const { id } = await this.jwtService.verifyAsync(token, { secret: jwtSecret });
+        const { id } = await this.jwtService.verifyAsync(token, { secret: JWT_SECRET });
         const user = await this.userRepository.findOneOrFail(id);
         req.state = { user };
         return true;
