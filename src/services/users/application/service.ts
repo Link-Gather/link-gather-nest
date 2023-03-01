@@ -36,11 +36,12 @@ export class UserService {
   @Transactional()
   async signIn(args: SignInBodyDto) {
     const [user] = await this.userRepository.find({ email: args.email });
-    if (!user || !(await bcrypt.compare(args.password, user.password))) {
-      throw badRequest(`이메일(${user.email})이나 패스워드(${user.password})가 일치하지 않습니다.`, {
+    if (!user) {
+      throw badRequest(`이메일(${args.email})이 일치하지 않습니다.`, {
         errorMessage: '이메일이나 패스워드가 일치하지 않습니다.',
       });
     }
+    await user.validatePassword(args.password);
 
     const accessToken = this.jwtService.sign(
       { id: user.id },
