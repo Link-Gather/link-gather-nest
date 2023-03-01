@@ -61,8 +61,8 @@ describe('auth guard test', () => {
     test('정상적인 access token이 올 경우 req.state에 user를 주입하고 true를 반환한다.', async () => {
       const mockContext = createMock<ExecutionContext>();
       mockContext.switchToHttp().getRequest.mockReturnValue({
-        headers: {
-          accesstoken: 'Bearer accessToken',
+        signedCookies: {
+          accessToken: 'Bearer accessToken',
         },
       });
       jest.spyOn(jwtService, 'verifyAsync').mockResolvedValue({ id: 'userId' });
@@ -73,11 +73,28 @@ describe('auth guard test', () => {
       expect(mockContext.switchToHttp().getRequest().state.user).toEqual(user);
     });
 
+    test('access token이 유저를 찾지 못하면 에러를 반환한다.', async () => {
+      const mockContext = createMock<ExecutionContext>();
+      mockContext.switchToHttp().getRequest.mockReturnValue({
+        signedCookies: {
+          accessToken: 'Bearer accessToken',
+        },
+      });
+      jest.spyOn(jwtService, 'verifyAsync').mockResolvedValue({ id: 'userId' });
+      jest.spyOn(userRepository, 'findOneOrFail').mockRejectedValue(new EntityNotFoundError(User, 'userId'));
+      expect.assertions(1);
+      try {
+        await authGuard.canActivate(mockContext);
+      } catch (err) {
+        expect(err).toEqual(new EntityNotFoundError(User, 'userId'));
+      }
+    });
+
     test('access token의 타입이 bearer가 아닌 경우 error를 반환한다.', async () => {
       const mockContext = createMock<ExecutionContext>();
       mockContext.switchToHttp().getRequest.mockReturnValue({
-        headers: {
-          accesstoken: 'accessToken',
+        signedCookies: {
+          accessToken: 'accessToken',
         },
       });
 
@@ -86,19 +103,21 @@ describe('auth guard test', () => {
         await authGuard.canActivate(mockContext);
       } catch (err) {
         expect(err).toEqual(
-          unauthorized('Token type is not `Bearer`', { errorMessage: '토큰 타입이 잘못 되었습니다.' }),
+          unauthorized(`Token type(accessToken) is not 'Bearer'`, { errorMessage: '토큰 타입이 잘못 되었습니다.' }),
         );
       }
     });
 
     describe('refresh token 관련 로직 테스트', () => {
-      test('정상적인 refresh token 이 오면 새로운 accessToken, refreshToken을 발급하고 req.state에 유저를 주입한다.', async () => {
+      test('accessToken이 만료되었으면 refreshToken으로 revise를 호출한다.', async () => {
         const mockContext = createMock<ExecutionContext>();
         mockContext.switchToHttp().getRequest.mockReturnValue({
-          headers: {
-            refreshtoken: 'Bearer refreshToken',
+          signedCookies: {
+            accessToken: 'Bearer accessToken',
+            refreshToken: 'Bearer refreshToken',
           },
         });
+        jest.spyOn(jwtService, 'verifyAsync').mockRejectedValue({ message: 'jwt expired' });
         jest
           .spyOn(authService, 'revise')
           .mockResolvedValue({ accessToken: 'accessToken', refreshToken: 'new refreshToken', user });
@@ -114,61 +133,29 @@ describe('auth guard test', () => {
       test('refresh token의 타입이 bearer가 아닌 경우 error를 반환한다.', async () => {
         const mockContext = createMock<ExecutionContext>();
         mockContext.switchToHttp().getRequest.mockReturnValue({
-          headers: {
-            refreshtoken: 'refreshToken',
+          signedCookies: {
+            accessToken: 'Bearer accessToken',
+            refreshToken: 'refreshToken',
           },
         });
+        jest.spyOn(jwtService, 'verifyAsync').mockRejectedValue({ message: 'jwt expired' });
 
         expect.assertions(1);
         try {
           await authGuard.canActivate(mockContext);
         } catch (err) {
           expect(err).toEqual(
-            unauthorized('Token type is not `Bearer`', { errorMessage: '토큰 타입이 잘못 되었습니다.' }),
+            unauthorized(`Token type(refreshToken) is not 'Bearer'`, { errorMessage: '토큰 타입이 잘못 되었습니다.' }),
           );
         }
       });
     });
-
-    test('access token이 만료되었으면 만료되었다는 에러를 반환한다.', async () => {
-      const mockContext = createMock<ExecutionContext>();
-      mockContext.switchToHttp().getRequest.mockReturnValue({
-        headers: {
-          accesstoken: 'Bearer accessToken',
-        },
-      });
-      jest.spyOn(jwtService, 'verifyAsync').mockResolvedValue({ id: 'userId' });
-      jest.spyOn(userRepository, 'findOneOrFail').mockRejectedValue(new EntityNotFoundError(User, 'userId'));
-      expect.assertions(1);
-      try {
-        await authGuard.canActivate(mockContext);
-      } catch (err) {
-        expect(err).toEqual(new EntityNotFoundError(User, 'userId'));
-      }
-    });
-
-    test('access token에 해당하는 유저가 없으면 에러를 반환한다.', async () => {
-      const mockContext = createMock<ExecutionContext>();
-      mockContext.switchToHttp().getRequest.mockReturnValue({
-        headers: {
-          accesstoken: 'Bearer accessToken',
-        },
-      });
-      jest.spyOn(jwtService, 'verifyAsync').mockRejectedValue({ message: 'jwt expired' });
-      jest.spyOn(userRepository, 'findOneOrFail').mockResolvedValue(user);
-      expect.assertions(1);
-      try {
-        await authGuard.canActivate(mockContext);
-      } catch (err) {
-        expect(err).toEqual(unauthorized('Access token is expired.'));
-      }
-    });
   });
 
-  test('access token이나 refresh token이 헤더에 담겨있지 않으면 false를 반환한다.', async () => {
+  test('access token이나 refresh token이 담겨있지 않으면 false를 반환한다.', async () => {
     const mockContext = createMock<ExecutionContext>();
     mockContext.switchToHttp().getRequest.mockReturnValue({
-      headers: {},
+      signedCookies: {},
     });
     expect(await authGuard.canActivate(mockContext)).toBe(false);
   });
