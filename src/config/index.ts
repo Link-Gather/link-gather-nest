@@ -21,6 +21,9 @@ const doc = {
       redirectUri: { $env: 'KAKAO_REDIRECT_URI' },
     },
   },
+  cookie: {
+    sign: { $env: 'COOKIE_SIGN' },
+  },
   ormConfig,
 };
 
