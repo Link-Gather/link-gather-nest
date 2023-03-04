@@ -13,7 +13,7 @@ import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import type { Response } from 'express';
 import { UserService } from '../application/service';
 import type { JobType } from '../domain/model';
-import type { SignUpBodyDto, SignInBodyDto } from '../dto';
+import { SignUpBodyDto, SignInBodyDto } from '../dto';
 
 @Controller('users')
 @ApiTags('User')
