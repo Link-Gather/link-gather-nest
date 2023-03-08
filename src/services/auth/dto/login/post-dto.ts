@@ -12,11 +12,3 @@ export class LoginBodyDto {
   @IsString()
   password!: string;
 }
-
-export class LoginResponseDto {
-  @ApiProperty({ example: 'example-access-token', description: 'user access token', required: true })
-  accessToken!: string;
-
-  @ApiProperty({ example: 'example-refresh-token', description: 'user refresh token', required: true })
-  refreshToken!: string;
-}
