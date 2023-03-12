@@ -6,7 +6,7 @@ import { DatabaseModule } from './libs/orm/database.module';
 import { UserModule, ProjectModule, AuthModule } from './services';
 
 @Module({
-  imports: [DatabaseModule.manager(), ProjectModule, UserModule, AuthModule, GuardModule.auth()],
+  imports: [DatabaseModule.manager(), ProjectModule, UserModule, AuthModule, GuardModule],
   controllers: [AppController],
   providers: [GracefulShutdownService],
 })

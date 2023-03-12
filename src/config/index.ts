@@ -3,7 +3,7 @@ import { ormConfig } from './ormconfig';
 
 const doc = {
   port: { $env: 'PORT' },
-  origin: { $env: 'ORIGIN' },
+  corsOrigin: { $env: 'CORS_ORIGIN' },
   jwtSecret: { $env: 'JWT_SECRET' },
   saltRounds: { $env: 'SALT_ROUNDS' },
   oauth: {
@@ -21,6 +21,9 @@ const doc = {
       clientSecret: { $env: 'KAKAO_CLIENT_SECRET' },
       redirectUri: { $env: 'KAKAO_REDIRECT_URI' },
     },
+  },
+  cookie: {
+    sign: { $env: 'COOKIE_SIGN' },
   },
   ormConfig,
 };

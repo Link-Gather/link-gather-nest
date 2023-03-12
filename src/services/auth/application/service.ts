@@ -5,7 +5,7 @@ import { badRequest } from '../../../libs/exception';
 import { Transactional } from '../../../libs/orm/transactional';
 import { UserRepository } from '../../users/infrastructure/repository';
 
-const jwtSecret = getConfig('/jwtSecret');
+const JWT_SECRET = getConfig('/jwtSecret');
 
 @Injectable()
 export class AuthService {
@@ -41,19 +41,19 @@ export class AuthService {
   async revise(token: string) {
     const [user] = await this.userRepository.find({ refreshToken: token });
     if (user) {
-      const { exp } = await this.jwtService.verifyAsync(token, { secret: jwtSecret });
+      const { exp } = await this.jwtService.verifyAsync(token, { secret: JWT_SECRET });
       const accessToken = this.jwtService.sign(
         { id: user.id },
         {
           expiresIn: '1h',
-          secret: jwtSecret,
+          secret: JWT_SECRET,
         },
       );
       const refreshToken = this.jwtService.sign(
         {},
         {
           expiresIn: exp,
-          secret: jwtSecret,
+          secret: JWT_SECRET,
         },
       );
       user.update({ refreshToken });
