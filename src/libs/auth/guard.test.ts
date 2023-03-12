@@ -42,7 +42,7 @@ describe('auth guard test', () => {
     provider: 'link-gather',
     introduction: 'hello, my name is arthur',
     career: 1,
-    job: 'Developer',
+    job: 'Backend Developer',
     stacks: ['node.js', 'nest.js', 'koa.js', 'react.js', 'javascript', 'typescript'],
     urls: ['https://github.com/changchanghwang'],
     profiles: [
@@ -50,7 +50,7 @@ describe('auth guard test', () => {
         id: 'profileId',
         introduction: 'hello, my name is arthur',
         career: 1,
-        job: 'Developer',
+        job: 'Backend Developer',
         stacks: ['node.js', 'nest.js', 'koa.js', 'react.js', 'javascript', 'typescript'],
         urls: ['https://github.com/changchanghwang'],
       }),
