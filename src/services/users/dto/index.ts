@@ -1,1 +1,1 @@
-export * from './post-dto';
+export * from './sign-up';

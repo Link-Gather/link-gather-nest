@@ -78,6 +78,8 @@ export class User extends Aggregate {
       // FIXME: 소셜일 경우 프론트에서 password 를 채워서 주나? 안채워주나? 안채워주면 optional 이어야 하니까 채워주나?
       this.password = args.password;
       this.nickname = args.nickname;
+      // TODO: 이미지들 미리 s3에 저장하고 image url 로 변환시켜주는 method 를 만들어서 프론트에 반환하도록 한다.
+      // https://github.com/Link-Gather/link-gather-nest/pull/28#discussion_r1129592221
       this.profileImage = args.profileImage;
       this.provider = args.provider;
       this.introduction = args.introduction;

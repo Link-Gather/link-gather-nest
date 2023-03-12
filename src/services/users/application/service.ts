@@ -6,6 +6,9 @@ import { JobType, User } from '../domain/model';
 import { Transactional } from '../../../libs/orm/transactional';
 import type { SignInBodyDto, SignUpBodyDto } from '../dto';
 import { badRequest, unauthorized } from '../../../libs/exception';
+import { getConfig } from '../../../config';
+
+const SALT_ROUNDS = getConfig('/saltRounds');
 
 @Injectable()
 export class UserService {
@@ -19,8 +22,8 @@ export class UserService {
       throw unauthorized('이미 존재하는 이메일입니다.');
     }
 
-    // TODO: salt 를 환경변수로 주입?
-    const password = await bcrypt.hash(args.password, 10);
+    const salt = await bcrypt.genSalt(SALT_ROUNDS);
+    const password = await bcrypt.hash(args.password, salt);
 
     const user = new User({
       ...args,
