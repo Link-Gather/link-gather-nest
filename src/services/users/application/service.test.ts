@@ -33,7 +33,8 @@ describe('UserService 테스트', () => {
   test('신규 유저는 회원가입을 진행할 수 있다.', async () => {
     const userRepositorySaveSpy = jest.spyOn(userRepository, 'save').mockResolvedValue();
     const userRepositoryFindSpy = jest.spyOn(userRepository, 'find').mockResolvedValue([]);
-    const bcryptSpy = jest.spyOn(bcrypt, 'hash').mockImplementation(() => Promise.resolve('encrypt password'));
+    jest.spyOn(bcrypt, 'genSalt').mockImplementation(() => Promise.resolve('$2b$10$5CW3ftestSaltJ9wpFAShe'));
+    const bcryptHashSpy = jest.spyOn(bcrypt, 'hash').mockImplementation(() => Promise.resolve('encrypt password'));
 
     await userService.signUp({
       email: 'email@test.com',
@@ -76,7 +77,7 @@ describe('UserService 테스트', () => {
     ]);
 
     expect(userRepositoryFindSpy).toHaveBeenCalled();
-    expect(bcryptSpy).toHaveBeenCalled();
+    expect(bcryptHashSpy).toHaveBeenCalledWith('qhupr22qp3ir23qrn2-23rnj1p', '$2b$10$5CW3ftestSaltJ9wpFAShe');
   });
 
   test('이미 존재하는 이메일이면 에러를 던진다.', async () => {

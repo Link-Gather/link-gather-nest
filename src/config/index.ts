@@ -4,6 +4,7 @@ import { ormConfig } from './ormconfig';
 const doc = {
   port: { $env: 'PORT' },
   jwtSecret: { $env: 'JWT_SECRET' },
+  saltRounds: { $env: 'SALT_ROUNDS' },
   oauth: {
     github: {
       clientId: { $env: 'GITHUB_CLIENT_ID' },
