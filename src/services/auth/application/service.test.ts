@@ -105,7 +105,7 @@ describe('AuthService 테스트', () => {
       provider: 'link-gather',
       introduction: 'hello, my name is arthur',
       career: 1,
-      job: 'Developer',
+      job: 'Backend Developer',
       stacks: ['node.js', 'nest.js', 'koa.js', 'react.js', 'javascript', 'typescript'],
       urls: ['https://github.com/changchanghwang'],
       profiles: [
@@ -113,7 +113,7 @@ describe('AuthService 테스트', () => {
           id: 'profileId',
           introduction: 'hello, my name is arthur',
           career: 1,
-          job: 'Developer',
+          job: 'Backend Developer',
           stacks: ['node.js', 'nest.js', 'koa.js', 'react.js', 'javascript', 'typescript'],
           urls: ['https://github.com/changchanghwang'],
         }),
