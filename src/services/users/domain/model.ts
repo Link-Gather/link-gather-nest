@@ -2,24 +2,25 @@ import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
 import { customAlphabet } from 'nanoid';
 import { Exclude } from 'class-transformer';
 import { Aggregate } from '../../../libs/ddd/aggregate';
+import { compareHash } from '../../../libs/password';
+import { badRequest } from '../../../libs/exception';
 
 export const providerType = <const>['kakao', 'github', 'google', 'link-gather'];
-export type ProviderType = typeof providerType[number];
-export const jobType = <const>['Developer', 'Designer', 'Product Manager', 'Other'];
-export type JobType = typeof jobType[number];
+export type ProviderType = (typeof providerType)[number];
+export const jobType = <const>['Frontend Developer', 'Backend Developer', 'Designer', 'Product Manager', 'Other'];
+export type JobType = (typeof jobType)[number];
 
 type CtorType = {
   email: string;
   password: string;
   nickname: string;
-  profileImage?: string;
+  profileImage: string;
   provider: ProviderType;
-  introduction?: string;
+  introduction: string;
   career: number;
   job: JobType;
   stacks: string[];
   urls?: string[];
-  profiles: Profile;
 };
 
 @Entity()
@@ -74,21 +75,41 @@ export class User extends Aggregate {
     if (args) {
       this.id = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_', 10)();
       this.email = args.email;
+      // FIXME: 소셜일 경우 프론트에서 password 를 채워서 주나? 안채워주나? 안채워주면 optional 이어야 하니까 채워주나?
       this.password = args.password;
       this.nickname = args.nickname;
-      // TODO: 기본 이미지 url이 생기면 변경해야한다.
-      this.profileImage = args.profileImage ?? 'linkgather image url';
+      // TODO: 이미지들 미리 s3에 저장하고 image url 로 변환시켜주는 method 를 만들어서 프론트에 반환하도록 한다.
+      // https://github.com/Link-Gather/link-gather-nest/pull/28#discussion_r1129592221
+      this.profileImage = args.profileImage;
       this.provider = args.provider;
-      this.introduction = args.introduction ?? '';
+      this.introduction = args.introduction;
+      this.career = args.career;
+      this.job = args.job;
       this.stacks = args.stacks;
       this.urls = args.urls ?? [];
-      this.profiles = [args.profiles];
+      this.profiles = [
+        new Profile({
+          career: args.career,
+          job: args.job,
+          introduction: args.introduction,
+          stacks: args.stacks,
+          urls: args.urls,
+        }),
+      ];
     }
   }
 
   update(args: { refreshToken?: string }) {
     // TODO: stripUnchanged 구현해서 적용하기
     Object.assign(this, args);
+  }
+
+  async validatePassword(password: string) {
+    if (!(await compareHash(password, this.password))) {
+      throw badRequest('패스워드가 일치하지 않습니다.', {
+        errorMessage: '이메일이나 패스워드가 일치하지 않습니다.',
+      });
+    }
   }
 }
 

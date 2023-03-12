@@ -1,8 +1,8 @@
 import { IsArray, IsEmail, IsIn, IsNotEmpty, IsNumber, IsString, Min, MinLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { jobType, JobType, ProviderType, providerType } from '../domain/model';
+import { jobType, JobType, ProviderType, providerType } from '../../domain/model';
 
-export class CreateDto {
+export class SignUpBodyDto {
   @ApiProperty({ example: 'test@test.com', description: '이메일', required: true })
   @IsNotEmpty()
   @IsEmail()
@@ -37,6 +37,7 @@ export class CreateDto {
   job!: JobType;
 
   @ApiProperty({ example: 'I am developer', description: '자기소개', required: true })
+  @IsNotEmpty()
   @IsString()
   introduction!: string;
 
@@ -54,7 +55,8 @@ export class CreateDto {
   @IsString({ each: true })
   urls?: string[];
 
-  @ApiProperty({ example: 'url', description: '프로필 사진 url', required: false })
+  @ApiProperty({ example: 'url', description: '프로필 사진 url', required: true })
+  @IsNotEmpty()
   @IsString()
-  profileImage?: string;
+  profileImage!: string;
 }
