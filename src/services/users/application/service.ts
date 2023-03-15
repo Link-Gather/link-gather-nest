@@ -65,4 +65,10 @@ export class UserService {
 
     return { accessToken, refreshToken, user };
   }
+
+  async isNicknameDuplicated({ nickname }: { nickname: string }) {
+    const [user] = await this.userRepository.find({ nickname });
+
+    return !!user;
+  }
 }
