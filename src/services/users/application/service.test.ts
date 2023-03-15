@@ -87,8 +87,6 @@ describe('UserService 테스트', () => {
 
       expect(userRepositoryFindSpy).toHaveBeenCalled();
       expect(bcryptHashSpy).toHaveBeenCalledWith('qhupr22qp3ir23qrn2-23rnj1p', '$2b$10$5CW3ftestSaltJ9wpFAShe');
-
-      expect(userService).toBeDefined();
     });
 
     test('이미 존재하는 이메일이면 에러를 던진다.', async () => {
