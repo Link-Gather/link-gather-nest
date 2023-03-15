@@ -55,7 +55,7 @@ export class SignUpBodyDto {
   @IsString({ each: true })
   urls?: string[];
 
-  @ApiProperty({ example: 'url', description: '프로필 사진 url', required: true })
+  @ApiProperty({ example: '프로필이미지1', description: '특정 프로필 이미지의 고유 값', required: true })
   @IsNotEmpty()
   @IsString()
   profileImage!: string;
