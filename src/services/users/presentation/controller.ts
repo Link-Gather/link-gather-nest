@@ -13,7 +13,7 @@ import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import type { Response } from 'express';
 import { UserService } from '../application/service';
 import type { JobType } from '../domain/model';
-import { SignUpBodyDto, SignInBodyDto } from '../dto';
+import { SignUpBodyDto, SignInBodyDto, nicknameCheckQueryDto } from '../dto';
 
 @Controller('users')
 @ApiTags('User')
@@ -56,7 +56,7 @@ export class UserController {
     summary: '닉네임 중복 체크 API',
     description: '사용 불가능한 닉네임일 경우 true, 사용 가능한 닉네임일 경우 false 를 반환한다.',
   })
-  isNicknameDuplicated(@Query('nickname') nickname: string): Promise<boolean> {
+  isNicknameDuplicated(@Query() { nickname }: nicknameCheckQueryDto): Promise<boolean> {
     return this.userService.isNicknameDuplicated({ nickname });
   }
 }
