@@ -38,7 +38,8 @@ export class UserController {
     summary: '닉네임 중복 체크 API',
     description: '사용 불가능한 닉네임일 경우 true, 사용 가능한 닉네임일 경우 false 를 반환한다.',
   })
-  isNicknameDuplicated(@Query() { nickname }: nicknameCheckQueryDto): Promise<boolean> {
+  isNicknameDuplicated(@Query() query: nicknameCheckQueryDto): Promise<boolean> {
+    const { nickname } = query;
     return this.userService.isNicknameDuplicated({ nickname });
   }
 }
