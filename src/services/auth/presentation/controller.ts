@@ -6,7 +6,7 @@ import { getConfig } from '../../../config';
 import { AuthService } from '../application/service';
 import { OauthBodyDto, OauthParamDto, OauthResponseDto } from '../dto';
 
-const oauthConfig = getConfig('/oauth');
+const OAUTH_CONFIG = getConfig('/oauth');
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -24,9 +24,9 @@ export class AuthController {
           'https://oauth2.googleapis.com/token',
           {
             grant_type: 'authorization_code',
-            client_id: oauthConfig.google.clientId,
-            client_secret: oauthConfig.google.clientSecret,
-            redirect_uri: oauthConfig.google.redirectUri,
+            client_id: OAUTH_CONFIG.google.clientId,
+            client_secret: OAUTH_CONFIG.google.clientSecret,
+            redirect_uri: OAUTH_CONFIG.google.redirectUri,
             code: body.code,
           },
           { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
@@ -46,8 +46,8 @@ export class AuthController {
         .post(
           'https://github.com/login/oauth/access_token',
           {
-            client_id: oauthConfig.github.clientId,
-            client_secret: oauthConfig.github.clientSecret,
+            client_id: OAUTH_CONFIG.github.clientId,
+            client_secret: OAUTH_CONFIG.github.clientSecret,
             code: body.code,
           },
           {
@@ -72,9 +72,9 @@ export class AuthController {
           'https://kauth.kakao.com/oauth/token',
           {
             grant_type: 'authorization_code',
-            client_id: oauthConfig.kakao.clientId,
-            client_secret: oauthConfig.kakao.clientSecret,
-            redirect_uri: oauthConfig.kakao.redirectUri,
+            client_id: OAUTH_CONFIG.kakao.clientId,
+            client_secret: OAUTH_CONFIG.kakao.clientSecret,
+            redirect_uri: OAUTH_CONFIG.kakao.redirectUri,
             code: body.code,
           },
           { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },

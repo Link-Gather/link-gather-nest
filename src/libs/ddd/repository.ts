@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { EntityManager, FindManyOptions, In, ObjectLiteral, ObjectType } from 'typeorm';
+import { EntityManager, EntityNotFoundError, FindManyOptions, In, ObjectLiteral, ObjectType } from 'typeorm';
 import {
   convertOptions,
   DuplicateEntityError,
@@ -65,6 +65,14 @@ export abstract class Repository<T extends ObjectLiteral, ID> {
 
   public async countAll(spec: Specification<T>): Promise<number> {
     return this.getManager().count<T>(this.entityClass, spec.where as FindManyOptions<T>);
+  }
+
+  public async findOneOrFail(id: ID): Promise<T> {
+    const [entity] = await this.findByIds([id]);
+    if (!entity) {
+      throw new EntityNotFoundError(this.entityClass, id);
+    }
+    return entity;
   }
 
   /**
