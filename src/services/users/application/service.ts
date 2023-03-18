@@ -1,17 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 import { UserRepository } from '../infrastructure/repository';
 import { JobType, User } from '../domain/model';
 import { Transactional } from '../../../libs/orm/transactional';
-import type { SignUpBodyDto } from '../dto';
-import { unauthorized } from '../../../libs/exception';
+import type { SignInBodyDto, SignUpBodyDto } from '../dto';
+import { badRequest, unauthorized } from '../../../libs/exception';
 import { getConfig } from '../../../config';
 
 const SALT_ROUNDS = getConfig('/saltRounds');
 
 @Injectable()
 export class UserService {
-  constructor(private userRepository: UserRepository) {}
+  constructor(private userRepository: UserRepository, private jwtService: JwtService) {}
 
   @Transactional()
   async signUp(args: SignUpBodyDto) {
@@ -33,5 +34,35 @@ export class UserService {
 
   async list({ email, profiles }: { email?: string; profiles?: { jobs: JobType[] } }) {
     return this.userRepository.find({ email, profiles });
+  }
+
+  @Transactional()
+  async signIn(args: SignInBodyDto) {
+    const [user] = await this.userRepository.find({ email: args.email });
+    if (!user) {
+      throw badRequest(`이메일(${args.email})이 일치하지 않습니다.`, {
+        errorMessage: '이메일이나 패스워드가 일치하지 않습니다.',
+      });
+    }
+    await user.validatePassword(args.password);
+
+    const accessToken = this.jwtService.sign(
+      { id: user.id },
+      {
+        expiresIn: '1h',
+      },
+    );
+
+    const refreshToken = this.jwtService.sign(
+      {},
+      {
+        expiresIn: '30d',
+      },
+    );
+
+    user.update({ refreshToken });
+    await this.userRepository.save([user]);
+
+    return { accessToken, refreshToken, user };
   }
 }
