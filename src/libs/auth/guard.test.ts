@@ -6,7 +6,7 @@ import { EntityNotFoundError } from 'typeorm';
 import { AuthService } from '../../services/auth/application/service';
 import { UserRepository } from '../../services/users/infrastructure/repository';
 import { AuthGuard } from './guard';
-import { plainToClass } from '../../test';
+import { plainToClass } from '../test';
 import { Profile, User } from '../../services/users/domain/model';
 import { dataSource } from '../orm';
 import { unauthorized } from '../exception';

@@ -5,7 +5,7 @@ import { UserRepository } from '../infrastructure/repository';
 import { UserService } from './service';
 import { dataSource } from '../../../libs/orm';
 import { Profile, User } from '../domain/model';
-import { plainToClass } from '../../../test';
+import { plainToClass } from '../../../libs/test';
 
 jest.mock('nanoid');
 
