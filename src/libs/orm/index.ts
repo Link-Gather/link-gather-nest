@@ -2,9 +2,9 @@ import { DataSource, FindOperator, In as TypeOrmIn } from 'typeorm';
 import * as _ from 'lodash';
 import { getConfig } from '../../config';
 
-const ormConfig = getConfig('/ormConfig');
+const ORM_CONFIG = getConfig('/ormConfig');
 
-export const dataSource = new DataSource(ormConfig);
+export const dataSource = new DataSource(ORM_CONFIG);
 
 /**
  * Array는 or 조건

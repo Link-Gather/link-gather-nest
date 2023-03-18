@@ -34,4 +34,10 @@ export class UserService {
   async list({ email, profiles }: { email?: string; profiles?: { jobs: JobType[] } }) {
     return this.userRepository.find({ email, profiles });
   }
+
+  async isNicknameDuplicated({ nickname }: { nickname: string }) {
+    const [user] = await this.userRepository.find({ nickname });
+
+    return !!user;
+  }
 }

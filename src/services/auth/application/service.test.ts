@@ -5,10 +5,14 @@ import { AuthService } from './service';
 import { dataSource } from '../../../libs/orm';
 import { Profile, User } from '../../users/domain/model';
 import { plainToClass } from '../../../test';
+import { badRequest } from '../../../libs/exception';
 
 const mockJwtService = {
   sign: jest.fn(() => 'TOKEN'),
   verify: jest.fn(() => 'verify'),
+  verifyAsync: jest.fn(() => {
+    return { exp: 1613641614 };
+  }),
 };
 
 describe('AuthService 테스트', () => {
@@ -33,6 +37,7 @@ describe('AuthService 테스트', () => {
     userRepository = module.get<UserRepository>(UserRepository);
   });
 
+  afterEach(() => jest.clearAllMocks());
   describe('login 테스트', () => {
     test('email 과 일치하는 유저가 없으면 해당 email 을 그대로 리턴한다.', async () => {
       jest.spyOn(userRepository, 'find').mockResolvedValueOnce([]);
@@ -87,6 +92,50 @@ describe('AuthService 테스트', () => {
         accessToken: 'TOKEN',
         refreshToken: 'TOKEN',
       });
+    });
+  });
+
+  describe('revise 테스트', () => {
+    const user = plainToClass(User, {
+      id: 'userId',
+      email: 'test@test.com',
+      password: 'password',
+      nickname: 'arthur',
+      profileImage: '',
+      provider: 'link-gather',
+      introduction: 'hello, my name is arthur',
+      career: 1,
+      job: 'Developer',
+      stacks: ['node.js', 'nest.js', 'koa.js', 'react.js', 'javascript', 'typescript'],
+      urls: ['https://github.com/changchanghwang'],
+      profiles: [
+        plainToClass(Profile, {
+          id: 'profileId',
+          introduction: 'hello, my name is arthur',
+          career: 1,
+          job: 'Developer',
+          stacks: ['node.js', 'nest.js', 'koa.js', 'react.js', 'javascript', 'typescript'],
+          urls: ['https://github.com/changchanghwang'],
+        }),
+      ],
+    });
+    test('token이 들어오면 유저의 refreshToken을 갱신해야한다.', async () => {
+      jest.spyOn(userRepository, 'find').mockResolvedValue([user]);
+      jest.spyOn(userRepository, 'save');
+      await authService.revise('oldRefreshToken');
+
+      expect(userRepository.save).toBeCalledTimes(1);
+      expect(userRepository.save).toBeCalledWith([{ ...user, refreshToken: 'TOKEN' }]);
+    });
+    test('token에 해당하는 유저가 없다면 에러를 던져야한다.', async () => {
+      jest.spyOn(userRepository, 'find').mockResolvedValue([]);
+
+      expect.assertions(1);
+      try {
+        await authService.revise('oldRefreshToken');
+      } catch (err) {
+        expect(err).toEqual(badRequest('유저를 찾을 수 없습니다.'));
+      }
     });
   });
 });

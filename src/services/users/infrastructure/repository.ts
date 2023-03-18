@@ -9,7 +9,13 @@ export class UserRepository extends Repository<User, User['id']> {
   entityClass = User;
 
   async find(
-    conditions: { email?: string; profiles?: { jobs?: JobType[] }; provider?: ProviderType },
+    conditions: {
+      email?: string;
+      profiles?: { jobs?: JobType[] };
+      provider?: ProviderType;
+      refreshToken?: string;
+      nickname?: string;
+    },
     options?: PaginationOption,
     order?: FindOrder,
   ): Promise<User[]> {
@@ -17,10 +23,12 @@ export class UserRepository extends Repository<User, User['id']> {
       where: {
         ...stripUndefined({
           email: conditions.email,
+          nickname: conditions.nickname,
           profiles: {
             job: In(conditions.profiles?.jobs),
           },
           provider: conditions.provider,
+          refreshToken: conditions.refreshToken,
         }),
       },
       ...convertOptions(options),
