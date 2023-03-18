@@ -32,9 +32,4 @@ export class UserController {
     const profiles = users.flatMap((user) => user.profiles);
     return profiles;
   }
-
-  @Get('/')
-  async get() {
-    return this.userService.list({});
-  }
 }
