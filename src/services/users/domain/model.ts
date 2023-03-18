@@ -62,6 +62,7 @@ export class User extends Aggregate {
   urls!: string[];
 
   @Column({ nullable: true })
+  @Exclude()
   refreshToken?: string;
 
   @Column({ nullable: true })
