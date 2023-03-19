@@ -1,6 +1,19 @@
-import { IsArray, IsEmail, IsIn, IsNotEmpty, IsNumber, IsString, Min, MinLength } from 'class-validator';
+import {
+  IsArray,
+  IsEmail,
+  IsIn,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  Matches,
+  MaxLength,
+  Min,
+  MinLength,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { jobType, JobType, ProviderType, providerType } from '../../domain/model';
+
+const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*\W)(?!.*\s)$/;
 
 export class SignUpBodyDto {
   @ApiProperty({ example: 'test@test.com', description: '이메일', required: true })
@@ -8,10 +21,15 @@ export class SignUpBodyDto {
   @IsEmail()
   email!: string;
 
-  @ApiProperty({ example: 'asdf1234!@', description: '패스워드', required: true })
+  @ApiProperty({
+    example: 'asdf1234!@',
+    description: '패스워드(8~16자리+문자+숫자+특수문자), sns 로 가입할 경우 optional',
+  })
   @IsNotEmpty()
   @IsString()
-  @MinLength(8, { message: 'Password required at least 8' })
+  @Matches(passwordRegex, { message: 'Passwords must contain numbers, special characters and letters.' })
+  @MinLength(8, { message: 'Password required at least 8.' })
+  @MaxLength(16, { message: 'Password required up to 16.' })
   password!: string;
 
   @ApiProperty({ example: 'nickname', description: '닉네임', required: true })
