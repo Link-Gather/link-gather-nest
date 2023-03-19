@@ -7,6 +7,7 @@ import { UserService } from './service';
 import { dataSource } from '../../../libs/orm';
 import { Profile, User } from '../domain/model';
 import { plainToClass } from '../../../libs/test';
+import { unauthorized } from '../../../libs/exception';
 
 jest.mock('nanoid');
 
@@ -116,8 +117,10 @@ describe('UserService 테스트', () => {
 
       jest.spyOn(userRepository, 'find').mockResolvedValue([user]);
 
-      expect(() =>
-        userService.signUp({
+      expect.assertions(1);
+
+      try {
+        await userService.signUp({
           email: 'email@test.com',
           password: 'testpassword1234',
           nickname: 'windy',
@@ -128,8 +131,10 @@ describe('UserService 테스트', () => {
           stacks: ['node.js', 'typescript', 'react.js'],
           urls: ['https://github.com/changchanghwang'],
           profileImage: 'image url',
-        }),
-      ).rejects.toThrow(new Error('이미 존재하는 이메일입니다.'));
+        });
+      } catch (err) {
+        expect(err).toEqual(unauthorized('이미 존재하는 이메일입니다.'));
+      }
     });
   });
 
