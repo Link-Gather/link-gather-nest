@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { nanoid } from 'nanoid';
 import { UserRepository } from '../infrastructure/repository';
 import { JobType, User } from '../domain/model';
 import { Transactional } from '../../../libs/orm/transactional';
@@ -23,7 +24,7 @@ export class UserService {
     }
 
     const salt = await bcrypt.genSalt(SALT_ROUNDS);
-    const password = await bcrypt.hash(args.password, salt);
+    const password = await bcrypt.hash(args.password || nanoid(10), salt);
 
     const user = new User({
       ...args,

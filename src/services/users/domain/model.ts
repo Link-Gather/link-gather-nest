@@ -76,7 +76,6 @@ export class User extends Aggregate {
     if (args) {
       this.id = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_', 10)();
       this.email = args.email;
-      // FIXME: 소셜일 경우 프론트에서 password 를 채워서 주나? 안채워주나? 안채워주면 optional 이어야 하니까 채워주나?
       this.password = args.password;
       this.nickname = args.nickname;
       // TODO: 이미지들 미리 s3에 저장하고 image url 로 변환시켜주는 method 를 만들어서 프론트에 반환하도록 한다.

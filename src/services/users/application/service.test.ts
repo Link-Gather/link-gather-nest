@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { customAlphabet } from 'nanoid';
+import { customAlphabet, nanoid } from 'nanoid';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { UserRepository } from '../infrastructure/repository';
@@ -32,7 +32,9 @@ describe('UserService 테스트', () => {
 
   beforeEach(() => {
     const mockedCustomAlphabet = customAlphabet as jest.Mock<() => string>;
+    const mockedNanoid = nanoid as jest.Mock<string>;
     mockedCustomAlphabet.mockImplementation(() => () => 'nanoid');
+    mockedNanoid.mockImplementation(() => 'IRFa-VaY2b');
   });
 
   afterEach(() => {
@@ -88,6 +90,55 @@ describe('UserService 테스트', () => {
 
       expect(userRepositoryFindSpy).toHaveBeenCalled();
       expect(bcryptHashSpy).toHaveBeenCalledWith('qhupr22qp3ir23qrn2-23rnj1p', '$2b$10$5CW3ftestSaltJ9wpFAShe');
+    });
+
+    test('SNS 로 가입한 유저이면 nanoId 로 비밀번호를 새로 만들어준다.', async () => {
+      const userRepositorySaveSpy = jest.spyOn(userRepository, 'save').mockResolvedValue();
+      const userRepositoryFindSpy = jest.spyOn(userRepository, 'find').mockResolvedValue([]);
+      jest.spyOn(bcrypt, 'genSalt').mockImplementation(() => Promise.resolve('$2b$10$5CW3ftestSaltJ9wpFAShe'));
+      const bcryptHashSpy = jest.spyOn(bcrypt, 'hash').mockImplementation(() => Promise.resolve('encrypt password'));
+
+      await userService.signUp({
+        email: 'email@test.com',
+        nickname: 'github user',
+        provider: 'github',
+        career: 1,
+        job: 'Frontend Developer',
+        introduction: 'sns user',
+        stacks: ['typescript', 'react.js'],
+        urls: ['https://github.com/'],
+        profileImage: 'profile image',
+      });
+
+      expect(userRepositorySaveSpy.mock.calls).toHaveLength(1);
+      expect(userRepositorySaveSpy.mock.calls[0][0]).toEqual([
+        {
+          career: 1,
+          email: 'email@test.com',
+          id: 'nanoid',
+          introduction: 'sns user',
+          job: 'Frontend Developer',
+          nickname: 'github user',
+          password: 'encrypt password',
+          profileImage: 'profile image',
+          provider: 'github',
+          profiles: [
+            {
+              career: 1,
+              id: 'nanoid',
+              introduction: 'sns user',
+              job: 'Frontend Developer',
+              stacks: ['typescript', 'react.js'],
+              urls: ['https://github.com/'],
+            },
+          ],
+          stacks: ['typescript', 'react.js'],
+          urls: ['https://github.com/'],
+        },
+      ]);
+
+      expect(userRepositoryFindSpy).toHaveBeenCalled();
+      expect(bcryptHashSpy).toHaveBeenCalledWith('IRFa-VaY2b', '$2b$10$5CW3ftestSaltJ9wpFAShe');
     });
 
     test('이미 존재하는 이메일이면 에러를 던진다.', async () => {

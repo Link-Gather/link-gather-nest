@@ -30,7 +30,7 @@ export class SignUpBodyDto {
   @Matches(passwordRegex, { message: 'Passwords must contain numbers, special characters and letters.' })
   @MinLength(8, { message: 'Password required at least 8.' })
   @MaxLength(16, { message: 'Password required up to 16.' })
-  password!: string;
+  password?: string;
 
   @ApiProperty({ example: 'nickname', description: '닉네임', required: true })
   @IsNotEmpty()
