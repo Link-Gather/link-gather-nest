@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { customAlphabet, nanoid } from 'nanoid';
+import { nanoid } from 'nanoid';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { UserRepository } from '../infrastructure/repository';
@@ -31,9 +31,7 @@ describe('UserService 테스트', () => {
   });
 
   beforeEach(() => {
-    const mockedCustomAlphabet = customAlphabet as jest.Mock<() => string>;
     const mockedNanoid = nanoid as jest.Mock<string>;
-    mockedCustomAlphabet.mockImplementation(() => () => 'nanoid');
     mockedNanoid.mockImplementation(() => 'IRFa-VaY2b');
   });
 
@@ -66,7 +64,7 @@ describe('UserService 테스트', () => {
         {
           career: 1,
           email: 'email@test.com',
-          id: 'nanoid',
+          id: 'IRFa-VaY2b',
           introduction: 'link-gather creator',
           job: 'Backend Developer',
           nickname: 'arthur',
@@ -76,7 +74,7 @@ describe('UserService 테스트', () => {
           profiles: [
             {
               career: 1,
-              id: 'nanoid',
+              id: 'IRFa-VaY2b',
               introduction: 'link-gather creator',
               job: 'Backend Developer',
               stacks: ['node.js', 'typescript', 'react.js'],
@@ -115,7 +113,7 @@ describe('UserService 테스트', () => {
         {
           career: 1,
           email: 'email@test.com',
-          id: 'nanoid',
+          id: 'IRFa-VaY2b',
           introduction: 'sns user',
           job: 'Frontend Developer',
           nickname: 'github user',
@@ -125,7 +123,7 @@ describe('UserService 테스트', () => {
           profiles: [
             {
               career: 1,
-              id: 'nanoid',
+              id: 'IRFa-VaY2b',
               introduction: 'sns user',
               job: 'Frontend Developer',
               stacks: ['typescript', 'react.js'],
@@ -145,7 +143,7 @@ describe('UserService 테스트', () => {
       const user = plainToClass(User, {
         career: 1,
         email: 'email@test.com',
-        id: 'nanoid',
+        id: 'IRFa-VaY2b',
         introduction: 'link-gather creator',
         job: 'Backend Developer',
         nickname: 'arthur',
@@ -155,7 +153,7 @@ describe('UserService 테스트', () => {
         profiles: [
           plainToClass(Profile, {
             career: 1,
-            id: 'nanoid',
+            id: 'IRFa-VaY2b',
             introduction: 'link-gather creator',
             job: 'Backend Developer',
             stacks: ['node.js', 'typescript', 'react.js'],
@@ -193,7 +191,7 @@ describe('UserService 테스트', () => {
     const user = plainToClass(User, {
       career: 1,
       email: 'email@test.com',
-      id: 'nanoid',
+      id: 'IRFa-VaY2b',
       introduction: 'link-gather creator',
       job: 'Backend Developer',
       nickname: 'arthur',
@@ -203,7 +201,7 @@ describe('UserService 테스트', () => {
       profiles: [
         plainToClass(Profile, {
           career: 1,
-          id: 'nanoid',
+          id: 'IRFa-VaY2b',
           introduction: 'link-gather creator',
           job: 'Backend Developer',
           stacks: ['node.js', 'typescript', 'react.js'],
@@ -234,7 +232,7 @@ describe('UserService 테스트', () => {
       const user = plainToClass(User, {
         career: 1,
         email: 'email@test.com',
-        id: 'nanoid',
+        id: 'IRFa-VaY2b',
         introduction: 'link-gather creator',
         job: 'Backend Developer',
         nickname: 'windy',
@@ -244,7 +242,7 @@ describe('UserService 테스트', () => {
         profiles: [
           plainToClass(Profile, {
             career: 1,
-            id: 'nanoid',
+            id: 'IRFa-VaY2b',
             introduction: 'link-gather creator',
             job: 'Backend Developer',
             stacks: ['node.js', 'typescript', 'react.js'],

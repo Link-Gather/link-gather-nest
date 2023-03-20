@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
-import { customAlphabet } from 'nanoid';
+import { nanoid } from 'nanoid';
 import { Exclude } from 'class-transformer';
 import { Aggregate } from '../../../libs/ddd/aggregate';
 import { compareHash } from '../../../libs/password';
@@ -74,7 +74,7 @@ export class User extends Aggregate {
   constructor(args: CtorType) {
     super();
     if (args) {
-      this.id = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_', 10)();
+      this.id = nanoid(10);
       this.email = args.email;
       this.password = args.password;
       this.nickname = args.nickname;
@@ -138,7 +138,7 @@ export class Profile {
 
   constructor(args: { career: number; job: JobType; introduction: string; urls?: string[]; stacks: string[] }) {
     if (args) {
-      this.id = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_', 10)();
+      this.id = nanoid(10);
       this.career = args.career;
       this.job = args.job;
       this.introduction = args.introduction;
