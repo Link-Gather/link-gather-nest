@@ -20,6 +20,9 @@ const doc = {
       redirectUri: { $env: 'KAKAO_REDIRECT_URI' },
     },
   },
+  mail: {
+    pass: { $env: 'MAIL_AUTH_PASS' },
+  },
   ormConfig,
 };
 

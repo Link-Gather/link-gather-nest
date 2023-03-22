@@ -3,8 +3,15 @@ import { Body, ClassSerializerInterceptor, Controller, Injectable, Param, Post, 
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import axios from 'axios';
 import { getConfig } from '../../../config';
+import { VerificationService } from '../../verifications/application/service';
 import { AuthService } from '../application/service';
-import { OauthBodyDto, OauthParamDto, OauthResponseDto } from '../dto';
+import {
+  OauthBodyDto,
+  OauthParamDto,
+  OauthResponseDto,
+  EmailVerificationBodyDto,
+  EmailVerificationConfirmBodyDto,
+} from '../dto';
 
 const oauthConfig = getConfig('/oauth');
 
@@ -13,10 +20,10 @@ const oauthConfig = getConfig('/oauth');
 @Injectable()
 @UseInterceptors(ClassSerializerInterceptor)
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService, private readonly verificationService: VerificationService) {}
 
   @Post('/oauth/:provider')
-  @ApiOperation({ summary: 'oauth', description: 'oauth 로그인 및 회원가입 API' })
+  @ApiOperation({ summary: 'oauth', description: 'oauth 로그인' })
   async oauth(@Param() param: OauthParamDto, @Body() body: OauthBodyDto): Promise<OauthResponseDto> {
     if (param.provider === 'google') {
       const { access_token } = await axios
@@ -92,5 +99,19 @@ export class AuthController {
 
     // TODO: 임시 리턴
     return { email: '??', nickname: '??', accessToken: '??', refreshToken: '??' };
+  }
+
+  @Post('/email-verification')
+  @ApiOperation({ summary: 'email 인증 코드 발송', description: 'email 인증' })
+  async verifyEmail(@Body() body: EmailVerificationBodyDto) {
+    const { email } = body;
+    await this.verificationService.verifyEmail(email);
+  }
+
+  @Post('/email-verification/confirm')
+  @ApiOperation({ summary: 'email 인증 코드 확인', description: '인증이 실패하면 error는 던진다.' })
+  async verifyEmailCode(@Body() body: EmailVerificationConfirmBodyDto) {
+    const { code, email } = body;
+    await this.verificationService.confirm({ code, email });
   }
 }

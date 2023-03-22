@@ -120,21 +120,28 @@ export type PaginationOption = {
   limit?: number;
 };
 
+export type FindOption = { lock: { mode: 'pessimistic_write' } };
+
 /**
  * @param options
  */
-export const convertOptions = (options?: PaginationOption) => {
+export const convertOptions = (options?: PaginationOption & Partial<FindOption>) => {
   let skip;
   let take;
+  let lock;
   if (options && options.page) {
     skip = ((options.page || 1) - 1) * (options.limit || 1);
   }
   if (options && options.limit) {
     take = options.limit;
   }
+  if (options && options.lock) {
+    lock = options.lock;
+  }
   return {
     skip,
     take,
+    lock,
   };
 };
 
