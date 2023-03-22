@@ -13,3 +13,5 @@ export function stripUndefined(obj: { [key: string]: any }) {
   }
   return stripped;
 }
+
+export const isProd = process.env.NODE_ENV === 'production';
