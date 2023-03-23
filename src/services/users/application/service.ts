@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { nanoid } from 'nanoid';
 import { UserRepository } from '../infrastructure/repository';
 import { JobType, User } from '../domain/model';
 import { Transactional } from '../../../libs/orm/transactional';
@@ -22,8 +23,8 @@ export class UserService {
       throw unauthorized('이미 존재하는 이메일입니다.');
     }
 
-    const salt = await bcrypt.genSalt(SALT_ROUNDS);
-    const password = await bcrypt.hash(args.password, salt);
+    const salt = await bcrypt.genSalt(Number(SALT_ROUNDS));
+    const password = await bcrypt.hash(args.password || nanoid(10), salt);
 
     const user = new User({
       ...args,

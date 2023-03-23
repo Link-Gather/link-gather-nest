@@ -4,7 +4,7 @@ import { UserRepository } from '../../users/infrastructure/repository';
 import { AuthService } from './service';
 import { dataSource } from '../../../libs/orm';
 import { Profile, User } from '../../users/domain/model';
-import { plainToClass } from '../../../test';
+import { plainToClass } from '../../../libs/test';
 import { badRequest } from '../../../libs/exception';
 
 const mockJwtService = {

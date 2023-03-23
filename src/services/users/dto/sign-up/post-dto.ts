@@ -1,6 +1,20 @@
-import { IsArray, IsEmail, IsIn, IsNotEmpty, IsNumber, IsString, Min, MinLength } from 'class-validator';
+import {
+  IsArray,
+  IsEmail,
+  IsIn,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  Matches,
+  MaxLength,
+  Min,
+  MinLength,
+  ValidateIf,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { jobType, JobType, ProviderType, providerType } from '../../domain/model';
+
+const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*\W)(?!.*\s)$/;
 
 export class SignUpBodyDto {
   @ApiProperty({ example: 'test@test.com', description: '이메일', required: true })
@@ -8,11 +22,17 @@ export class SignUpBodyDto {
   @IsEmail()
   email!: string;
 
-  @ApiProperty({ example: 'asdf1234!@', description: '패스워드', required: true })
+  @ApiProperty({
+    example: 'asdf1234!@',
+    description: '패스워드(8~16자리+문자+숫자+특수문자), sns 로 가입할 경우 optional',
+  })
   @IsNotEmpty()
   @IsString()
-  @MinLength(8, { message: 'Password required at least 8' })
-  password!: string;
+  @Matches(passwordRegex, { message: 'Passwords must contain numbers, special characters and letters.' })
+  @MinLength(8, { message: 'Password required at least 8.' })
+  @MaxLength(16, { message: 'Password required up to 16.' })
+  @ValidateIf((o) => o.provider === 'link-gather')
+  password?: string;
 
   @ApiProperty({ example: 'nickname', description: '닉네임', required: true })
   @IsNotEmpty()
@@ -55,7 +75,7 @@ export class SignUpBodyDto {
   @IsString({ each: true })
   urls?: string[];
 
-  @ApiProperty({ example: 'url', description: '프로필 사진 url', required: true })
+  @ApiProperty({ example: '프로필이미지1', description: '특정 프로필 이미지의 고유 값', required: true })
   @IsNotEmpty()
   @IsString()
   profileImage!: string;

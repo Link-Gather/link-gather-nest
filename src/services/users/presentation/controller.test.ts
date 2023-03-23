@@ -6,7 +6,7 @@ import { UserService } from '../application/service';
 import { UserController } from './controller';
 import { UserRepository } from '../infrastructure/repository';
 import { dataSource } from '../../../libs/orm';
-import { plainToClass } from '../../../test';
+import { plainToClass } from '../../../libs/test';
 import { Profile, User } from '../domain/model';
 
 jest.mock('../application/service');
@@ -31,7 +31,7 @@ describe('UserController test', () => {
   const user = plainToClass(User, {
     career: 1,
     email: 'email@test.com',
-    id: 'nanoid',
+    id: 'IRFa-VaY2b',
     introduction: 'link-gather creator',
     job: 'Backend Developer',
     nickname: 'arthur',
@@ -41,7 +41,7 @@ describe('UserController test', () => {
     profiles: [
       plainToClass(Profile, {
         career: 1,
-        id: 'nanoid',
+        id: 'IRFa-VaY2b',
         introduction: 'link-gather creator',
         job: 'Backend Developer',
         stacks: ['node.js', 'typescript', 'react.js'],
