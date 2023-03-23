@@ -7,13 +7,13 @@ import { VerificationService } from '../verifications/application/service';
 import { AuthService } from './application/service';
 import { AuthController } from './presentation/controller';
 
-const jwtSecret = getConfig('/jwtSecret');
+const JWT_SECRET = getConfig('/jwtSecret');
 
 @Module({
   imports: [
     VerificationModule,
     JwtModule.register({
-      secret: jwtSecret,
+      secret: JWT_SECRET,
     }),
   ],
   controllers: [AuthController],
