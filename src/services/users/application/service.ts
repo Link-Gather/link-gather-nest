@@ -23,7 +23,7 @@ export class UserService {
       throw unauthorized('이미 존재하는 이메일입니다.');
     }
 
-    const salt = await bcrypt.genSalt(SALT_ROUNDS);
+    const salt = await bcrypt.genSalt(Number(SALT_ROUNDS));
     const password = await bcrypt.hash(args.password || nanoid(10), salt);
 
     const user = new User({

@@ -9,6 +9,7 @@ import {
   MaxLength,
   Min,
   MinLength,
+  ValidateIf,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { jobType, JobType, ProviderType, providerType } from '../../domain/model';
@@ -30,6 +31,7 @@ export class SignUpBodyDto {
   @Matches(passwordRegex, { message: 'Passwords must contain numbers, special characters and letters.' })
   @MinLength(8, { message: 'Password required at least 8.' })
   @MaxLength(16, { message: 'Password required up to 16.' })
+  @ValidateIf((o) => o.provider === 'link-gather')
   password?: string;
 
   @ApiProperty({ example: 'nickname', description: '닉네임', required: true })
