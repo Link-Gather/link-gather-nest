@@ -7,7 +7,7 @@ import { badRequest, forbidden } from '../../../libs/exception';
 @Entity()
 export class Verification extends Aggregate {
   @PrimaryGeneratedColumn()
-  id!: string;
+  id!: number;
 
   @Column()
   email!: string;

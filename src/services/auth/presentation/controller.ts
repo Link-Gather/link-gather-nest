@@ -110,7 +110,7 @@ export class AuthController {
 
   @Post('/email-verification/confirm')
   @ApiOperation({ summary: 'email 인증 코드 확인', description: '인증이 실패하면 error는 던진다.' })
-  async verifyEmailCode(@Body() body: EmailVerificationConfirmBodyDto) {
+  async verifyEmailConfirm(@Body() body: EmailVerificationConfirmBodyDto) {
     const { code, email } = body;
     await this.verificationService.confirm({ code, email });
   }
