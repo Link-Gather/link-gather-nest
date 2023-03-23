@@ -9,6 +9,7 @@ import { dataSource } from '../../../libs/orm';
 import { Profile, User } from '../domain/model';
 
 jest.mock('nanoid');
+
 describe('UserService 테스트', () => {
   let userService: UserService;
   let userRepository: UserRepository;
