@@ -9,7 +9,6 @@ import { dataSource } from '../../../libs/orm';
 import { Profile, User } from '../domain/model';
 
 jest.mock('nanoid');
-
 describe('UserService 테스트', () => {
   let userService: UserService;
   let userRepository: UserRepository;
@@ -172,6 +171,49 @@ describe('UserService 테스트', () => {
       expect(userRepositorySaveSpy.mock.calls[0][0]).toEqual(
         expect.arrayContaining([expect.objectContaining({ refreshToken: 'refreshToken' })]),
       );
+    });
+  });
+
+  describe('nickname duplicated check 테스트', () => {
+    test('이미 사용중인 닉네임이면 true 를 반환한다.', async () => {
+      const user = plainToClass(User, {
+        career: 1,
+        email: 'email@test.com',
+        id: 'nanoid',
+        introduction: 'link-gather creator',
+        job: 'Backend Developer',
+        nickname: 'windy',
+        password: expect.not.stringMatching('qhupr22qp3ir23qrn2-23rnj1p'),
+        profileImage: 'image url',
+        provider: 'link-gather',
+        profiles: [
+          plainToClass(Profile, {
+            career: 1,
+            id: 'nanoid',
+            introduction: 'link-gather creator',
+            job: 'Backend Developer',
+            stacks: ['node.js', 'typescript', 'react.js'],
+            urls: ['https://github.com/changchanghwang'],
+          }),
+        ],
+        stacks: ['node.js', 'typescript', 'react.js'],
+        urls: ['https://github.com/changchanghwang'],
+      });
+      const userRepositoryFindSpy = jest.spyOn(userRepository, 'find').mockResolvedValue([user]);
+
+      const result = await userService.isNicknameDuplicated({ nickname: 'windy' });
+
+      expect(userRepositoryFindSpy).toHaveBeenCalledWith({ nickname: 'windy' });
+      expect(result).toBe(true);
+    });
+
+    test('사용 가능한 닉네임이면 false 를 반환한다.', async () => {
+      const userRepositoryFindSpy = jest.spyOn(userRepository, 'find').mockResolvedValue([]);
+
+      const result = await userService.isNicknameDuplicated({ nickname: 'windy' });
+
+      expect(userRepositoryFindSpy).toHaveBeenCalledWith({ nickname: 'windy' });
+      expect(result).toBe(false);
     });
   });
 });

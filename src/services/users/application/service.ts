@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UserRepository } from '../infrastructure/repository';
 import { JobType, User } from '../domain/model';
 import { Transactional } from '../../../libs/orm/transactional';
-import type { SignInBodyDto, SignUpBodyDto } from '../dto';
+import { SignInBodyDto, SignUpBodyDto } from '../dto';
 import { badRequest, unauthorized } from '../../../libs/exception';
 import { getConfig } from '../../../config';
 
@@ -64,5 +64,11 @@ export class UserService {
     await this.userRepository.save([user]);
 
     return { accessToken, refreshToken, user };
+  }
+
+  async isNicknameDuplicated({ nickname }: { nickname: string }) {
+    const [user] = await this.userRepository.find({ nickname });
+
+    return !!user;
   }
 }
