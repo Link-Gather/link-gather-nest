@@ -11,10 +11,10 @@ export class UserRepository extends Repository<User, User['id']> {
   async find(
     conditions: {
       email?: string;
-      profiles?: { jobs?: JobType[] };
+      nickname?: string;
       refreshToken?: string;
       provider?: ProviderType;
-      nickname?: string;
+      profiles?: { jobs?: JobType[] };
     },
     options?: PaginationOption,
     order?: FindOrder,

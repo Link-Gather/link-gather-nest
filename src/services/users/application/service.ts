@@ -5,7 +5,7 @@ import { nanoid } from 'nanoid';
 import { UserRepository } from '../infrastructure/repository';
 import { JobType, User } from '../domain/model';
 import { Transactional } from '../../../libs/orm/transactional';
-import type { SignInBodyDto, SignUpBodyDto } from '../dto';
+import { SignInBodyDto, SignUpBodyDto } from '../dto';
 import { badRequest, unauthorized } from '../../../libs/exception';
 import { getConfig } from '../../../config';
 
