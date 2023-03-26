@@ -1,11 +1,11 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
-import { customAlphabet } from 'nanoid';
+import { nanoid } from 'nanoid';
 import { Aggregate } from '../../../libs/ddd/aggregate';
 
 export const statusType = <const>['recruiting', 'progressing', 'finish', 'close'];
-export type StatusType = typeof statusType[number];
+export type StatusType = (typeof statusType)[number];
 export const purposeType = <const>['For Improvement', 'For Practice', 'For Fun'];
-export type PurposeType = typeof purposeType[number];
+export type PurposeType = (typeof purposeType)[number];
 
 type RecruitMember = {
   frontendDeveloper: number;
@@ -61,7 +61,7 @@ export class Project extends Aggregate {
   constructor(args: CtorType) {
     super();
     if (args) {
-      this.id = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_', 10)();
+      this.id = nanoid(10);
       this.title = args.title;
       this.description = args.description;
       this.purpose = args.purpose;

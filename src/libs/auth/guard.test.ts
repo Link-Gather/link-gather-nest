@@ -6,7 +6,7 @@ import { EntityNotFoundError } from 'typeorm';
 import { AuthService } from '../../services/auth/application/service';
 import { UserRepository } from '../../services/users/infrastructure/repository';
 import { AuthGuard } from './guard';
-import { plainToClass } from '../../test';
+import { plainToClass } from '../test';
 import { Profile, User } from '../../services/users/domain/model';
 import { dataSource } from '../orm';
 import { unauthorized } from '../exception';
@@ -42,7 +42,7 @@ describe('auth guard test', () => {
     provider: 'link-gather',
     introduction: 'hello, my name is arthur',
     career: 1,
-    job: 'Developer',
+    job: 'Backend Developer',
     stacks: ['node.js', 'nest.js', 'koa.js', 'react.js', 'javascript', 'typescript'],
     urls: ['https://github.com/changchanghwang'],
     profiles: [
@@ -50,7 +50,7 @@ describe('auth guard test', () => {
         id: 'profileId',
         introduction: 'hello, my name is arthur',
         career: 1,
-        job: 'Developer',
+        job: 'Backend Developer',
         stacks: ['node.js', 'nest.js', 'koa.js', 'react.js', 'javascript', 'typescript'],
         urls: ['https://github.com/changchanghwang'],
       }),
