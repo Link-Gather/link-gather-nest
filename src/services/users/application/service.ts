@@ -24,7 +24,8 @@ export class UserService {
     }
 
     const salt = await bcrypt.genSalt(Number(SALT_ROUNDS));
-    const password = await bcrypt.hash(args.password || nanoid(10), salt);
+    // NOTE: provider === 'link-gather' 일 경우 args.password 는 required 이다.
+    const password = await bcrypt.hash(args.provider === 'link-gather' ? args.password! : nanoid(10), salt);
 
     const user = new User({
       ...args,
