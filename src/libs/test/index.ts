@@ -1,5 +1,5 @@
 import * as ct from 'class-transformer';
-import { NonFunctionProperties } from '../libs/types';
+import { NonFunctionProperties } from '../types';
 
 /**
  * @param classType

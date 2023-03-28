@@ -4,7 +4,7 @@ import { UserRepository } from '../../users/infrastructure/repository';
 import { AuthService } from './service';
 import { dataSource } from '../../../libs/orm';
 import { Profile, User } from '../../users/domain/model';
-import { plainToClass } from '../../../test';
+import { plainToClass } from '../../../libs/test';
 import { badRequest } from '../../../libs/exception';
 
 const mockJwtService = {
@@ -57,7 +57,7 @@ describe('AuthService 테스트', () => {
         nickname: 'windy',
         provider: 'google',
         career: 1,
-        job: 'Developer',
+        job: 'Backend Developer',
         introduction: 'Hello world!',
         stacks: ['node.js', 'typescript', 'react.js'],
         urls: ['https://github.com/yoon-bomi'],
@@ -66,7 +66,7 @@ describe('AuthService 테스트', () => {
           plainToClass(Profile, {
             id: '1',
             career: 1,
-            job: 'Developer',
+            job: 'Backend Developer',
             introduction: 'Hello world!',
             urls: ['https://github.com/yoon-bomi'],
             stacks: ['node.js', 'typescript', 'react.js'],
@@ -105,7 +105,7 @@ describe('AuthService 테스트', () => {
       provider: 'link-gather',
       introduction: 'hello, my name is arthur',
       career: 1,
-      job: 'Developer',
+      job: 'Backend Developer',
       stacks: ['node.js', 'nest.js', 'koa.js', 'react.js', 'javascript', 'typescript'],
       urls: ['https://github.com/changchanghwang'],
       profiles: [
@@ -113,7 +113,7 @@ describe('AuthService 테스트', () => {
           id: 'profileId',
           introduction: 'hello, my name is arthur',
           career: 1,
-          job: 'Developer',
+          job: 'Backend Developer',
           stacks: ['node.js', 'nest.js', 'koa.js', 'react.js', 'javascript', 'typescript'],
           urls: ['https://github.com/changchanghwang'],
         }),

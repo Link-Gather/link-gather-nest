@@ -1,4 +1,4 @@
-import { customAlphabet } from 'nanoid';
+import { nanoid } from 'nanoid';
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 import { Aggregate } from '../../../libs/ddd/aggregate';
 
@@ -25,7 +25,7 @@ export class Comment extends Aggregate {
   constructor(args: CtorType) {
     super();
     if (args) {
-      this.id = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_', 10)();
+      this.id = nanoid(10);
       this.userId = args.userId;
       this.projectId = args.projectId;
       this.content = args.content;

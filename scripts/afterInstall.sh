@@ -8,6 +8,7 @@ export DB_PASSWORD=$(aws ssm get-parameters --region ap-northeast-2 --names /env
 export PORT=$(aws ssm get-parameters --region ap-northeast-2 --names /env/PORT --query Parameters[0].Value | sed 's/"//g')
 export NODE_ENV=$(aws ssm get-parameters --region ap-northeast-2 --names /env/NODE_ENV --query Parameters[0].Value | sed 's/"//g')
 export JWT_SECRET=$(aws ssm get-parameters --region ap-northeast-2 --names /env/JWT_SECRET --query Parameters[0].Value | sed 's/"//g')
+export SALT_ROUNDS=$(aws ssm get-parameters --region ap-northeast-2 --names /env/SALT_ROUNDS --query Parameters[0].Value | sed 's/"//g')
 export GITHUB_CLIENT_ID=$(aws ssm get-parameters --region ap-northeast-2 --names /env/GITHUB_CLIENT_ID --query Parameters[0].Value | sed 's/"//g')
 export GITHUB_CLIENT_SECRET=$(aws ssm get-parameters --region ap-northeast-2 --names /env/GITHUB_CLIENT_SECRET --query Parameters[0].Value | sed 's/"//g')
 export GOOGLE_CLIENT_ID=$(aws ssm get-parameters --region ap-northeast-2 --names /env/GOOGLE_CLIENT_ID --query Parameters[0].Value | sed 's/"//g')
@@ -51,6 +52,7 @@ sudo docker run --name linkgather -d -p $PORT:$PORT \
 -e DB_USER=$DB_USER \
 -e DB_PASSWORD=$DB_PASSWORD \
 -e JWT_SECRET=$JWT_SECRET \
+-e SALT_ROUNDS=$SALT_ROUNDS \
 -e GITHUB_CLIENT_ID=$GITHUB_CLIENT_ID \
 -e GITHUB_CLIENT_SECRET=$GITHUB_CLIENT_SECRET \
 -e GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID \

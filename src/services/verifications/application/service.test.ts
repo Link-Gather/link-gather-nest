@@ -4,7 +4,7 @@ import { customAlphabet } from 'nanoid';
 import { UserRepository } from '../../users/infrastructure/repository';
 import { VerificationService } from './service';
 import { dataSource } from '../../../libs/orm';
-import { plainToClass } from '../../../test';
+import { plainToClass } from '../../../libs/test';
 import { Profile, User } from '../../users/domain/model';
 import { VerificationRepository } from '../infrastructure/repository';
 import { badRequest } from '../../../libs/exception';
@@ -58,14 +58,14 @@ describe('VerificationService 테스트', () => {
     provider: 'link-gather',
     introduction: 'hello world',
     career: 1,
-    job: 'Developer',
+    job: 'Backend Developer',
     stacks: ['Node.js'],
     urls: ['https://github.com/Link-Gather'],
     profiles: [
       plainToClass(Profile, {
         id: '1',
         career: 1,
-        job: 'Developer',
+        job: 'Backend Developer',
         introduction: 'Hello world!',
         urls: ['https://github.com/Link-Gather'],
         stacks: ['node.js'],
