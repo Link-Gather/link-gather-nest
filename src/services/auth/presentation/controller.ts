@@ -113,6 +113,6 @@ export class AuthController {
   ) {
     const { code } = body;
     const { id } = param;
-    await this.verificationService.confirm({ code, id });
+    await this.verificationService.confirm({ code, id: Number(id) });
   }
 }

@@ -45,11 +45,11 @@ describe('Auth Controller test', () => {
     test('verficationService.confirm 호출한다.', async () => {
       const verificationServiceConfirmSpyOn = jest.spyOn(verificationService, 'confirm');
 
-      await authController.verifyEmailConfirm({ id: 'verificationId' }, { code: '123456' });
+      await authController.verifyEmailConfirm({ id: '0' }, { code: '123456' });
 
       expect(verificationServiceConfirmSpyOn.mock.calls).toHaveLength(1);
       expect(verificationServiceConfirmSpyOn.mock.calls[0][0]).toEqual({
-        id: 'verificationId',
+        id: 0,
         code: '123456',
       });
     });

@@ -109,7 +109,7 @@ describe('VerificationService 테스트', () => {
       jest.spyOn(verificationRepository, 'find').mockResolvedValue([verification]);
       jest.spyOn(verificationRepository, 'save');
 
-      await verificationService.confirm({ code: 'verificationCode', id: 'verificationId' });
+      await verificationService.confirm({ code: 'verificationCode', id: 0 });
       expect(verificationRepository.save).toHaveBeenCalledTimes(1);
       expect(verificationRepository.save).toHaveBeenCalledWith([
         {

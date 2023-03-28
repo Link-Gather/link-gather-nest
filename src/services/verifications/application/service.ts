@@ -28,7 +28,7 @@ export class VerificationService {
     return { id: verification.id };
   }
 
-  async confirm({ code, id }: { code: string; id: string }) {
+  async confirm({ code, id }: { code: string; id: number }) {
     const [verification] = await this.verificationRepository.find({ id }, { lock: { mode: 'pessimistic_write' } });
 
     verification.verify(code);
