@@ -28,6 +28,15 @@ const doc = {
   mail: {
     pass: { $env: 'MAIL_AUTH_PASS' },
   },
+  linkgather: {
+    front: {
+      url: {
+        $filter: { $env: 'NODE_ENV' },
+        production: 'https://www.linkgather.co.kr',
+        $default: 'http://localhost:3030',
+      },
+    },
+  },
   ormConfig,
 };
 
