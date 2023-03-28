@@ -9,14 +9,14 @@ export class VerificationRepository extends Repository<Verification, Verificatio
   entityClass = Verification;
 
   async find(
-    conditions: { code?: string; email?: string },
+    conditions: { id?: string },
     options?: PaginationOption & Partial<FindOption>,
     order?: FindOrder,
   ): Promise<Verification[]> {
     return this.getManager().find(Verification, {
       where: {
         ...stripUndefined({
-          email: conditions.code,
+          id: conditions.id,
         }),
       },
       ...convertOptions(options),
