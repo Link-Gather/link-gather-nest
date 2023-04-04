@@ -12,6 +12,7 @@ import {
   EmailVerificationBodyDto,
   EmailVerificationConfirmBodyDto,
   EmailVerificationConfirmParamDto,
+  EmailVerificationResponseDto,
 } from '../dto';
 
 const OAUTH_CONFIG = getConfig('/oauth');
@@ -99,7 +100,7 @@ export class AuthController {
 
   @Post('/email-verification')
   @ApiOperation({ summary: 'email 인증 코드 발송', description: 'email 인증' })
-  async verifyEmail(@Body() body: EmailVerificationBodyDto) {
+  async verifyEmail(@Body() body: EmailVerificationBodyDto): Promise<EmailVerificationResponseDto> {
     const { email } = body;
     return this.verificationService.verifyEmail(email);
   }
