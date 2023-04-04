@@ -25,8 +25,10 @@ export class AuthController {
 
   @Post('/oauth/:provider')
   @ApiOperation({ summary: 'oauth', description: 'oauth 로그인' })
-  async oauth(@Param() param: OauthParamDto, @Body() body: OauthBodyDto): Promise<OauthResponseDto> {
-    if (param.provider === 'google') {
+  async oauth(@Param() param: OauthParamDto, @Body() body: OauthBodyDto): Promise<Result<OauthResponseDto>> {
+    const { provider } = param;
+    const { code } = body;
+    if (provider === 'google') {
       const { access_token } = await axios
         .post(
           'https://oauth2.googleapis.com/token',
@@ -35,7 +37,7 @@ export class AuthController {
             client_id: OAUTH_CONFIG.google.clientId,
             client_secret: OAUTH_CONFIG.google.clientSecret,
             redirect_uri: OAUTH_CONFIG.google.redirectUri,
-            code: body.code,
+            code,
           },
           { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
         )
@@ -47,16 +49,24 @@ export class AuthController {
 
       const { email, accessToken, refreshToken } = await this.authService.login(data.email);
 
-      return { email, nickname: data.name, provider: 'google', accessToken, refreshToken };
+      const result = new OauthResponseDto({
+        email,
+        nickname: data.name,
+        provider: 'google',
+        accessToken,
+        refreshToken,
+      });
+
+      return { data: result };
     }
-    if (param.provider === 'github') {
+    if (provider === 'github') {
       const { access_token } = await axios
         .post(
           'https://github.com/login/oauth/access_token',
           {
             client_id: OAUTH_CONFIG.github.clientId,
             client_secret: OAUTH_CONFIG.github.clientSecret,
-            code: body.code,
+            code,
           },
           {
             headers: {
@@ -71,7 +81,15 @@ export class AuthController {
       });
       const { email, accessToken, refreshToken } = await this.authService.login(data.email);
 
-      return { email, nickname: data.name, provider: 'github', accessToken, refreshToken };
+      const result = new OauthResponseDto({
+        email,
+        nickname: data.name,
+        provider: 'github',
+        accessToken,
+        refreshToken,
+      });
+
+      return { data: result };
     }
 
     const { access_token } = await axios
@@ -82,7 +100,7 @@ export class AuthController {
           client_id: OAUTH_CONFIG.kakao.clientId,
           client_secret: OAUTH_CONFIG.kakao.clientSecret,
           redirect_uri: OAUTH_CONFIG.kakao.redirectUri,
-          code: body.code,
+          code,
         },
         { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
       )
@@ -94,7 +112,15 @@ export class AuthController {
 
     const { email, accessToken, refreshToken } = await this.authService.login(data.kakao_account.email);
 
-    return { email, nickname: data.properties.nickname, provider: 'kakao', accessToken, refreshToken };
+    const result = new OauthResponseDto({
+      email,
+      nickname: data.properties.nickname,
+      provider: 'kakao',
+      accessToken,
+      refreshToken,
+    });
+
+    return { data: result };
   }
 
   @Post('/email-verification')
@@ -109,7 +135,7 @@ export class AuthController {
   async verifyEmailConfirm(
     @Param() param: EmailVerificationConfirmParamDto,
     @Body() body: EmailVerificationConfirmBodyDto,
-  ) {
+  ): Promise<void> {
     const { code } = body;
     const { id } = param;
     await this.verificationService.confirm({ code, id: Number(id) });
