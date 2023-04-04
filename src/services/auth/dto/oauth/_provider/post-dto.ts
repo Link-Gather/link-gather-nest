@@ -32,4 +32,18 @@ export class OauthResponseDto {
 
   @ApiProperty({ example: 'example-refresh-token', description: 'user refresh token', required: false })
   refreshToken?: string;
+
+  constructor(args: {
+    email?: string;
+    nickname?: string;
+    provider: ProviderType;
+    accessToken?: string;
+    refreshToken?: string;
+  }) {
+    this.email = args.email;
+    this.nickname = args.nickname;
+    this.provider = args.provider;
+    this.accessToken = args.accessToken;
+    this.refreshToken = args.refreshToken;
+  }
 }
