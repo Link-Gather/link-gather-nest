@@ -119,7 +119,7 @@ export class AuthController {
   async verifyEmailConfirm(
     @Param() param: EmailVerificationConfirmParamDto,
     @Body() body: EmailVerificationConfirmBodyDto,
-  ) {
+  ): Promise<void> {
     const { code } = body;
     const { id } = param;
     await this.verificationService.confirm({ code, id: Number(id) });
@@ -127,8 +127,8 @@ export class AuthController {
 
   @Get('/email-verification/:id')
   @ApiOperation({ summary: 'email 인증 코드 확인 (화면 접근)', description: '인증이 실패하면 error는 던진다.' })
-  async isValidVerification(@Param() param: EmailVerificationConfirmParamDto) {
+  async isValidVerification(@Param() param: EmailVerificationConfirmParamDto): Promise<void> {
     const { id } = param;
-    return this.verificationService.isValidVerification(Number(id));
+    this.verificationService.isValidVerification(Number(id));
   }
 }
