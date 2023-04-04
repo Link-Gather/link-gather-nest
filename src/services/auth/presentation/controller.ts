@@ -101,8 +101,7 @@ export class AuthController {
   @ApiOperation({ summary: 'email 인증 코드 발송', description: 'email 인증' })
   async verifyEmail(@Body() body: EmailVerificationBodyDto) {
     const { email } = body;
-    const { id } = await this.verificationService.verifyEmail(email);
-    return { id };
+    return this.verificationService.verifyEmail(email);
   }
 
   @Post('/email-verification/:id/confirm')
