@@ -72,10 +72,10 @@ export class VerificationService {
               </p>
               <div>
                 <p>
-                  안녕하세요. 링크게더를 이용해주셔서 감사합니다 :)
+                  링크게더를 이용해주셔서 감사합니다 :)
                 </p>
                 <p>
-                  링크게더 가입을 위해 아래 인증번호를 화면에 입력해주세요.
+                  가입을 위해 아래 인증번호를 화면에 입력해주세요.
                 </p>
               </div>
               <div style="height:5rem;background-color:#E3E3FF;text-align:center; vertical-align:middle;">
@@ -106,10 +106,10 @@ export class VerificationService {
               </p>
               <div>
                 <p>
-                  안녕하세요. 링크게더를 이용해주셔서 감사합니다 :)
+                  링크게더를 이용해주셔서 감사합니다 :)
                 </p>
                 <p>
-                  링크게더 가입을 위해 아래 링크로 접속하여 비밀번호를 재설정 해주세요.
+                  비밀번호 재설정을 위해 아래 링크로 접속하여 비밀번호를 재설정 해주세요.
                 </p>
               </div>
               <div style="height:5rem;background-color:#E3E3FF;text-align:center; padding: 20px;">
