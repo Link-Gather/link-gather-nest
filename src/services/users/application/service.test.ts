@@ -86,7 +86,7 @@ describe('UserService 테스트', () => {
         },
       ]);
 
-      expect(userRepositoryFindSpy).toHaveBeenCalled();
+      expect(userRepositoryFindSpy).toHaveBeenCalledWith({ email: 'email@test.com' });
       expect(bcryptHashSpy).toHaveBeenCalledWith('qhupr22qp3ir23qrn2-23rnj1p', '$2b$10$5CW3ftestSaltJ9wpFAShe');
     });
 
@@ -135,7 +135,7 @@ describe('UserService 테스트', () => {
         },
       ]);
 
-      expect(userRepositoryFindSpy).toHaveBeenCalled();
+      expect(userRepositoryFindSpy).toHaveBeenCalledWith({ email: 'email@test.com' });
       expect(bcryptHashSpy).toHaveBeenCalledWith('IRFa-VaY2b', '$2b$10$5CW3ftestSaltJ9wpFAShe');
     });
 

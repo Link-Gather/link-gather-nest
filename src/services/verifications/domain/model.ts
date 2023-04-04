@@ -1,6 +1,6 @@
 import { customAlphabet } from 'nanoid';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { addDays } from '../../../libs/date';
+import { addMinutes } from '../../../libs/date';
 import { Aggregate } from '../../../libs/ddd/aggregate';
 import { badRequest, forbidden } from '../../../libs/exception';
 
@@ -26,8 +26,8 @@ export class Verification extends Aggregate {
     if (args) {
       this.email = args.email;
       this.code = customAlphabet('0123456789', 6)();
-      // NOTE: 유효기간 24시간
-      this.expiredAt = addDays(new Date(), 1);
+      // NOTE: 유효기간 3분
+      this.expiredAt = addMinutes(new Date(), 3);
     }
   }
 

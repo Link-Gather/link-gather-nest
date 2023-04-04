@@ -31,7 +31,9 @@ describe('Auth Controller test', () => {
 
   describe('POST /email-verification test', () => {
     test('verficationService.verifyEmail을 호출한다.', async () => {
-      const verificationServiceVerifyEmailSpyOn = jest.spyOn(verificationService, 'verifyEmail');
+      const verificationServiceVerifyEmailSpyOn = jest
+        .spyOn(verificationService, 'verifyEmail')
+        .mockResolvedValue({ id: 0 });
 
       await authController.verifyEmail({ email: 'hch950627@naver.com' });
 
@@ -39,15 +41,15 @@ describe('Auth Controller test', () => {
       expect(verificationServiceVerifyEmailSpyOn.mock.calls[0][0]).toBe('hch950627@naver.com');
     });
   });
-  describe('POST /email-verification/confirm test', () => {
+  describe('POST /email-verification/:id/confirm test', () => {
     test('verficationService.confirm 호출한다.', async () => {
       const verificationServiceConfirmSpyOn = jest.spyOn(verificationService, 'confirm');
 
-      await authController.verifyEmailConfirm({ email: 'hch950627@naver.com', code: '123456' });
+      await authController.verifyEmailConfirm({ id: '0' }, { code: '123456' });
 
       expect(verificationServiceConfirmSpyOn.mock.calls).toHaveLength(1);
       expect(verificationServiceConfirmSpyOn.mock.calls[0][0]).toEqual({
-        email: 'hch950627@naver.com',
+        id: 0,
         code: '123456',
       });
     });

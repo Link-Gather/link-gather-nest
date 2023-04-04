@@ -1,12 +1,12 @@
-import { addDays } from './index';
+import { addMinutes } from './index';
 
 describe('date lib 테스트', () => {
-  describe('addDays 테스트', () => {
-    test('날짜를 더할 수 있다.', () => {
-      expect(addDays(new Date('2023-03-22T00:00:00.000Z'), 1)).toEqual(new Date('2023-03-23T00:00:00.000Z'));
+  describe('addMinutes 테스트', () => {
+    test('분을 더할 수 있다.', () => {
+      expect(addMinutes(new Date('2023-03-22T00:00:00.000Z'), 1)).toEqual(new Date('2023-03-22T00:01:00.000Z'));
     });
-    test('날짜를 뺄 수 있다.', () => {
-      expect(addDays(new Date('2023-03-22T00:00:00.000Z'), -1)).toEqual(new Date('2023-03-21T00:00:00.000Z'));
+    test('분을 뺄 수 있다.', () => {
+      expect(addMinutes(new Date('2023-03-22T00:00:00.000Z'), -1)).toEqual(new Date('2023-03-21T23:59:00.000Z'));
     });
   });
 });

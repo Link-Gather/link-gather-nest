@@ -25,14 +25,11 @@ export class VerificationService {
     const verification = new Verification({ email });
     await this.verificationRepository.save([verification]);
     await this.send({ email: verification.email, code: verification.code });
+    return { id: verification.id };
   }
 
-  async confirm({ code, email }: { code: string; email: string }) {
-    const [verification] = await this.verificationRepository.find(
-      { email },
-      { limit: 1, lock: { mode: 'pessimistic_write' } },
-      { order: { id: 'DESC' } },
-    );
+  async confirm({ code, id }: { code: string; id: number }) {
+    const [verification] = await this.verificationRepository.find({ id }, { lock: { mode: 'pessimistic_write' } });
 
     verification.verify(code);
     await this.verificationRepository.save([verification]);
@@ -64,7 +61,7 @@ export class VerificationService {
               </span>
             </div>
             <span>
-              본 인증번호의 유효기간은 24시간 입니다.
+              본 인증번호의 유효기간은 3분 입니다.
             </span>
           </div>
         </div>  

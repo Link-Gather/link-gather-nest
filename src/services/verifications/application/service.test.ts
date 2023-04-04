@@ -87,7 +87,7 @@ describe('VerificationService 테스트', () => {
       await verificationService.verifyEmail('test@email.com');
       expect(verificationRepository.save).toHaveBeenCalledTimes(1);
       expect(verificationRepository.save).toHaveBeenCalledWith([
-        { code: '222222', email: 'test@email.com', expiredAt: new Date('2023-03-24T00:00:00.000Z') },
+        { code: '222222', email: 'test@email.com', expiredAt: new Date('2023-03-23T00:03:00.000Z') },
       ]);
       expect(mailerService.sendMail).toHaveBeenCalledTimes(1);
     });
@@ -109,7 +109,7 @@ describe('VerificationService 테스트', () => {
       jest.spyOn(verificationRepository, 'find').mockResolvedValue([verification]);
       jest.spyOn(verificationRepository, 'save');
 
-      await verificationService.confirm({ code: 'verificationCode', email: 'test@email ' });
+      await verificationService.confirm({ code: 'verificationCode', id: 0 });
       expect(verificationRepository.save).toHaveBeenCalledTimes(1);
       expect(verificationRepository.save).toHaveBeenCalledWith([
         {

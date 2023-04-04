@@ -11,6 +11,7 @@ import {
   OauthResponseDto,
   EmailVerificationBodyDto,
   EmailVerificationConfirmBodyDto,
+  EmailVerificationConfirmParamDto,
 } from '../dto';
 
 const OAUTH_CONFIG = getConfig('/oauth');
@@ -100,13 +101,17 @@ export class AuthController {
   @ApiOperation({ summary: 'email 인증 코드 발송', description: 'email 인증' })
   async verifyEmail(@Body() body: EmailVerificationBodyDto) {
     const { email } = body;
-    await this.verificationService.verifyEmail(email);
+    return this.verificationService.verifyEmail(email);
   }
 
-  @Post('/email-verification/confirm')
-  @ApiOperation({ summary: 'email 인증 코드 확인', description: '인증이 실패하면 error는 던진다.' })
-  async verifyEmailConfirm(@Body() body: EmailVerificationConfirmBodyDto) {
-    const { code, email } = body;
-    await this.verificationService.confirm({ code, email });
+  @Post('/email-verification/:id/confirm')
+  @ApiOperation({ summary: 'email 인증 코드 확인', description: '인증이 실패하면 error를 던진다.' })
+  async verifyEmailConfirm(
+    @Param() param: EmailVerificationConfirmParamDto,
+    @Body() body: EmailVerificationConfirmBodyDto,
+  ) {
+    const { code } = body;
+    const { id } = param;
+    await this.verificationService.confirm({ code, id: Number(id) });
   }
 }
