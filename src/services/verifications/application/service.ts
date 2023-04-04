@@ -66,6 +66,7 @@ export class VerificationService {
         html: `
           <div style="max-width:600px; margin:auto">
             <div style="margin:auto; display:flex; flex-direction:column; gap:32px;">
+            <img style="aspect-ratio:auto 763 / 329; width:150px;" src="https://link-gather-img.s3.ap-northeast-2.amazonaws.com/Link+gather_logo-01+1.png" />
               <p style="font-size:26px; font-weight: bold;">
                 이메일 인증을 진행해주세요
               </p>
@@ -83,7 +84,7 @@ export class VerificationService {
                 </span>
               </div>
               <span>
-                본 인증번호의 유효기간은 24시간 입니다.
+                본 인증번호의 유효기간은 3분 입니다.
               </span>
             </div>
           </div>  
@@ -99,6 +100,7 @@ export class VerificationService {
         html: `
           <div style="max-width:600px; margin:auto">
             <div style="margin:auto; display:flex; flex-direction:column; gap:32px;">
+              <img style="aspect-ratio:auto 763 / 329; width:150px;" src="https://link-gather-img.s3.ap-northeast-2.amazonaws.com/Link+gather_logo-01+1.png" />
               <p style="font-size:26px; font-weight: bold;">
                 이메일 인증을 진행해주세요
               </p>
@@ -118,7 +120,7 @@ export class VerificationService {
                 </a>
               </div>
               <span>
-                본 인증번호의 유효기간은 3분 입니다.
+                본 인증번호의 유효기간은 1시간 입니다.
               </span>
             </div>
           </div>  
