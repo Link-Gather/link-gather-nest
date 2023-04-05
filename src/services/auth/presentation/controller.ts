@@ -115,7 +115,7 @@ export class AuthController {
   }
 
   @Post('/email-verification/:id')
-  @ApiOperation({ summary: 'email 인증 코드 확인 (코드입력)', description: '인증이 실패하면 error는 던진다.' })
+  @ApiOperation({ summary: 'email 인증 코드 확인 (코드입력)', description: '인증이 실패하면 error를 던진다.' })
   async verifyEmailConfirm(
     @Param() param: EmailVerificationConfirmParamDto,
     @Body() body: EmailVerificationConfirmBodyDto,
@@ -126,7 +126,7 @@ export class AuthController {
   }
 
   @Get('/email-verification/:id')
-  @ApiOperation({ summary: 'email 인증 코드 확인 (화면 접근)', description: '인증이 실패하면 error는 던진다.' })
+  @ApiOperation({ summary: 'email 인증 코드 확인 (화면 접근)', description: '인증이 실패하면 error를 던진다.' })
   async isValidVerification(@Param() param: EmailVerificationConfirmParamDto): Promise<void> {
     const { id } = param;
     this.verificationService.isValidVerification(Number(id));
