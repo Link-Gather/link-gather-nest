@@ -58,7 +58,7 @@ export class UserController {
     description:
       '사용 불가능한 닉네임일 경우 { isDuplicated: true }, 사용 가능한 닉네임일 경우 { isDuplicated: false } 를 반환한다.',
   })
-  async isNicknameDuplicated(@Query() query: NicknameCheckQueryDto): Promise<Result<NicknameCheckResponseDto>> {
+  async isNicknameDuplicated(@Query() query: NicknameCheckQueryDto): Result<NicknameCheckResponseDto> {
     const { nickname } = query;
     const isDuplicated = await this.userService.isNicknameDuplicated({ nickname });
 

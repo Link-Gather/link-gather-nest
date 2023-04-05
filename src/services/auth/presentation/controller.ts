@@ -25,7 +25,7 @@ export class AuthController {
 
   @Post('/oauth/:provider')
   @ApiOperation({ summary: 'oauth', description: 'oauth 로그인' })
-  async oauth(@Param() param: OauthParamDto, @Body() body: OauthBodyDto): Promise<Result<OauthResponseDto>> {
+  async oauth(@Param() param: OauthParamDto, @Body() body: OauthBodyDto): Result<OauthResponseDto> {
     const { provider } = param;
     const { code } = body;
     if (provider === 'google') {
