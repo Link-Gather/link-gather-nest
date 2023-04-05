@@ -25,6 +25,9 @@ const doc = {
   cookie: {
     sign: { $env: 'COOKIE_SIGN' },
   },
+  mail: {
+    pass: { $env: 'MAIL_AUTH_PASS' },
+  },
   ormConfig,
 };
 

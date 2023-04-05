@@ -19,6 +19,7 @@ export KAKAO_CLIENT_SECRET=$(aws ssm get-parameters --region ap-northeast-2 --na
 export KAKAO_REDIRECT_URI=$(aws ssm get-parameters --region ap-northeast-2 --names /env/KAKAO_REDIRECT_URI --query Parameters[0].Value | sed 's/"//g')
 export CORS_ORIGIN=$(aws ssm get-parameters --region ap-northeast-2 --names /env/CORS_ORIGIN --query Parameters[0].Value | sed 's/"//g')
 export COOKIE_SIGN=$(aws ssm get-parameters --region ap-northeast-2 --names /env/COOKIE_SIGN --query Parameters[0].Value | sed 's/"//g')
+export MAIL_AUTH_PASS=$(aws ssm get-parameters --region ap-northeast-2 --names /env/MAIL_AUTH_PASS --query Parameters[0].Value | sed 's/"//g')
 
 cd /home/ubuntu/link-gather-nest/
 
@@ -62,4 +63,5 @@ sudo docker run --name linkgather -d -p $PORT:$PORT \
 -e KAKAO_REDIRECT_URI=$KAKAO_REDIRECT_URI \
 -e CORS_ORIGIN=$CORS_ORIGIN \
 -e COOKIE_SIGN=$COOKIE_SIGN \
+-e MAIL_AUTH_PASS=$MAIL_AUTH_PASS \
 linkgather

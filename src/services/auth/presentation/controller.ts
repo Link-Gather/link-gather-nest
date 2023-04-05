@@ -3,8 +3,17 @@ import { Body, ClassSerializerInterceptor, Controller, Injectable, Param, Post, 
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import axios from 'axios';
 import { getConfig } from '../../../config';
+import { VerificationService } from '../../verifications/application/service';
 import { AuthService } from '../application/service';
-import { OauthBodyDto, OauthParamDto, OauthResponseDto } from '../dto';
+import {
+  OauthBodyDto,
+  OauthParamDto,
+  OauthResponseDto,
+  EmailVerificationBodyDto,
+  EmailVerificationConfirmBodyDto,
+  EmailVerificationConfirmParamDto,
+  EmailVerificationResponseDto,
+} from '../dto';
 
 const OAUTH_CONFIG = getConfig('/oauth');
 
@@ -13,10 +22,10 @@ const OAUTH_CONFIG = getConfig('/oauth');
 @Injectable()
 @UseInterceptors(ClassSerializerInterceptor)
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService, private readonly verificationService: VerificationService) {}
 
   @Post('/oauth/:provider')
-  @ApiOperation({ summary: 'oauth', description: 'oauth 로그인 및 회원가입 API' })
+  @ApiOperation({ summary: 'oauth', description: 'oauth 로그인' })
   async oauth(@Param() param: OauthParamDto, @Body() body: OauthBodyDto): Promise<OauthResponseDto> {
     if (param.provider === 'google') {
       const { access_token } = await axios
@@ -87,5 +96,23 @@ export class AuthController {
     const { email, accessToken, refreshToken } = await this.authService.login(data.kakao_account.email);
 
     return { email, nickname: data.properties.nickname, provider: 'kakao', accessToken, refreshToken };
+  }
+
+  @Post('/email-verification')
+  @ApiOperation({ summary: 'email 인증 코드 발송', description: 'email 인증' })
+  async verifyEmail(@Body() body: EmailVerificationBodyDto): Promise<EmailVerificationResponseDto> {
+    const { email } = body;
+    return this.verificationService.verifyEmail(email);
+  }
+
+  @Post('/email-verification/:id/confirm')
+  @ApiOperation({ summary: 'email 인증 코드 확인', description: '인증이 실패하면 error를 던진다.' })
+  async verifyEmailConfirm(
+    @Param() param: EmailVerificationConfirmParamDto,
+    @Body() body: EmailVerificationConfirmBodyDto,
+  ) {
+    const { code } = body;
+    const { id } = param;
+    await this.verificationService.confirm({ code, id: Number(id) });
   }
 }
