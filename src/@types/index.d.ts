@@ -1,1 +1,1 @@
-type Result<T> = { data: T; count?: number };
+type Result<T> = Promise<{ data: T; count?: number }>;
