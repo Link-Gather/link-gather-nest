@@ -133,9 +133,7 @@ export class Profile {
   @Column('simple-array')
   stacks!: string[];
 
-  @ManyToOne(() => User, (user) => user.profiles, {
-    cascade: true,
-  })
+  @ManyToOne(() => User, (user) => user.profiles)
   user!: never;
 
   constructor(args: { career: number; job: JobType; introduction: string; urls?: string[]; stacks: string[] }) {
