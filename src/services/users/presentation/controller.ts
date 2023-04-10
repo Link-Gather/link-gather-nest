@@ -11,8 +11,16 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import type { Response } from 'express';
+import { validate } from 'class-validator';
 import { UserService } from '../application/service';
-import { SignUpBodyDto, SignInBodyDto, NicknameCheckQueryDto, NicknameCheckResponseDto } from '../dto';
+import {
+  SignUpBodyDto,
+  SignInBodyDto,
+  NicknameCheckQueryDto,
+  NicknameCheckResponseDto,
+  SignInResponseDto,
+} from '../dto';
+import { badRequest } from '../../../libs/exception';
 
 @Controller('users')
 @ApiTags('User')
@@ -48,8 +56,27 @@ export class UserController {
     res.cookie('accessToken', `Bearer ${data.accessToken}`, { maxAge: 1000 * 60 * 60 });
     res.cookie('refreshToken', `Bearer ${data.refreshToken}`, { maxAge: 1000 * 60 * 60 * 24 * 30 });
 
+    const user = new SignInResponseDto({
+      id: data.user.id,
+      email: data.user.email,
+      nickname: data.user.nickname,
+      provider: data.user.provider,
+      profileImage: data.user.profileImage,
+      nicknameUpdatedOn: data.user.nicknameUpdatedOn,
+      profiles: data.user.profiles,
+    });
+
+    const errors = await validate(user);
+
+    if (errors.length > 0) {
+      const messege = errors.map((error) => error.constraints);
+      throw badRequest(`유저 정보가 올바르지 않습니다.`, {
+        errorMessage: JSON.stringify(messege),
+      });
+    }
+
     // HACK: controller에서 res객체에 접근하게 되면 return문으로 응답을 보낼 경우 무한 pending에 걸려서 express 방식으로 전달해주고 있다.
-    res.status(200).json(data.user);
+    res.status(200).json(user);
   }
 
   @Get('/nickname-check')

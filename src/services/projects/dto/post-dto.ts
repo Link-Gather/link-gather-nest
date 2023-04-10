@@ -1,4 +1,4 @@
-import { IsArray, IsIn, IsNotEmpty, IsNumber, IsString, Min, ValidateNested } from 'class-validator';
+import { IsArray, IsIn, IsNotEmpty, IsNumber, IsOptional, IsString, Min, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import { purposeType, PurposeType } from '../domain/model';
@@ -52,6 +52,7 @@ export class CreateDto {
   period!: string;
 
   @ApiProperty({ example: ['node.js', 'react', 'spring'], description: '기술스택', required: false })
+  @IsOptional()
   @IsArray()
   @IsString({ each: true })
   stacks?: string[];
