@@ -42,7 +42,6 @@ export class User extends Aggregate {
   profileImage!: string;
 
   @Column()
-  @Exclude()
   provider!: ProviderType;
 
   @Column()
