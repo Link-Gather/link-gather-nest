@@ -70,8 +70,8 @@ export class UserController {
 
     if (errors.length > 0) {
       const messege = errors.map((error) => error.constraints);
-      throw badRequest(`유저 정보가 올바르지 않습니다.`, {
-        errorMessage: JSON.stringify(messege),
+      throw badRequest(JSON.stringify(messege), {
+        errorMessage: '유저 정보가 올바르지 않습니다.',
       });
     }
 
