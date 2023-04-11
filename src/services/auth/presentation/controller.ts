@@ -1,5 +1,14 @@
 /* eslint-disable camelcase */
-import { Body, ClassSerializerInterceptor, Controller, Injectable, Param, Post, UseInterceptors } from '@nestjs/common';
+import {
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  Get,
+  Injectable,
+  Param,
+  Post,
+  UseInterceptors,
+} from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import axios from 'axios';
 import { getConfig } from '../../../config';
@@ -101,18 +110,25 @@ export class AuthController {
   @Post('/email-verification')
   @ApiOperation({ summary: 'email 인증 코드 발송', description: 'email 인증' })
   async verifyEmail(@Body() body: EmailVerificationBodyDto): Promise<EmailVerificationResponseDto> {
-    const { email } = body;
-    return this.verificationService.verifyEmail(email);
+    const { email, type } = body;
+    return this.verificationService.start({ email, type });
   }
 
-  @Post('/email-verification/:id/confirm')
-  @ApiOperation({ summary: 'email 인증 코드 확인', description: '인증이 실패하면 error를 던진다.' })
+  @Post('/email-verification/:id')
+  @ApiOperation({ summary: 'email 인증 코드 확인 (코드입력)', description: '인증이 실패하면 error를 던진다.' })
   async verifyEmailConfirm(
     @Param() param: EmailVerificationConfirmParamDto,
     @Body() body: EmailVerificationConfirmBodyDto,
-  ) {
+  ): Promise<void> {
     const { code } = body;
     const { id } = param;
     await this.verificationService.confirm({ code, id: Number(id) });
+  }
+
+  @Get('/email-verification/:id')
+  @ApiOperation({ summary: 'email 인증 코드 확인 (화면 접근)', description: '인증이 실패하면 error를 던진다.' })
+  async isValidVerification(@Param() param: EmailVerificationConfirmParamDto): Promise<void> {
+    const { id } = param;
+    this.verificationService.isValidVerification(Number(id));
   }
 }

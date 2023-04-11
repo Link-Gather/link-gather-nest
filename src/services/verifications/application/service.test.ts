@@ -78,16 +78,17 @@ describe('VerificationService 테스트', () => {
     email: 'test@email.com',
     code: 'verificationCode',
     expiredAt: new Date('2023-03-24T00:00:00.000Z'),
+    type: 'signup',
   });
 
-  describe('verifyEmail test', () => {
+  describe('start test', () => {
     test('이메일 인증을 시작하면 verification을 생성하고 mail을 보낸다.', async () => {
       jest.spyOn(userRepository, 'find').mockResolvedValue([]);
 
-      await verificationService.verifyEmail('test@email.com');
+      await verificationService.start({ email: 'test@email.com', type: 'signup' });
       expect(verificationRepository.save).toHaveBeenCalledTimes(1);
       expect(verificationRepository.save).toHaveBeenCalledWith([
-        { code: '222222', email: 'test@email.com', expiredAt: new Date('2023-03-23T00:03:00.000Z') },
+        { code: '222222', email: 'test@email.com', expiredAt: new Date('2023-03-23T00:03:00.000Z'), type: 'signup' },
       ]);
       expect(mailerService.sendMail).toHaveBeenCalledTimes(1);
     });
@@ -97,7 +98,7 @@ describe('VerificationService 테스트', () => {
 
       expect.assertions(1);
       try {
-        await verificationService.verifyEmail('test@email.com');
+        await verificationService.start({ email: 'test@email.com', type: 'signup' });
       } catch (err) {
         expect(err).toEqual(badRequest(`Invalid email(test@email.com) is entered. Please check the email.`));
       }
@@ -106,7 +107,7 @@ describe('VerificationService 테스트', () => {
 
   describe('confirm test', () => {
     test('code를 입력하면 이메일에 해당하는 verification의 코드와 비교한다.', async () => {
-      jest.spyOn(verificationRepository, 'find').mockResolvedValue([verification]);
+      jest.spyOn(verificationRepository, 'findSpec').mockResolvedValue([verification]);
       jest.spyOn(verificationRepository, 'save');
 
       await verificationService.confirm({ code: 'verificationCode', id: 0 });
@@ -118,8 +119,25 @@ describe('VerificationService 테스트', () => {
           expiredAt: new Date('2023-03-24T00:00:00.000Z'),
           id: 1,
           verifiedAt: new Date('2023-03-23T00:00:00.000Z'),
+          type: 'signup',
         },
       ]);
+    });
+  });
+
+  describe('isValidVerification test', () => {
+    test('verification이 없으면 에러를 뱉는다.', async () => {
+      jest.spyOn(verificationRepository, 'findSpec').mockResolvedValue([]);
+      expect.assertions(1);
+      try {
+        await verificationService.isValidVerification(0);
+      } catch (err) {
+        expect(err).toEqual(
+          badRequest(`Invalid verificationId(0) is entered.`, {
+            errorMessage: '잘못된 URL입니다. 다시한번 인증을 진행해주세요.',
+          }),
+        );
+      }
     });
   });
 });
