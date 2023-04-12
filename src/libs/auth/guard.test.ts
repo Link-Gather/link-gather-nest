@@ -40,11 +40,6 @@ describe('auth guard test', () => {
     nickname: 'arthur',
     profileImage: '',
     provider: 'link-gather',
-    introduction: 'hello, my name is arthur',
-    career: 1,
-    job: 'Backend Developer',
-    stacks: ['node.js', 'nest.js', 'koa.js', 'react.js', 'javascript', 'typescript'],
-    urls: ['https://github.com/changchanghwang'],
     profiles: [
       plainToClass(Profile, {
         id: 'profileId',

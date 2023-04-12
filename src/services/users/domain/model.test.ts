@@ -29,15 +29,10 @@ describe('User 테스트', () => {
     expect(user).toEqual({
       email: 'email@test.com',
       id: 'IRFa-VaY2b',
-      introduction: 'link-gather creator',
-      career: 1,
       nickname: 'arthur',
       password: 'qhupr22qp3ir23qrn2-23rnj1p',
-      job: 'Backend Developer',
       profileImage: 'linkgather image url',
       provider: 'link-gather',
-      stacks: ['node.js', 'typescript', 'react.js'],
-      urls: ['https://github.com/changchanghwang'],
       profiles: [
         plainToClass(Profile, {
           career: 1,
