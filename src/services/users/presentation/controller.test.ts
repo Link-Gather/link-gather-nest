@@ -29,11 +29,8 @@ describe('UserController test', () => {
   });
 
   const user = plainToClass(User, {
-    career: 1,
     email: 'email@test.com',
     id: 'IRFa-VaY2b',
-    introduction: 'link-gather creator',
-    job: 'Backend Developer',
     nickname: 'arthur',
     password: expect.not.stringMatching('qhupr22qp3ir23qrn2-23rnj1p'),
     profileImage: 'image url',
@@ -48,8 +45,6 @@ describe('UserController test', () => {
         urls: ['https://github.com/changchanghwang'],
       }),
     ],
-    stacks: ['node.js', 'typescript', 'react.js'],
-    urls: ['https://github.com/changchanghwang'],
   });
 
   describe('signIn test', () => {

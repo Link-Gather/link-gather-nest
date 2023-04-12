@@ -56,11 +56,6 @@ describe('VerificationService 테스트', () => {
     nickname: 'arthur',
     profileImage: '',
     provider: 'link-gather',
-    introduction: 'hello world',
-    career: 1,
-    job: 'Backend Developer',
-    stacks: ['Node.js'],
-    urls: ['https://github.com/Link-Gather'],
     profiles: [
       plainToClass(Profile, {
         id: '1',

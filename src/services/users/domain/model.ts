@@ -44,22 +44,6 @@ export class User extends Aggregate {
   @Column()
   provider!: ProviderType;
 
-  @Column()
-  introduction!: string;
-
-  @Column()
-  // TODO: 추후 타입이 정해지면 그때 다시 custom type으로 변경한다.
-  career!: number;
-
-  @Column()
-  job!: JobType;
-
-  @Column('simple-array')
-  stacks!: string[];
-
-  @Column('simple-array')
-  urls!: string[];
-
   @Column({ nullable: true })
   @Exclude()
   refreshToken?: string;
@@ -81,11 +65,6 @@ export class User extends Aggregate {
       // https://github.com/Link-Gather/link-gather-nest/pull/28#discussion_r1129592221
       this.profileImage = args.profileImage;
       this.provider = args.provider;
-      this.introduction = args.introduction;
-      this.career = args.career;
-      this.job = args.job;
-      this.stacks = args.stacks;
-      this.urls = args.urls ?? [];
       this.profiles = [
         new Profile({
           career: args.career,

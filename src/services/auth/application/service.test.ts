@@ -56,11 +56,6 @@ describe('AuthService 테스트', () => {
         password: 'qhupr22qp3ir23qrn2-23rnj1p',
         nickname: 'windy',
         provider: 'google',
-        career: 1,
-        job: 'Backend Developer',
-        introduction: 'Hello world!',
-        stacks: ['node.js', 'typescript', 'react.js'],
-        urls: ['https://github.com/yoon-bomi'],
         profileImage: 'test',
         profiles: [
           plainToClass(Profile, {
@@ -103,11 +98,6 @@ describe('AuthService 테스트', () => {
       nickname: 'arthur',
       profileImage: '',
       provider: 'link-gather',
-      introduction: 'hello, my name is arthur',
-      career: 1,
-      job: 'Backend Developer',
-      stacks: ['node.js', 'nest.js', 'koa.js', 'react.js', 'javascript', 'typescript'],
-      urls: ['https://github.com/changchanghwang'],
       profiles: [
         plainToClass(Profile, {
           id: 'profileId',
