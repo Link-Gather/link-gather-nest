@@ -4,6 +4,7 @@ import {
   IsIn,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
   Matches,
   MaxLength,
@@ -14,7 +15,7 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 import { jobType, JobType, ProviderType, providerType } from '../../domain/model';
 
-const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*\W)(?!.*\s)$/;
+const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*\-_+.,?])[A-Za-z\d!@#$%^&*\-_+.,?]{8,16}$/;
 
 export class SignUpBodyDto {
   @ApiProperty({ example: 'test@test.com', description: '이메일', required: true })
@@ -73,6 +74,7 @@ export class SignUpBodyDto {
   })
   @IsArray()
   @IsString({ each: true })
+  @IsOptional()
   urls?: string[];
 
   @ApiProperty({ example: '프로필이미지1', description: '특정 프로필 이미지의 고유 값', required: true })
