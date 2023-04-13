@@ -62,11 +62,8 @@ describe('UserService 테스트', () => {
       expect(userRepositorySaveSpy.mock.calls).toHaveLength(1);
       expect(userRepositorySaveSpy.mock.calls[0][0]).toEqual([
         {
-          career: 1,
           email: 'email@test.com',
           id: 'IRFa-VaY2b',
-          introduction: 'link-gather creator',
-          job: 'Backend Developer',
           nickname: 'arthur',
           password: 'encrypt password',
           profileImage: 'image url',
@@ -81,8 +78,6 @@ describe('UserService 테스트', () => {
               urls: ['https://github.com/changchanghwang'],
             },
           ],
-          stacks: ['node.js', 'typescript', 'react.js'],
-          urls: ['https://github.com/changchanghwang'],
         },
       ]);
 
@@ -111,11 +106,8 @@ describe('UserService 테스트', () => {
       expect(userRepositorySaveSpy.mock.calls).toHaveLength(1);
       expect(userRepositorySaveSpy.mock.calls[0][0]).toEqual([
         {
-          career: 1,
           email: 'email@test.com',
           id: 'IRFa-VaY2b',
-          introduction: 'sns user',
-          job: 'Frontend Developer',
           nickname: 'github user',
           password: 'encrypt password',
           profileImage: 'profile image',
@@ -130,8 +122,6 @@ describe('UserService 테스트', () => {
               urls: ['https://github.com/'],
             },
           ],
-          stacks: ['typescript', 'react.js'],
-          urls: ['https://github.com/'],
         },
       ]);
 
@@ -141,11 +131,8 @@ describe('UserService 테스트', () => {
 
     test('이미 존재하는 이메일이면 에러를 던진다.', async () => {
       const user = plainToClass(User, {
-        career: 1,
         email: 'email@test.com',
         id: 'IRFa-VaY2b',
-        introduction: 'link-gather creator',
-        job: 'Backend Developer',
         nickname: 'arthur',
         password: expect.not.stringMatching('qhupr22qp3ir23qrn2-23rnj1p'),
         profileImage: 'image url',
@@ -160,8 +147,6 @@ describe('UserService 테스트', () => {
             urls: ['https://github.com/changchanghwang'],
           }),
         ],
-        stacks: ['node.js', 'typescript', 'react.js'],
-        urls: ['https://github.com/changchanghwang'],
       });
 
       jest.spyOn(userRepository, 'find').mockResolvedValue([user]);
@@ -189,11 +174,8 @@ describe('UserService 테스트', () => {
 
   describe('signIn test', () => {
     const user = plainToClass(User, {
-      career: 1,
       email: 'email@test.com',
       id: 'IRFa-VaY2b',
-      introduction: 'link-gather creator',
-      job: 'Backend Developer',
       nickname: 'arthur',
       password: expect.not.stringMatching('qhupr22qp3ir23qrn2-23rnj1p'),
       profileImage: 'image url',
@@ -208,8 +190,6 @@ describe('UserService 테스트', () => {
           urls: ['https://github.com/changchanghwang'],
         }),
       ],
-      stacks: ['node.js', 'typescript', 'react.js'],
-      urls: ['https://github.com/changchanghwang'],
     });
 
     test('이메일, 패스워드가 일치한다면 refreshToken을 업데이트 한 후, accessToken, refreshToken을 반환해야한다.', async () => {
@@ -230,11 +210,8 @@ describe('UserService 테스트', () => {
   describe('nickname duplicated check 테스트', () => {
     test('이미 사용중인 닉네임이면 true 를 반환한다.', async () => {
       const user = plainToClass(User, {
-        career: 1,
         email: 'email@test.com',
         id: 'IRFa-VaY2b',
-        introduction: 'link-gather creator',
-        job: 'Backend Developer',
         nickname: 'windy',
         password: expect.not.stringMatching('qhupr22qp3ir23qrn2-23rnj1p'),
         profileImage: 'image url',
@@ -249,8 +226,6 @@ describe('UserService 테스트', () => {
             urls: ['https://github.com/changchanghwang'],
           }),
         ],
-        stacks: ['node.js', 'typescript', 'react.js'],
-        urls: ['https://github.com/changchanghwang'],
       });
       const userRepositoryFindSpy = jest.spyOn(userRepository, 'find').mockResolvedValue([user]);
 
