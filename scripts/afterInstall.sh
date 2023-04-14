@@ -17,7 +17,7 @@ export GOOGLE_REDIRECT_URI=$(aws ssm get-parameters --region ap-northeast-2 --na
 export KAKAO_CLIENT_ID=$(aws ssm get-parameters --region ap-northeast-2 --names /env/KAKAO_CLIENT_ID --query Parameters[0].Value | sed 's/"//g')
 export KAKAO_CLIENT_SECRET=$(aws ssm get-parameters --region ap-northeast-2 --names /env/KAKAO_CLIENT_SECRET --query Parameters[0].Value | sed 's/"//g')
 export KAKAO_REDIRECT_URI=$(aws ssm get-parameters --region ap-northeast-2 --names /env/KAKAO_REDIRECT_URI --query Parameters[0].Value | sed 's/"//g')
-export CORS_ORIGIN=($(aws ssm get-parameters-by-path --region ap-northeast-2 --path /env/CORS_ORIGIN --query "Parameters[].Value" --output text))
+export CORS_ORIGIN=$(aws ssm get-parameters --region ap-northeast-2 --names /env/CORS_ORIGIN --query Parameters[0].Value | sed 's/"//g')
 export COOKIE_SIGN=$(aws ssm get-parameters --region ap-northeast-2 --names /env/COOKIE_SIGN --query Parameters[0].Value | sed 's/"//g')
 export MAIL_AUTH_PASS=$(aws ssm get-parameters --region ap-northeast-2 --names /env/MAIL_AUTH_PASS --query Parameters[0].Value | sed 's/"//g')
 
