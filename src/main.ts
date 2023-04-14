@@ -17,7 +17,7 @@ async function bootstrap() {
   dataSource.initialize().then(() => console.log('DB Connected 🔥'));
 
   const app = await NestFactory.create(AppModule);
-  app.enableCors({ credentials: true, origin: CORS_ORIGIN });
+  app.enableCors({ credentials: true, origin: JSON.parse(CORS_ORIGIN) });
   app.use(cookieParser(COOKIE_SIGN));
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new HttpExceptionFilter());
