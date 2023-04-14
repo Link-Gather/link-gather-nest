@@ -13,6 +13,8 @@ const PORT = getConfig('/port');
 const CORS_ORIGIN = getConfig('/corsOrigin');
 const COOKIE_SIGN = getConfig('/cookie/sign');
 
+console.log(JSON.parse(CORS_ORIGIN), 'origin');
+
 async function bootstrap() {
   dataSource.initialize().then(() => console.log('DB Connected 🔥'));
 
