@@ -13,11 +13,14 @@ const PORT = getConfig('/port');
 const CORS_ORIGIN = getConfig('/corsOrigin');
 const COOKIE_SIGN = getConfig('/cookie/sign');
 
+// HACK: origin url 이 배열이지만 문자열로 넘어오기 때문에 파싱해줘야 한다.
+const origin = CORS_ORIGIN.replace(/\\/g, '').slice(1, -1).split(',');
+
 async function bootstrap() {
   dataSource.initialize().then(() => console.log('DB Connected 🔥'));
 
   const app = await NestFactory.create(AppModule);
-  app.enableCors({ credentials: true, origin: CORS_ORIGIN });
+  app.enableCors({ credentials: true, origin });
   app.use(cookieParser(COOKIE_SIGN));
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.useGlobalFilters(new HttpExceptionFilter());
