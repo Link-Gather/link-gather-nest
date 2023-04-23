@@ -56,6 +56,15 @@ export class VerificationService {
     }
   }
 
+  @Transactional()
+  async passwordChange({ id, password, passwordConfirm }: { id: number; password: string; passwordConfirm: string }) {
+    const [verification] = await this.verificationRepository.findSpec(new ValidVerificationSpec({ id }));
+    const [user] = await this.userRepository.find({ email: verification.email });
+
+    await user.changePassword({ password, passwordConfirm });
+    await this.userRepository.save([user]);
+  }
+
   private async send(verification: Verification) {
     if (verification.type === 'signup') {
       await this.mailerService.sendMail({

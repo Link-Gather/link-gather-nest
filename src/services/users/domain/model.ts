@@ -2,7 +2,7 @@ import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
 import { nanoid } from 'nanoid';
 import { Exclude } from 'class-transformer';
 import { Aggregate } from '../../../libs/ddd/aggregate';
-import { compareHash } from '../../../libs/password';
+import { compareHash, hashPassword } from '../../../libs/password';
 import { badRequest } from '../../../libs/exception';
 
 export const providerType = <const>['kakao', 'github', 'google', 'link-gather'];
@@ -94,6 +94,21 @@ export class User extends Aggregate {
         errorMessage: '이메일이나 패스워드가 일치하지 않습니다.',
       });
     }
+  }
+
+  async changePassword({ password, passwordConfirm }: { password: string; passwordConfirm: string }) {
+    if (password !== passwordConfirm) {
+      throw badRequest(`Password(${password}) is not equal to PasswordConfirm(${passwordConfirm})`, {
+        errorMessage: `비밀번호와 비밀번호 확인이 일치하지 않습니다.`,
+      });
+    }
+
+    if (this.provider !== 'link-gather') {
+      throw badRequest(`Invalid provider(${this.provider}) is entered. Only link-gather can change password`, {
+        errorMessage: '비밀번호를 변경할 수 없는 계정입니다.',
+      });
+    }
+    this.password = await hashPassword(password);
   }
 }
 
