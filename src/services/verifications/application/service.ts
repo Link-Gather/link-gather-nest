@@ -125,7 +125,7 @@ export class VerificationService {
               </div>
               <div style="height:5rem;background-color:#E3E3FF;text-align:center; padding: 20px;">
                 <a style="font-size: 3rem; font-weight: bold; letter-spacing: 8px; text-decoration:none; color:#5555ff;" 
-                  href="${LINK_GATHER_FRONT_URL}/forgot-password?step=2&verificationId=${verification.id}"
+                  href="${LINK_GATHER_FRONT_URL}/forgot-password?step=password&verificationId=${verification.id}"
                 >
                   비밀번호 재설정
                 </a>
