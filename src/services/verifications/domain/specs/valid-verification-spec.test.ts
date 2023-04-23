@@ -58,4 +58,24 @@ describe('ValidVerificationSpec test', () => {
       );
     }
   });
+
+  test('verification이 이미 인증을 한 verification이라면 에러를 던져야한다.', async () => {
+    jest.spyOn(verificationRepository, 'find').mockResolvedValue([
+      plainToClass(Verification, {
+        ...verification,
+        verifiedAt: new Date('2023-04-23T00:00:00.000Z'),
+      }),
+    ]);
+    expect.assertions(1);
+    const spec = new ValidVerificationSpec({ id: 0 });
+    try {
+      await spec.find(verificationRepository);
+    } catch (err) {
+      expect(err).toEqual(
+        forbidden(`Verification(${verification.id}) is already verified.`, {
+          errorMessage: '이미 인증된 인증코드입니다. 다시 인증해주세요.',
+        }),
+      );
+    }
+  });
 });
