@@ -38,6 +38,7 @@ module.exports = {
       'error',
       { typedefs: false, functions: false, classes: false, variables: true },
     ],
+    '@typescript-eslint/no-non-null-assertion': 'off',
     'no-restricted-syntax': ['error', 'WithStatement'],
   },
 };
