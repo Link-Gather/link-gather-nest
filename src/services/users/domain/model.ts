@@ -78,8 +78,14 @@ export class User extends Aggregate {
   }
 
   update(args: { refreshToken?: string }) {
-    // TODO: stripUnchanged 구현해서 적용하기
-    Object.assign(this, args);
+    // TODO: 추후 args에 타입이 생기면 여기도 타입선언을 해줘야한다.
+    const changedArgs = this.stripUnchanged(args);
+
+    if (!changedArgs) {
+      return;
+    }
+
+    Object.assign(this, changedArgs);
   }
 
   async validatePassword(password: string) {
