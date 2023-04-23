@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import * as cookieParser from 'cookie-parser';
+import { isProd } from 'libs/common';
 import { AppModule } from './app.module';
 import { getConfig } from './config';
 import { HttpExceptionFilter } from './libs/exception';
