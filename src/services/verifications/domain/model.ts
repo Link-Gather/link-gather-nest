@@ -38,8 +38,8 @@ export class Verification extends Aggregate {
     }
   }
 
-  verify(code: string) {
-    if (this.code !== code) {
+  verify(code?: string) {
+    if (code && this.code !== code) {
       throw badRequest(`Invalid Code(${code}) is entered.`, {
         errorMessage: '코드가 정확하지 않습니다. 다시 한번 확인해주세요.',
       });

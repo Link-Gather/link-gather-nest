@@ -19,11 +19,11 @@ describe('Verification test', () => {
   });
 
   describe('start method test', () => {
-    test('코드를 받으면 verifiedAt를 입력해야한다.', () => {
-      verification.verify('verificationCode');
+    test('verifiedAt를 입력해야한다.', () => {
+      verification.verify();
       expect(verification.verifiedAt).toEqual(new Date('2023-03-23T09:00:00.000Z'));
     });
-    test('code가 같지 않다면 에러를 던져야 한다.', () => {
+    test('코드가 있고 code가 같지 않다면 에러를 던져야 한다.', () => {
       expect.assertions(1);
       try {
         verification.verify('wrongCode');

@@ -57,12 +57,14 @@ export class VerificationService {
   }
 
   @Transactional()
-  async passwordChange({ id, password, passwordConfirm }: { id: number; password: string; passwordConfirm: string }) {
+  async changePassword({ id, password, passwordConfirm }: { id: number; password: string; passwordConfirm: string }) {
     const [verification] = await this.verificationRepository.findSpec(new ValidVerificationSpec({ id }));
     const [user] = await this.userRepository.find({ email: verification.email });
 
     await user.changePassword({ password, passwordConfirm });
-    await this.userRepository.save([user]);
+    verification.verify();
+
+    await Promise.all([this.userRepository.save([user]), this.verificationRepository.save([verification])]);
   }
 
   private async send(verification: Verification) {

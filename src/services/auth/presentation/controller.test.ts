@@ -66,4 +66,22 @@ describe('Auth Controller test', () => {
       expect(verificationServiceIsValidVerificationSpyOn.mock.calls[0][0]).toBe(0);
     });
   });
+
+  describe('PATCH /password-change/:verificationId test', () => {
+    test('verificationService.changePassword 호출한다.', async () => {
+      const verificationServiceChangePasswordSpyOn = jest.spyOn(verificationService, 'changePassword');
+
+      await authController.changePassword(
+        { verificationId: '0' },
+        { password: 'password', passwordConfirm: 'password' },
+      );
+
+      expect(verificationServiceChangePasswordSpyOn.mock.calls).toHaveLength(1);
+      expect(verificationServiceChangePasswordSpyOn.mock.calls[0][0]).toEqual({
+        id: 0,
+        password: 'password',
+        passwordConfirm: 'password',
+      });
+    });
+  });
 });

@@ -169,9 +169,9 @@ export class AuthController {
 
   @Patch('/password-change/:verificationId')
   @ApiOperation({ summary: '비밀번호 변경', description: 'verification 확인 후 비밀번호 변경' })
-  async passwordChange(@Param() param: PasswordChangeParamDto, @Body() body: PasswordChangeBodyDto): Promise<void> {
+  async changePassword(@Param() param: PasswordChangeParamDto, @Body() body: PasswordChangeBodyDto): Promise<void> {
     const { verificationId } = param;
     const { password, passwordConfirm } = body;
-    await this.verificationService.passwordChange({ id: Number(verificationId), password, passwordConfirm });
+    await this.verificationService.changePassword({ id: Number(verificationId), password, passwordConfirm });
   }
 }
