@@ -3,7 +3,7 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { nanoid } from 'nanoid';
 import { UserRepository } from '../infrastructure/repository';
-import { JobType, User } from '../domain/model';
+import { User } from '../domain/model';
 import { Transactional } from '../../../libs/orm/transactional';
 import type { SignInBodyDto, SignUpBodyDto } from '../dto';
 import { badRequest, unauthorized } from '../../../libs/exception';
@@ -32,10 +32,6 @@ export class UserService {
       password,
     });
     await this.userRepository.save([user]);
-  }
-
-  async list({ email, profiles }: { email?: string; profiles?: { jobs: JobType[] } }) {
-    return this.userRepository.find({ email, profiles });
   }
 
   async isNicknameDuplicated({ nickname }: { nickname: string }) {
