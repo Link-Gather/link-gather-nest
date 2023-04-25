@@ -14,8 +14,7 @@ import {
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { jobType, JobType, ProviderType, providerType } from '../../domain/model';
-
-export const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*\-_+.,?])[A-Za-z\d!@#$%^&*\-_+.,?]{8,16}$/;
+import { passwordRegex } from '../../../regex';
 
 export class SignUpBodyDto {
   @ApiProperty({ example: 'test@test.com', description: '이메일', required: true })
