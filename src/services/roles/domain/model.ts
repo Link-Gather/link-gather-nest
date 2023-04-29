@@ -1,8 +1,8 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { Aggregate } from '../../../libs/ddd/aggregate';
 
-export const jobType = <const>['Developer', 'Designer', 'ProductManager'];
-export type JobType = typeof jobType[number];
+export const jobType = <const>['FrontendDeveloper', 'BackendDeveloper', 'Designer', 'ProductManager'];
+export type JobType = (typeof jobType)[number];
 
 export type RoleType = 'Leader' | 'Member';
 
