@@ -53,8 +53,8 @@ export class UserController {
     const { email, password } = body;
     const data = await this.userService.signIn({ email, password });
 
-    res.cookie('accessToken', `Bearer ${data.accessToken}`, { maxAge: 1000 * 60 * 60 });
-    res.cookie('refreshToken', `Bearer ${data.refreshToken}`, { maxAge: 1000 * 60 * 60 * 24 * 30 });
+    res.cookie('accessToken', `Bearer ${data.accessToken}`, { maxAge: 1000 * 60 * 60, signed: true });
+    res.cookie('refreshToken', `Bearer ${data.refreshToken}`, { maxAge: 1000 * 60 * 60 * 24 * 30, signed: true });
 
     const user = new SignInResponseDto({
       id: data.user.id,

@@ -4,7 +4,7 @@ import { Aggregate } from '../../../libs/ddd/aggregate';
 
 export const statusType = <const>['recruiting', 'progressing', 'finish', 'close'];
 export type StatusType = (typeof statusType)[number];
-export const purposeType = <const>['For Improvement', 'For Practice', 'For Fun'];
+export const purposeType = <const>['Improvement', 'Business', 'Fun', 'Study'];
 export type PurposeType = (typeof purposeType)[number];
 
 type RecruitMember = {
