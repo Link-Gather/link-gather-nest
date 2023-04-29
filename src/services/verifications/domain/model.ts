@@ -1,5 +1,5 @@
-import { customAlphabet } from 'nanoid';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { customAlphabet, nanoid } from 'nanoid';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 import { addHours, addMinutes } from '../../../libs/date';
 import { Aggregate } from '../../../libs/ddd/aggregate';
 import { badRequest } from '../../../libs/exception';
@@ -9,8 +9,8 @@ export type VerificationType = (typeof verificationType)[number];
 
 @Entity()
 export class Verification extends Aggregate {
-  @PrimaryGeneratedColumn()
-  id!: number;
+  @PrimaryColumn()
+  id!: string;
 
   @Column()
   email!: string;
@@ -30,6 +30,7 @@ export class Verification extends Aggregate {
   constructor(args: { email: string; type: VerificationType }) {
     super();
     if (args) {
+      this.id = nanoid(30);
       this.email = args.email;
       this.code = args.type === 'signup' ? customAlphabet('0123456789', 6)() : '';
       // NOTE: 회원가입 이메일 인증 유효기간 3분, 비밀번호 찾기 유효기간 1시간
@@ -38,8 +39,8 @@ export class Verification extends Aggregate {
     }
   }
 
-  verify(code: string) {
-    if (this.code !== code) {
+  verify(code?: string) {
+    if (code && this.code !== code) {
       throw badRequest(`Invalid Code(${code}) is entered.`, {
         errorMessage: '코드가 정확하지 않습니다. 다시 한번 확인해주세요.',
       });

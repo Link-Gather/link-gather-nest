@@ -1,5 +1,5 @@
-import { plainToClass } from 'class-transformer';
 import { nanoid } from 'nanoid';
+import { plainToClass } from '../../../libs/test';
 import { Profile, User } from './model';
 import { compareHash } from '../../../libs/password';
 import { badRequest } from '../../../libs/exception';
@@ -47,11 +47,8 @@ describe('User 테스트', () => {
   });
   describe('validatePassword test', () => {
     const user = plainToClass(User, {
-      career: 1,
       email: 'email@test.com',
       id: 'IRFa-VaY2b',
-      introduction: 'link-gather creator',
-      job: 'Backend Developer',
       nickname: 'arthur',
       password: expect.not.stringMatching('qhupr22qp3ir23qrn2-23rnj1p'),
       profileImage: 'image url',
@@ -66,8 +63,6 @@ describe('User 테스트', () => {
           urls: ['https://github.com/changchanghwang'],
         }),
       ],
-      stacks: ['node.js', 'typescript', 'react.js'],
-      urls: ['https://github.com/changchanghwang'],
     });
     test('패스워드가 일치하면 성공', async () => {
       const mockedCompareHash = compareHash as jest.Mock;
@@ -98,6 +93,94 @@ describe('User 테스트', () => {
           }),
         );
       }
+    });
+  });
+
+  describe('changePassword test', () => {
+    const user = plainToClass(User, {
+      email: 'email@test.com',
+      id: 'IRFa-VaY2b',
+      nickname: 'arthur',
+      password: expect.not.stringMatching('qhupr22qp3ir23qrn2-23rnj1p'),
+      profileImage: 'image url',
+      provider: 'link-gather',
+      profiles: [
+        plainToClass(Profile, {
+          career: 1,
+          id: 'IRFa-VaY2b',
+          introduction: 'link-gather creator',
+          job: 'Backend Developer',
+          stacks: ['node.js', 'typescript', 'react.js'],
+          urls: ['https://github.com/changchanghwang'],
+        }),
+      ],
+    });
+
+    test('비밀번호와 비밀번호확인이 일치하지 않으면 에러를 뱉는다.', async () => {
+      expect.assertions(1);
+      try {
+        await user.changePassword({ password: 'new', passwordConfirm: 'new2' });
+      } catch (err) {
+        expect(err).toEqual(
+          badRequest(`Password(new) is not equal to PasswordConfirm(new2)`, {
+            errorMessage: `비밀번호와 비밀번호 확인이 일치하지 않습니다.`,
+          }),
+        );
+      }
+    });
+
+    describe('provider가 link-gather가 아니면 에러를 뱉는다.', () => {
+      test('provider === google', async () => {
+        const googleUser = plainToClass(User, {
+          ...user,
+          provider: 'google',
+        });
+
+        expect.assertions(1);
+        try {
+          await googleUser.changePassword({ password: 'new', passwordConfirm: 'new' });
+        } catch (err) {
+          expect(err).toEqual(
+            badRequest(`Invalid provider(google) is entered. Only link-gather can change password`, {
+              errorMessage: '비밀번호를 변경할 수 없는 계정입니다.',
+            }),
+          );
+        }
+      });
+      test('provider === kakao', async () => {
+        const kakaoUser = plainToClass(User, {
+          ...user,
+          provider: 'kakao',
+        });
+
+        expect.assertions(1);
+        try {
+          await kakaoUser.changePassword({ password: 'new', passwordConfirm: 'new' });
+        } catch (err) {
+          expect(err).toEqual(
+            badRequest(`Invalid provider(kakao) is entered. Only link-gather can change password`, {
+              errorMessage: '비밀번호를 변경할 수 없는 계정입니다.',
+            }),
+          );
+        }
+      });
+      test('provider === github', async () => {
+        const githubUser = plainToClass(User, {
+          ...user,
+          provider: 'github',
+        });
+
+        expect.assertions(1);
+        try {
+          await githubUser.changePassword({ password: 'new', passwordConfirm: 'new' });
+        } catch (err) {
+          expect(err).toEqual(
+            badRequest(`Invalid provider(github) is entered. Only link-gather can change password`, {
+              errorMessage: '비밀번호를 변경할 수 없는 계정입니다.',
+            }),
+          );
+        }
+      });
     });
   });
 });

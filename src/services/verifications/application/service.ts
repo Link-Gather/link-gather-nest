@@ -56,6 +56,17 @@ export class VerificationService {
     }
   }
 
+  @Transactional()
+  async changePassword({ id, password, passwordConfirm }: { id: number; password: string; passwordConfirm: string }) {
+    const [verification] = await this.verificationRepository.findSpec(new ValidVerificationSpec({ id }));
+    const [user] = await this.userRepository.find({ email: verification.email });
+
+    await user.changePassword({ password, passwordConfirm });
+    verification.verify();
+
+    await Promise.all([this.userRepository.save([user]), this.verificationRepository.save([verification])]);
+  }
+
   private async send(verification: Verification) {
     if (verification.type === 'signup') {
       await this.mailerService.sendMail({
@@ -114,7 +125,7 @@ export class VerificationService {
               </div>
               <div style="height:5rem;background-color:#E3E3FF;text-align:center; padding: 20px;">
                 <a style="font-size: 3rem; font-weight: bold; letter-spacing: 8px; text-decoration:none; color:#5555ff;" 
-                  href="${LINK_GATHER_FRONT_URL}/forgot-password?step=2&verificationId=${verification.id}"
+                  href="${LINK_GATHER_FRONT_URL}/forgot-password?step=password&verificationId=${verification.id}"
                 >
                   비밀번호 재설정
                 </a>

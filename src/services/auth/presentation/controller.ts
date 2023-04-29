@@ -6,6 +6,7 @@ import {
   Get,
   Injectable,
   Param,
+  Patch,
   Post,
   UseInterceptors,
 } from '@nestjs/common';
@@ -22,6 +23,8 @@ import {
   EmailVerificationConfirmBodyDto,
   EmailVerificationConfirmParamDto,
   EmailVerificationResponseDto,
+  PasswordChangeParamDto,
+  PasswordChangeBodyDto,
 } from '../dto';
 
 const OAUTH_CONFIG = getConfig('/oauth');
@@ -162,5 +165,13 @@ export class AuthController {
   async isValidVerification(@Param() param: EmailVerificationConfirmParamDto): Promise<void> {
     const { id } = param;
     this.verificationService.isValidVerification(Number(id));
+  }
+
+  @Patch('/password-change/:verificationId')
+  @ApiOperation({ summary: '비밀번호 변경', description: 'verification 확인 후 비밀번호 변경' })
+  async changePassword(@Param() param: PasswordChangeParamDto, @Body() body: PasswordChangeBodyDto): Promise<void> {
+    const { verificationId } = param;
+    const { password, passwordConfirm } = body;
+    await this.verificationService.changePassword({ id: Number(verificationId), password, passwordConfirm });
   }
 }

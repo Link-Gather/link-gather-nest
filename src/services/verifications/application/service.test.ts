@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MailerService } from '@nestjs-modules/mailer';
 import { customAlphabet } from 'nanoid';
+import * as bcrypt from 'bcrypt';
 import { UserRepository } from '../../users/infrastructure/repository';
 import { VerificationService } from './service';
 import { dataSource } from '../../../libs/orm';
@@ -69,7 +70,7 @@ describe('VerificationService 테스트', () => {
   });
 
   const verification = plainToClass(Verification, {
-    id: 1,
+    id: 'nanoid',
     email: 'test@email.com',
     code: 'verificationCode',
     expiredAt: new Date('2023-03-24T00:00:00.000Z'),
@@ -112,7 +113,7 @@ describe('VerificationService 테스트', () => {
           code: 'verificationCode',
           email: 'test@email.com',
           expiredAt: new Date('2023-03-24T00:00:00.000Z'),
-          id: 1,
+          id: 'nanoid',
           verifiedAt: new Date('2023-03-23T00:00:00.000Z'),
           type: 'signup',
         },
@@ -133,6 +134,26 @@ describe('VerificationService 테스트', () => {
           }),
         );
       }
+    });
+  });
+
+  describe('changePassword test', () => {
+    test('비밀번호를 변경할 수 있다.', async () => {
+      jest.spyOn(verificationRepository, 'findSpec').mockResolvedValue([verification]);
+      jest.spyOn(verificationRepository, 'save');
+      jest.spyOn(userRepository, 'find').mockResolvedValue([user]);
+      jest.spyOn(userRepository, 'save');
+      jest.spyOn(bcrypt, 'genSalt').mockImplementation(() => Promise.resolve('$2b$10$5CW3ftestSaltJ9wpFAShe'));
+      jest.spyOn(bcrypt, 'hash').mockImplementation(() => Promise.resolve('encrypt password'));
+
+      await verificationService.changePassword({ id: 0, password: 'newPassword', passwordConfirm: 'newPassword' });
+
+      expect(userRepository.save).toHaveBeenCalledTimes(1);
+      expect(verificationRepository.save).toHaveBeenCalledTimes(1);
+      expect(userRepository.save).toHaveBeenCalledWith([{ ...user, password: 'encrypt password' }]);
+      expect(verificationRepository.save).toHaveBeenCalledWith([
+        { ...verification, verifiedAt: new Date('2023-03-23T00:00:00.000Z') },
+      ]);
     });
   });
 });

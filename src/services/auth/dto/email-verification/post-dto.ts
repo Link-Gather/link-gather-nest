@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsIn, IsNotEmpty, IsString, IsNumber } from 'class-validator';
+import { IsEmail, IsIn, IsNotEmpty, IsString } from 'class-validator';
 import { type VerificationType, verificationType } from '../../../verifications/domain/model';
 
 export class EmailVerificationBodyDto {
@@ -17,12 +17,12 @@ export class EmailVerificationBodyDto {
 }
 
 export class EmailVerificationResponseDto {
-  @ApiProperty({ example: 0, description: 'verification id', required: true })
+  @ApiProperty({ example: 'nanoid', description: 'verification id', required: true })
   @IsNotEmpty()
-  @IsNumber()
-  id!: number;
+  @IsString()
+  id!: string;
 
-  constructor(args: { id: number }) {
+  constructor(args: { id: string }) {
     this.id = args.id;
   }
 }

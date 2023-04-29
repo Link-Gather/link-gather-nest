@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { nanoid } from 'nanoid';
 import { UserRepository } from '../infrastructure/repository';
@@ -7,9 +6,7 @@ import { User } from '../domain/model';
 import { Transactional } from '../../../libs/orm/transactional';
 import type { SignInBodyDto, SignUpBodyDto } from '../dto';
 import { badRequest, unauthorized } from '../../../libs/exception';
-import { getConfig } from '../../../config';
-
-const SALT_ROUNDS = getConfig('/saltRounds');
+import { hashPassword } from '../../../libs/password';
 
 @Injectable()
 export class UserService {
@@ -23,9 +20,8 @@ export class UserService {
       throw unauthorized('이미 존재하는 이메일입니다.');
     }
 
-    const salt = await bcrypt.genSalt(Number(SALT_ROUNDS));
     // NOTE: provider === 'link-gather' 일 경우 args.password 는 required 이다.
-    const password = await bcrypt.hash(args.provider === 'link-gather' ? args.password! : nanoid(10), salt);
+    const password = await hashPassword(args.provider === 'link-gather' ? args.password! : nanoid(10));
 
     const user = new User({
       ...args,

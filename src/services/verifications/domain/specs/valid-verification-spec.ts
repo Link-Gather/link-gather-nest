@@ -18,6 +18,12 @@ export class ValidVerificationSpec implements VerificationSpec {
       });
     }
 
+    if (verification.verifiedAt) {
+      throw forbidden(`Verification(${verification.id}) is already verified.`, {
+        errorMessage: '이미 인증된 인증코드입니다. 다시 인증해주세요.',
+      });
+    }
+
     return [verification];
   }
 }
