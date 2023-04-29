@@ -70,7 +70,7 @@ describe('ProjectService 테스트', () => {
           description: 'description',
           recruitMember: { frontendDeveloper: 2, backendDeveloper: 2, designer: 1, productManager: 1 },
           stacks: ['node.js'],
-          period: '1개월',
+          period: 1,
           purpose: 'Business',
           leaderJob: 'BackendDeveloper',
         },
@@ -83,7 +83,7 @@ describe('ProjectService 테스트', () => {
           description: 'description',
           id: 'IRFa-VaY2b',
           isRecruiting: true,
-          period: '1개월',
+          period: 1,
           purpose: 'Business',
           recruitMember: {
             backendDeveloper: 2,

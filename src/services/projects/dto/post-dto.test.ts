@@ -14,7 +14,7 @@ describe('post dto 테스트', () => {
         designer: 1,
         productManager: 1,
       },
-      period: '1 개월',
+      period: 1,
       leaderJob: 'BackendDeveloper',
       stacks: ['node.js'],
     });
@@ -35,7 +35,7 @@ describe('post dto 테스트', () => {
         designer: 1,
         productManager: 1,
       },
-      period: '1 개월',
+      period: 1,
       stacks: ['node.js'],
     });
 

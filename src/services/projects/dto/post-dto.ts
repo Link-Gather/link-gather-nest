@@ -55,10 +55,10 @@ export class CreateBodyDto {
   @Type(() => RecruitMemberDto)
   recruitMember!: RecruitMemberDto;
 
-  @ApiProperty({ example: '1 개월', description: '프로젝트 기간' })
+  @ApiProperty({ example: 1, description: '프로젝트 기간 (개월 단위)' })
   @IsNotEmpty()
-  @IsString()
-  period!: string;
+  @IsNumber()
+  period!: number;
 
   @ApiProperty({ example: ['node.js', 'react', 'spring'], description: '기술스택', required: false })
   @IsOptional()
@@ -102,10 +102,10 @@ export class CreateResponseDto {
   @Type(() => RecruitMemberDto)
   recruitMember!: RecruitMemberDto;
 
-  @ApiProperty({ example: '1 개월', description: '프로젝트 기간' })
+  @ApiProperty({ example: 1, description: '프로젝트 기간' })
   @IsNotEmpty()
-  @IsString()
-  period!: string;
+  @IsNumber()
+  period!: number;
 
   @ApiProperty({ example: ['node.js', 'react', 'spring'], description: '기술스택', required: false })
   @IsOptional()
@@ -113,13 +113,15 @@ export class CreateResponseDto {
   @IsString({ each: true })
   stacks?: string[];
 
-  constructor(args: CreateResponseDto) {
-    this.id = args.id;
-    this.title = args.title;
-    this.description = args.description;
-    this.purpose = args.purpose;
-    this.recruitMember = args.recruitMember;
-    this.period = args.period;
-    this.stacks = args.stacks;
+  constructor(args?: CreateResponseDto) {
+    if (args) {
+      this.id = args.id;
+      this.title = args.title;
+      this.description = args.description;
+      this.purpose = args.purpose;
+      this.recruitMember = args.recruitMember;
+      this.period = args.period;
+      this.stacks = args.stacks;
+    }
   }
 }
