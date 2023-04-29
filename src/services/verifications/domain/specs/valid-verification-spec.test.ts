@@ -20,7 +20,7 @@ describe('ValidVerificationSpec test', () => {
   afterEach(() => jest.clearAllTimers());
 
   const verification = plainToClass(Verification, {
-    id: 1,
+    id: 'nanoid',
     email: 'test@email.com',
     code: 'verificationCode',
     expiredAt: new Date('2023-03-29T00:00:00.000Z'),

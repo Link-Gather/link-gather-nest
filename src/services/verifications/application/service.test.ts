@@ -70,7 +70,7 @@ describe('VerificationService 테스트', () => {
   });
 
   const verification = plainToClass(Verification, {
-    id: 1,
+    id: 'nanoid',
     email: 'test@email.com',
     code: 'verificationCode',
     expiredAt: new Date('2023-03-24T00:00:00.000Z'),
@@ -113,7 +113,7 @@ describe('VerificationService 테스트', () => {
           code: 'verificationCode',
           email: 'test@email.com',
           expiredAt: new Date('2023-03-24T00:00:00.000Z'),
-          id: 1,
+          id: 'nanoid',
           verifiedAt: new Date('2023-03-23T00:00:00.000Z'),
           type: 'signup',
         },

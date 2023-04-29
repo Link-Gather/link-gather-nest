@@ -31,7 +31,9 @@ describe('Auth Controller test', () => {
 
   describe('POST /email-verification test', () => {
     test('verificationService.start 호출한다.', async () => {
-      const verificationServiceStartSpyOn = jest.spyOn(verificationService, 'start').mockResolvedValue({ id: 0 });
+      const verificationServiceStartSpyOn = jest
+        .spyOn(verificationService, 'start')
+        .mockResolvedValue({ id: 'nanoid' });
 
       await authController.verifyEmail({ email: 'hch950627@naver.com', type: 'signup' });
 

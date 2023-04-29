@@ -4,7 +4,7 @@ import { Verification } from './model';
 
 describe('Verification test', () => {
   const verification = plainToClass(Verification, {
-    id: 1,
+    id: 'nanoid',
     email: 'test@email.com',
     code: 'verificationCode',
     expiredAt: new Date('2023-03-24T00:00:00.000Z'),
