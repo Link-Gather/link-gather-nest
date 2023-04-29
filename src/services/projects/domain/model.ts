@@ -19,7 +19,7 @@ type CtorType = {
   description: string;
   purpose: PurposeType;
   recruitMember: RecruitMember;
-  period: string;
+  period: number;
   stacks?: string[];
 };
 
@@ -47,7 +47,7 @@ export class Project extends Aggregate {
   recruitMember!: RecruitMember;
 
   @Column()
-  period!: string;
+  period!: number;
 
   @Column('simple-array', { nullable: true })
   stacks?: string[];
