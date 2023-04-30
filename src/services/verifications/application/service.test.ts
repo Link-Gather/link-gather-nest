@@ -106,7 +106,7 @@ describe('VerificationService 테스트', () => {
       jest.spyOn(verificationRepository, 'findSpec').mockResolvedValue([verification]);
       jest.spyOn(verificationRepository, 'save');
 
-      await verificationService.confirm({ code: 'verificationCode', id: 0 });
+      await verificationService.confirm({ code: 'verificationCode', id: 'X1ctfskzB_E3hums84rTESTcF__CD' });
       expect(verificationRepository.save).toHaveBeenCalledTimes(1);
       expect(verificationRepository.save).toHaveBeenCalledWith([
         {
@@ -126,10 +126,10 @@ describe('VerificationService 테스트', () => {
       jest.spyOn(verificationRepository, 'findSpec').mockResolvedValue([]);
       expect.assertions(1);
       try {
-        await verificationService.isValidVerification(0);
+        await verificationService.isValidVerification('X1ctfskzB_E3hums84rTESTcF__CD');
       } catch (err) {
         expect(err).toEqual(
-          badRequest(`Invalid verificationId(0) is entered.`, {
+          badRequest(`Invalid verificationId(X1ctfskzB_E3hums84rTESTcF__CD) is entered.`, {
             errorMessage: '잘못된 URL입니다. 다시한번 인증을 진행해주세요.',
           }),
         );
@@ -146,7 +146,11 @@ describe('VerificationService 테스트', () => {
       jest.spyOn(bcrypt, 'genSalt').mockImplementation(() => Promise.resolve('$2b$10$5CW3ftestSaltJ9wpFAShe'));
       jest.spyOn(bcrypt, 'hash').mockImplementation(() => Promise.resolve('encrypt password'));
 
-      await verificationService.changePassword({ id: 0, password: 'newPassword', passwordConfirm: 'newPassword' });
+      await verificationService.changePassword({
+        id: 'X1ctfskzB_E3hums84rTESTcF__CD',
+        password: 'newPassword',
+        passwordConfirm: 'newPassword',
+      });
 
       expect(userRepository.save).toHaveBeenCalledTimes(1);
       expect(verificationRepository.save).toHaveBeenCalledTimes(1);

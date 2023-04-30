@@ -10,7 +10,7 @@ export class VerificationRepository extends Repository<Verification, Verificatio
   entityClass = Verification;
 
   async find(
-    conditions: { id?: number },
+    conditions: { id?: string },
     options?: PaginationOption & Partial<FindOption>,
     order?: FindOrder,
   ): Promise<Verification[]> {
