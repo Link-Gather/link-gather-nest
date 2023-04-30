@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Equals, IsNotEmpty, IsString, Matches, MaxLength, MinLength } from 'class-validator';
+import { IsNotEmpty, IsString, Matches, MaxLength, MinLength } from 'class-validator';
 import { passwordRegex } from '../../../../regex';
 import { Match } from '../../../../../libs/class-validator';
 
@@ -19,7 +19,7 @@ export class PasswordChangeBodyDto {
 }
 
 export class PasswordChangeParamDto {
-  @ApiProperty({ example: '0', description: 'verification id', required: true })
+  @ApiProperty({ example: 'X1ctfskzB_E3hums84rTESTcF__CD', description: 'verification id', required: true })
   @IsNotEmpty()
   @IsString()
   verificationId!: string;

@@ -3,9 +3,9 @@ import { VerificationRepository } from '../../infrastructure/repository';
 import { VerificationSpec } from './index';
 
 export class ValidVerificationSpec implements VerificationSpec {
-  private id: number;
+  private id: string;
 
-  constructor({ id }: { id: number }) {
+  constructor({ id }: { id: string }) {
     this.id = id;
   }
 
