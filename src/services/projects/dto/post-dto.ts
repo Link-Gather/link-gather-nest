@@ -73,10 +73,10 @@ export class CreateBodyDto {
 }
 
 export class CreateResponseDto {
-  @ApiProperty({ example: 'projectId', description: '프로젝트 id' })
+  @ApiProperty({ example: 1, description: '프로젝트 id' })
   @IsNotEmpty()
   @IsString()
-  id!: string;
+  id!: number;
 
   @ApiProperty({ example: 'title', description: '프로젝트 제목' })
   @IsNotEmpty()
