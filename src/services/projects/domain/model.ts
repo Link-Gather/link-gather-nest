@@ -2,7 +2,7 @@ import { Column, Entity, PrimaryColumn } from 'typeorm';
 import { nanoid } from 'nanoid';
 import { Aggregate } from '../../../libs/ddd/aggregate';
 
-export const statusType = <const>['recruiting', 'progressing', 'finish', 'close'];
+export const statusType = <const>['Recruiting', 'Progressing', 'Finish', 'Close'];
 export type StatusType = (typeof statusType)[number];
 export const purposeType = <const>['Improvement', 'Business', 'Fun', 'Study'];
 export type PurposeType = (typeof purposeType)[number];
@@ -68,7 +68,7 @@ export class Project extends Aggregate {
       this.recruitMember = args.recruitMember;
       this.period = args.period;
       this.stacks = args.stacks;
-      this.status = 'recruiting';
+      this.status = 'Recruiting';
       this.isRecruiting = true;
     }
   }

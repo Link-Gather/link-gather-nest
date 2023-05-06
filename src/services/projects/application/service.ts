@@ -30,8 +30,4 @@ export class ProjectService {
     await Promise.all([this.projectRepository.save([project]), this.roleRepository.save([role])]);
     return project;
   }
-
-  async findByTitle(title: string) {
-    return this.projectRepository.find({ title });
-  }
 }
