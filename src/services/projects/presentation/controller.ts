@@ -8,7 +8,7 @@ import { AuthGuard } from '../../../libs/auth/guard';
 @ApiTags('Project')
 @Injectable()
 export class ProjectController {
-  constructor(private readonly postService: ProjectService) {}
+  constructor(private readonly projectService: ProjectService) {}
 
   @Post('/')
   @UseGuards(AuthGuard)
@@ -16,6 +16,9 @@ export class ProjectController {
   async create(@Body() body: CreateBodyDto, @Req() req: Request) {
     const { user } = req.state;
     const { title, description, recruitMember, stacks, period, purpose, leaderJob } = body;
-    await this.postService.create({ user }, { title, description, recruitMember, stacks, period, purpose, leaderJob });
+    await this.projectService.create(
+      { user },
+      { title, description, recruitMember, stacks, period, purpose, leaderJob },
+    );
   }
 }
