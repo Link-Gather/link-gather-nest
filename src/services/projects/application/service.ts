@@ -28,6 +28,5 @@ export class ProjectService {
       job: args.leaderJob,
     });
     await Promise.all([this.projectRepository.save([project]), this.roleRepository.save([role])]);
-    return project;
   }
 }
