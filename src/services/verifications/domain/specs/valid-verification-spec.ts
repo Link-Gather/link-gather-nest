@@ -10,7 +10,7 @@ export class ValidVerificationSpec implements VerificationSpec {
   }
 
   async find(verificationRepository: VerificationRepository) {
-    const [verification] = await verificationRepository.find({ id: this.id }, { lock: { mode: 'pessimistic_write' } });
+    const [verification] = await verificationRepository.find({ id: this.id });
 
     if (verification.expiredAt < new Date()) {
       throw forbidden(`Verification(${verification.id}) is expired.`, {
