@@ -1,3 +1,4 @@
+import { FindOption } from 'libs/orm';
 import { forbidden } from '../../../../libs/exception';
 import { VerificationRepository } from '../../infrastructure/repository';
 import { VerificationSpec } from './index';
@@ -9,8 +10,8 @@ export class ValidVerificationSpec implements VerificationSpec {
     this.id = id;
   }
 
-  async find(verificationRepository: VerificationRepository) {
-    const [verification] = await verificationRepository.find({ id: this.id });
+  async find(verificationRepository: VerificationRepository, options?: Partial<FindOption>) {
+    const [verification] = await verificationRepository.find({ id: this.id }, options);
 
     if (verification.expiredAt < new Date()) {
       throw forbidden(`Verification(${verification.id}) is expired.`, {
