@@ -48,7 +48,11 @@ export class VerificationService {
   }
 
   async isValidVerification(id: string) {
-    const [verification] = await this.verificationRepository.findSpec(new ValidVerificationSpec({ id }));
+    const [verification] = await this.verificationRepository.findSpec(new ValidVerificationSpec({ id }), {
+      lock: {
+        mode: 'pessimistic_write',
+      },
+    });
     if (!verification) {
       throw badRequest(`Invalid verificationId(${id}) is entered.`, {
         errorMessage: '잘못된 URL입니다. 다시한번 인증을 진행해주세요.',
