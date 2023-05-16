@@ -5,6 +5,8 @@ export const statusType = <const>['recruiting', 'progressing', 'finish', 'close'
 export type StatusType = (typeof statusType)[number];
 export const purposeType = <const>['Improvement', 'Business', 'Fun', 'Study'];
 export type PurposeType = (typeof purposeType)[number];
+export const sortType = <const>['latest', 'hot', 'oldest'];
+export type SortType = (typeof sortType)[number];
 
 type RecruitMember = {
   frontendDeveloper: number;
