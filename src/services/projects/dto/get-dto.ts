@@ -57,12 +57,12 @@ export class ListQueryDto {
   @IsIn(statusType)
   status?: StatusType;
 
-  @ApiProperty({ example: 'latest', description: '프로젝트 목록 정렬 기준', default: 'latest', required: false })
+  @ApiProperty({ example: 'Latest', description: '프로젝트 목록 정렬 기준', default: 'Latest', required: false })
   @IsOptional()
   @IsNotEmpty()
   @IsString()
   @IsIn(sortType)
-  sort?: SortType = 'latest';
+  sort?: SortType = 'Latest';
 
   @ApiProperty({ example: '1', description: '페이지네이션용 page', default: '1', required: false })
   @IsOptional()

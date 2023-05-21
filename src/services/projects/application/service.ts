@@ -10,11 +10,11 @@ import { RoleRepository } from '../../roles/infrastructure/repository';
 
 function getSort(sort?: SortType): FindOrder {
   switch (sort) {
-    case 'hot':
+    case 'Hot':
       return { order: { bookMark: 'DESC', id: 'DESC' } };
-    case 'oldest':
+    case 'Oldest':
       return { order: { id: 'ASC' } };
-    case 'latest':
+    case 'Latest':
     default:
       return { order: { id: 'DESC' } };
   }
