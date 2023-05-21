@@ -22,8 +22,8 @@ export class ProjectRepository extends Repository<Project, Project['id']> {
           purpose: conditions.purpose,
           // TODO: 지금은 선택한 직무를 포함하고 있는 프로젝트 모두 노출이지만 인원이 다 차지 않은 프로젝트만 노출되도록 수정해야 함.
           recruitMember: conditions.job
-            ? Raw((alias) => `JSON_EXTRACT(${alias}, '$.:job') >= 1`, {
-                job: conditions.job,
+            ? Raw((alias) => `JSON_EXTRACT(${alias}, :job) >= 1`, {
+                job: `$.${conditions.job}`,
               })
             : undefined,
           status: conditions.status,
@@ -46,8 +46,8 @@ export class ProjectRepository extends Repository<Project, Project['id']> {
           purpose: conditions.purpose,
           // TODO: 지금은 선택한 직무를 포함하고 있는 프로젝트 모두 노출이지만 인원이 다 차지 않은 프로젝트만 노출되도록 수정해야 함.
           recruitMember: conditions.job
-            ? Raw((alias) => `JSON_EXTRACT(${alias}, '$.:job') >= 1`, {
-                job: conditions.job,
+            ? Raw((alias) => `JSON_EXTRACT(${alias}, :job) >= 1`, {
+                job: `$.${conditions.job}`,
               })
             : undefined,
           status: conditions.status,
