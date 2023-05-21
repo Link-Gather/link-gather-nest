@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MailerService } from '@nestjs-modules/mailer';
 import { customAlphabet } from 'nanoid';
+import * as bcrypt from 'bcrypt';
 import { UserRepository } from '../../users/infrastructure/repository';
 import { VerificationService } from './service';
 import { dataSource } from '../../../libs/orm';
@@ -69,7 +70,7 @@ describe('VerificationService 테스트', () => {
   });
 
   const verification = plainToClass(Verification, {
-    id: 1,
+    id: 'nanoid',
     email: 'test@email.com',
     code: 'verificationCode',
     expiredAt: new Date('2023-03-24T00:00:00.000Z'),
@@ -105,14 +106,14 @@ describe('VerificationService 테스트', () => {
       jest.spyOn(verificationRepository, 'findSpec').mockResolvedValue([verification]);
       jest.spyOn(verificationRepository, 'save');
 
-      await verificationService.confirm({ code: 'verificationCode', id: 0 });
+      await verificationService.confirm({ code: 'verificationCode', id: 'X1ctfskzB_E3hums84rTESTcF__CD' });
       expect(verificationRepository.save).toHaveBeenCalledTimes(1);
       expect(verificationRepository.save).toHaveBeenCalledWith([
         {
           code: 'verificationCode',
           email: 'test@email.com',
           expiredAt: new Date('2023-03-24T00:00:00.000Z'),
-          id: 1,
+          id: 'nanoid',
           verifiedAt: new Date('2023-03-23T00:00:00.000Z'),
           type: 'signup',
         },
@@ -125,14 +126,38 @@ describe('VerificationService 테스트', () => {
       jest.spyOn(verificationRepository, 'findSpec').mockResolvedValue([]);
       expect.assertions(1);
       try {
-        await verificationService.isValidVerification(0);
+        await verificationService.isValidVerification('X1ctfskzB_E3hums84rTESTcF__CD');
       } catch (err) {
         expect(err).toEqual(
-          badRequest(`Invalid verificationId(0) is entered.`, {
+          badRequest(`Invalid verificationId(X1ctfskzB_E3hums84rTESTcF__CD) is entered.`, {
             errorMessage: '잘못된 URL입니다. 다시한번 인증을 진행해주세요.',
           }),
         );
       }
+    });
+  });
+
+  describe('changePassword test', () => {
+    test('비밀번호를 변경할 수 있다.', async () => {
+      jest.spyOn(verificationRepository, 'findSpec').mockResolvedValue([verification]);
+      jest.spyOn(verificationRepository, 'save');
+      jest.spyOn(userRepository, 'find').mockResolvedValue([user]);
+      jest.spyOn(userRepository, 'save');
+      jest.spyOn(bcrypt, 'genSalt').mockImplementation(() => Promise.resolve('$2b$10$5CW3ftestSaltJ9wpFAShe'));
+      jest.spyOn(bcrypt, 'hash').mockImplementation(() => Promise.resolve('encrypt password'));
+
+      await verificationService.changePassword({
+        id: 'X1ctfskzB_E3hums84rTESTcF__CD',
+        password: 'newPassword',
+        passwordConfirm: 'newPassword',
+      });
+
+      expect(userRepository.save).toHaveBeenCalledTimes(1);
+      expect(verificationRepository.save).toHaveBeenCalledTimes(1);
+      expect(userRepository.save).toHaveBeenCalledWith([{ ...user, password: 'encrypt password' }]);
+      expect(verificationRepository.save).toHaveBeenCalledWith([
+        { ...verification, verifiedAt: new Date('2023-03-23T00:00:00.000Z') },
+      ]);
     });
   });
 });

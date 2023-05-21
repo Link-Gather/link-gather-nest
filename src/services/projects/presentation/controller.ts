@@ -31,7 +31,7 @@ export class ProjectController {
   @Post('/')
   @UseGuards(AuthGuard)
   @ApiOperation({ summary: '프로젝트 생성', description: '프로젝트 생성 API' })
-  async create(@Body() body: CreateBodyDto, @Req() req: Request): Result<CreateResponseDto> {
+  async create(@Body() body: CreateBodyDto, @Req() req: Request) {
     const { user } = req.state;
     const { title, description, recruitMember, stacks, period, purpose, leaderJob } = body;
     const project = await this.projectService.create(

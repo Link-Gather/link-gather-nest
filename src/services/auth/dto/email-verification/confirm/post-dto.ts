@@ -9,7 +9,7 @@ export class EmailVerificationConfirmBodyDto {
 }
 
 export class EmailVerificationConfirmParamDto {
-  @ApiProperty({ example: '0', description: 'verification id', required: true })
+  @ApiProperty({ example: 'X1ctfskzB_E3hums84rTESTcF__CD', description: 'verification id', required: true })
   @IsNotEmpty()
   @IsString()
   id!: string;

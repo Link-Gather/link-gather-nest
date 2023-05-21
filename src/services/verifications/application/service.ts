@@ -40,20 +40,35 @@ export class VerificationService {
     return { id: verification.id };
   }
 
-  async confirm({ code, id }: { code: string; id: number }) {
+  async confirm({ code, id }: { code: string; id: string }) {
     const [verification] = await this.verificationRepository.findSpec(new ValidVerificationSpec({ id }));
 
     verification.verify(code);
     await this.verificationRepository.save([verification]);
   }
 
-  async isValidVerification(id: number) {
-    const [verification] = await this.verificationRepository.findSpec(new ValidVerificationSpec({ id }));
+  async isValidVerification(id: string) {
+    const [verification] = await this.verificationRepository.findSpec(new ValidVerificationSpec({ id }), {
+      lock: {
+        mode: 'pessimistic_write',
+      },
+    });
     if (!verification) {
       throw badRequest(`Invalid verificationId(${id}) is entered.`, {
         errorMessage: '잘못된 URL입니다. 다시한번 인증을 진행해주세요.',
       });
     }
+  }
+
+  @Transactional()
+  async changePassword({ id, password, passwordConfirm }: { id: string; password: string; passwordConfirm: string }) {
+    const [verification] = await this.verificationRepository.findSpec(new ValidVerificationSpec({ id }));
+    const [user] = await this.userRepository.find({ email: verification.email });
+
+    await user.changePassword({ password, passwordConfirm });
+    verification.verify();
+
+    await Promise.all([this.userRepository.save([user]), this.verificationRepository.save([verification])]);
   }
 
   private async send(verification: Verification) {
@@ -114,7 +129,7 @@ export class VerificationService {
               </div>
               <div style="height:5rem;background-color:#E3E3FF;text-align:center; padding: 20px;">
                 <a style="font-size: 3rem; font-weight: bold; letter-spacing: 8px; text-decoration:none; color:#5555ff;" 
-                  href="${LINK_GATHER_FRONT_URL}/forgot-password?step=2&verificationId=${verification.id}"
+                  href="${LINK_GATHER_FRONT_URL}/forgot-password?step=password&verificationId=${verification.id}"
                 >
                   비밀번호 재설정
                 </a>
