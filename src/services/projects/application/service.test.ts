@@ -63,7 +63,7 @@ describe('ProjectService 테스트', () => {
       const projectRepositorySaveSpy = jest.spyOn(projectRepository, 'save');
       const roleRepositorySaveSpy = jest.spyOn(roleRepository, 'save');
 
-      await projectService.create(
+      const project = await projectService.create(
         { user },
         {
           title: 'title',
@@ -81,7 +81,6 @@ describe('ProjectService 테스트', () => {
       expect(projectRepositorySaveSpy.mock.calls[0][0]).toEqual([
         {
           description: 'description',
-          id: 'IRFa-VaY2b',
           isRecruiting: true,
           period: 1,
           purpose: 'Business',
@@ -92,6 +91,7 @@ describe('ProjectService 테스트', () => {
             productManager: 1,
           },
           stacks: ['node.js'],
+          bookMark: 0,
           status: 'Recruiting',
           title: 'title',
         },
@@ -99,7 +99,7 @@ describe('ProjectService 테스트', () => {
       expect(roleRepositorySaveSpy.mock.calls[0][0]).toEqual([
         {
           job: 'BackendDeveloper',
-          projectId: 'IRFa-VaY2b',
+          projectId: project.id,
           type: 'Leader',
           userId: 'userId',
         },
