@@ -40,15 +40,19 @@ export class VerificationService {
     return { id: verification.id };
   }
 
-  async confirm({ code, id }: { code: string; id: number }) {
+  async confirm({ code, id }: { code: string; id: string }) {
     const [verification] = await this.verificationRepository.findSpec(new ValidVerificationSpec({ id }));
 
     verification.verify(code);
     await this.verificationRepository.save([verification]);
   }
 
-  async isValidVerification(id: number) {
-    const [verification] = await this.verificationRepository.findSpec(new ValidVerificationSpec({ id }));
+  async isValidVerification(id: string) {
+    const [verification] = await this.verificationRepository.findSpec(new ValidVerificationSpec({ id }), {
+      lock: {
+        mode: 'pessimistic_write',
+      },
+    });
     if (!verification) {
       throw badRequest(`Invalid verificationId(${id}) is entered.`, {
         errorMessage: '잘못된 URL입니다. 다시한번 인증을 진행해주세요.',
@@ -57,7 +61,7 @@ export class VerificationService {
   }
 
   @Transactional()
-  async changePassword({ id, password, passwordConfirm }: { id: number; password: string; passwordConfirm: string }) {
+  async changePassword({ id, password, passwordConfirm }: { id: string; password: string; passwordConfirm: string }) {
     const [verification] = await this.verificationRepository.findSpec(new ValidVerificationSpec({ id }));
     const [user] = await this.userRepository.find({ email: verification.email });
 

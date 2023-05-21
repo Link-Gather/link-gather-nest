@@ -31,7 +31,9 @@ describe('Auth Controller test', () => {
 
   describe('POST /email-verification test', () => {
     test('verificationService.start 호출한다.', async () => {
-      const verificationServiceStartSpyOn = jest.spyOn(verificationService, 'start').mockResolvedValue({ id: 0 });
+      const verificationServiceStartSpyOn = jest
+        .spyOn(verificationService, 'start')
+        .mockResolvedValue({ id: 'nanoid' });
 
       await authController.verifyEmail({ email: 'hch950627@naver.com', type: 'signup' });
 
@@ -46,11 +48,11 @@ describe('Auth Controller test', () => {
     test('verificationService.confirm 호출한다.', async () => {
       const verificationServiceConfirmSpyOn = jest.spyOn(verificationService, 'confirm');
 
-      await authController.verifyEmailConfirm({ id: '0' }, { code: '123456' });
+      await authController.verifyEmailConfirm({ id: 'X1ctfskzB_E3hums84rTESTcF__CD' }, { code: '123456' });
 
       expect(verificationServiceConfirmSpyOn.mock.calls).toHaveLength(1);
       expect(verificationServiceConfirmSpyOn.mock.calls[0][0]).toEqual({
-        id: 0,
+        id: 'X1ctfskzB_E3hums84rTESTcF__CD',
         code: '123456',
       });
     });
@@ -60,10 +62,10 @@ describe('Auth Controller test', () => {
     test('verificationService.isValidVerification 호출한다.', async () => {
       const verificationServiceIsValidVerificationSpyOn = jest.spyOn(verificationService, 'isValidVerification');
 
-      await authController.isValidVerification({ id: '0' });
+      await authController.isValidVerification({ id: 'X1ctfskzB_E3hums84rTESTcF__CD' });
 
       expect(verificationServiceIsValidVerificationSpyOn.mock.calls).toHaveLength(1);
-      expect(verificationServiceIsValidVerificationSpyOn.mock.calls[0][0]).toBe(0);
+      expect(verificationServiceIsValidVerificationSpyOn.mock.calls[0][0]).toBe('X1ctfskzB_E3hums84rTESTcF__CD');
     });
   });
 
@@ -72,13 +74,13 @@ describe('Auth Controller test', () => {
       const verificationServiceChangePasswordSpyOn = jest.spyOn(verificationService, 'changePassword');
 
       await authController.changePassword(
-        { verificationId: '0' },
+        { verificationId: 'X1ctfskzB_E3hums84rTESTcF__CD' },
         { password: 'password', passwordConfirm: 'password' },
       );
 
       expect(verificationServiceChangePasswordSpyOn.mock.calls).toHaveLength(1);
       expect(verificationServiceChangePasswordSpyOn.mock.calls[0][0]).toEqual({
-        id: 0,
+        id: 'X1ctfskzB_E3hums84rTESTcF__CD',
         password: 'password',
         passwordConfirm: 'password',
       });

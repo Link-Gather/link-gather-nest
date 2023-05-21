@@ -1,11 +1,12 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
-import { nanoid } from 'nanoid';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { Aggregate } from '../../../libs/ddd/aggregate';
 
 export const statusType = <const>['Recruiting', 'Progressing', 'Finish', 'Close'];
 export type StatusType = (typeof statusType)[number];
 export const purposeType = <const>['Improvement', 'Business', 'Fun', 'Study'];
 export type PurposeType = (typeof purposeType)[number];
+export const sortType = <const>['Latest', 'Hot', 'Oldest'];
+export type SortType = (typeof sortType)[number];
 
 type RecruitMember = {
   frontendDeveloper: number;
@@ -25,8 +26,8 @@ type CtorType = {
 
 @Entity()
 export class Project extends Aggregate {
-  @PrimaryColumn()
-  id!: string;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
   @Column()
   title!: string;
@@ -52,6 +53,9 @@ export class Project extends Aggregate {
   @Column('simple-array', { nullable: true })
   stacks?: string[];
 
+  @Column()
+  bookMark!: number;
+
   @Column({ type: 'date', nullable: true })
   startDate?: Date;
 
@@ -61,7 +65,6 @@ export class Project extends Aggregate {
   constructor(args: CtorType) {
     super();
     if (args) {
-      this.id = nanoid(10);
       this.title = args.title;
       this.description = args.description;
       this.purpose = args.purpose;
@@ -69,6 +72,7 @@ export class Project extends Aggregate {
       this.period = args.period;
       this.stacks = args.stacks;
       this.status = 'Recruiting';
+      this.bookMark = 0;
       this.isRecruiting = true;
     }
   }

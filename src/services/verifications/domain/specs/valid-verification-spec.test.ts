@@ -20,7 +20,7 @@ describe('ValidVerificationSpec test', () => {
   afterEach(() => jest.clearAllTimers());
 
   const verification = plainToClass(Verification, {
-    id: 1,
+    id: 'nanoid',
     email: 'test@email.com',
     code: 'verificationCode',
     expiredAt: new Date('2023-03-29T00:00:00.000Z'),
@@ -32,11 +32,11 @@ describe('ValidVerificationSpec test', () => {
       .spyOn(verificationRepository, 'find')
       .mockResolvedValue([verification]);
 
-    const spec = new ValidVerificationSpec({ id: 0 });
+    const spec = new ValidVerificationSpec({ id: 'X1ctfskzB_E3hums84rTESTcF__CD' });
     await spec.find(verificationRepository);
 
     expect(verificationRepositoryFindSpyOn.mock.calls).toHaveLength(1);
-    expect(verificationRepositoryFindSpyOn.mock.calls[0][0]).toEqual({ id: 0 });
+    expect(verificationRepositoryFindSpyOn.mock.calls[0][0]).toEqual({ id: 'X1ctfskzB_E3hums84rTESTcF__CD' });
   });
 
   test('verification의 유효기간이 지났다면 에러를 던져야한다.', async () => {
@@ -47,7 +47,7 @@ describe('ValidVerificationSpec test', () => {
       }),
     ]);
     expect.assertions(1);
-    const spec = new ValidVerificationSpec({ id: 0 });
+    const spec = new ValidVerificationSpec({ id: 'X1ctfskzB_E3hums84rTESTcF__CD' });
     try {
       await spec.find(verificationRepository);
     } catch (err) {
@@ -67,7 +67,7 @@ describe('ValidVerificationSpec test', () => {
       }),
     ]);
     expect.assertions(1);
-    const spec = new ValidVerificationSpec({ id: 0 });
+    const spec = new ValidVerificationSpec({ id: 'X1ctfskzB_E3hums84rTESTcF__CD' });
     try {
       await spec.find(verificationRepository);
     } catch (err) {

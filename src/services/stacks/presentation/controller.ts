@@ -19,6 +19,6 @@ export class StackController {
     const stacks = await this.stackService.list();
 
     const data = stacks.map((stack) => new ListResponseDto(stack));
-    return { data };
+    return { data: { data } };
   }
 }

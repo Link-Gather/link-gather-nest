@@ -1,7 +1,7 @@
 import { IsArray, IsIn, IsNotEmpty, IsNumber, IsOptional, IsString, Max, Min, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
-import { purposeType, PurposeType } from '../domain/model';
+import { purposeType, PurposeType, statusType, StatusType, sortType, SortType } from '../domain/model';
 import { JobType, jobType } from '../../roles/domain/model';
 
 class RecruitMemberDto {
@@ -30,52 +30,57 @@ class RecruitMemberDto {
   productManager!: number;
 }
 
-export class CreateBodyDto {
-  @ApiProperty({ example: 'title', description: '프로젝트 제목' })
-  @IsNotEmpty()
-  @IsString()
-  title!: string;
-
-  @ApiProperty({ example: 'description', description: '프로젝트 설명' })
-  @IsNotEmpty()
-  @IsString()
-  description!: string;
-
-  @ApiProperty({ example: 'Fun', description: '프로젝트 목적' })
-  @IsNotEmpty()
-  @IsIn(purposeType)
-  purpose!: PurposeType;
-
-  @ApiProperty({
-    example: { frontendDeveloper: 2, backendDeveloper: 2, designer: 1, productManager: 1 },
-    description: '프로젝트 정원',
-  })
-  @IsNotEmpty()
-  @ValidateNested()
-  @Type(() => RecruitMemberDto)
-  recruitMember!: RecruitMemberDto;
-
-  @ApiProperty({ example: 1, description: '프로젝트 기간 (개월 단위)' })
-  @IsNotEmpty()
-  @IsNumber()
-  period!: number;
-
+export class ListQueryDto {
   @ApiProperty({ example: ['node.js', 'react', 'spring'], description: '기술스택', required: false })
   @IsOptional()
   @IsArray()
   @IsString({ each: true })
   stacks?: string[];
 
-  @IsString()
-  @IsIn(jobType)
-  @ApiProperty({ example: 'FrontendDeveloper', description: '리더 직업 id' })
-  leaderJob!: JobType;
-}
+  @ApiProperty({ example: 'Fun', description: '프로젝트 목적', required: false })
+  @IsOptional()
+  @IsNotEmpty()
+  @IsIn(purposeType)
+  purpose?: PurposeType;
 
-export class CreateResponseDto {
-  @ApiProperty({ example: 1, description: '프로젝트 id' })
+  @ApiProperty({ example: 'BackendDeveloper', description: '직무', required: false })
+  @IsOptional()
   @IsNotEmpty()
   @IsString()
+  @IsIn(jobType)
+  job?: JobType;
+
+  @ApiProperty({ example: 'progressing', description: '프로젝트 진행 상태', required: false })
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  @IsIn(statusType)
+  status?: StatusType;
+
+  @ApiProperty({ example: 'Latest', description: '프로젝트 목록 정렬 기준', default: 'Latest', required: false })
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  @IsIn(sortType)
+  sort?: SortType = 'Latest';
+
+  @ApiProperty({ example: '1', description: '페이지네이션용 page', default: '1', required: false })
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  page?: string = '1';
+
+  @ApiProperty({ example: '16', description: '페이지네이션용 limit', default: '16', required: false })
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  limit?: string = '16';
+}
+
+export class ListResponseDto {
+  @ApiProperty({ example: 'projectId', description: '프로젝트 id' })
+  @IsNotEmpty()
+  @IsNumber()
   id!: number;
 
   @ApiProperty({ example: 'title', description: '프로젝트 제목' })
@@ -102,6 +107,13 @@ export class CreateResponseDto {
   @Type(() => RecruitMemberDto)
   recruitMember!: RecruitMemberDto;
 
+  @ApiProperty({ example: 'progressing', description: '프로젝트 진행 상태', required: false })
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  @IsIn(statusType)
+  status!: StatusType;
+
   @ApiProperty({ example: 1, description: '프로젝트 기간' })
   @IsNotEmpty()
   @IsNumber()
@@ -113,7 +125,12 @@ export class CreateResponseDto {
   @IsString({ each: true })
   stacks?: string[];
 
-  constructor(args?: CreateResponseDto) {
+  @ApiProperty({ example: 10, description: '프로젝트 북마크 갯수' })
+  @IsNotEmpty()
+  @IsNumber()
+  bookMark!: number;
+
+  constructor(args?: ListResponseDto) {
     if (args) {
       this.id = args.id;
       this.title = args.title;
@@ -122,6 +139,7 @@ export class CreateResponseDto {
       this.recruitMember = args.recruitMember;
       this.period = args.period;
       this.stacks = args.stacks;
+      this.bookMark = args.bookMark;
     }
   }
 }

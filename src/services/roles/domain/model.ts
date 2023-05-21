@@ -8,7 +8,7 @@ export type RoleType = 'Leader' | 'Member';
 
 type CtorType = {
   userId: string;
-  projectId: string;
+  projectId: number;
   type: RoleType;
   job: JobType;
 };
@@ -22,7 +22,7 @@ export class Role extends Aggregate {
   userId!: string;
 
   @Column()
-  projectId!: string;
+  projectId!: number;
 
   @Column()
   type!: RoleType;
