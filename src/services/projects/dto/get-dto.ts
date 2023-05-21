@@ -57,20 +57,20 @@ export class ListQueryDto {
   @IsIn(statusType)
   status?: StatusType;
 
-  @ApiProperty({ example: 'latest', description: '프로젝트 목록 정렬 기준', required: false })
+  @ApiProperty({ example: 'latest', description: '프로젝트 목록 정렬 기준', default: 'latest', required: false })
   @IsOptional()
   @IsNotEmpty()
   @IsString()
   @IsIn(sortType)
-  sort?: SortType;
+  sort?: SortType = 'latest';
 
-  @ApiProperty({ example: 'latest', description: '프로젝트 목록 정렬 기준', required: false })
+  @ApiProperty({ example: '1', description: '페이지네이션용 page', default: '1', required: false })
   @IsOptional()
   @IsNotEmpty()
   @IsString()
-  after?: string = '0';
+  page?: string = '1';
 
-  @ApiProperty({ example: 'latest', description: '프로젝트 목록 정렬 기준', required: false })
+  @ApiProperty({ example: '16', description: '페이지네이션용 limit', default: '16', required: false })
   @IsOptional()
   @IsNotEmpty()
   @IsString()
@@ -125,6 +125,11 @@ export class ListResponseDto {
   @IsString({ each: true })
   stacks?: string[];
 
+  @ApiProperty({ example: 10, description: '프로젝트 북마크 갯수' })
+  @IsNotEmpty()
+  @IsNumber()
+  bookMark!: number;
+
   constructor(args?: ListResponseDto) {
     if (args) {
       this.id = args.id;
@@ -134,6 +139,7 @@ export class ListResponseDto {
       this.recruitMember = args.recruitMember;
       this.period = args.period;
       this.stacks = args.stacks;
+      this.bookMark = args.bookMark;
     }
   }
 }

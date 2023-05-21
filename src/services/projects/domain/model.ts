@@ -53,6 +53,9 @@ export class Project extends Aggregate {
   @Column('simple-array', { nullable: true })
   stacks?: string[];
 
+  @Column()
+  bookMark!: number;
+
   @Column({ type: 'date', nullable: true })
   startDate?: Date;
 
@@ -69,6 +72,7 @@ export class Project extends Aggregate {
       this.period = args.period;
       this.stacks = args.stacks;
       this.status = 'recruiting';
+      this.bookMark = 0;
       this.isRecruiting = true;
     }
   }
