@@ -91,7 +91,7 @@ describe('ProjectService 테스트', () => {
             productManager: 1,
           },
           stacks: ['node.js'],
-          bookMark: 0,
+          bookMarkCount: 0,
           status: 'Recruiting',
           title: 'title',
         },

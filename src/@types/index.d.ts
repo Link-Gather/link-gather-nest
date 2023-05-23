@@ -1,4 +1,4 @@
-type Result<T> = Promise<{ data: { data: T; count?: number } }>;
+type Result<T> = Promise<{ data: T }>;
 
 type Paginated<T> = { data: T; count: number };
 

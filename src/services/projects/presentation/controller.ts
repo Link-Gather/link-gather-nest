@@ -12,7 +12,7 @@ export class ProjectController {
 
   @Get('/')
   @ApiOperation({ summary: '프로젝트 목록 API', description: '프로젝트 목록을 리턴한다. 필터와 정렬이 가능하다.' })
-  async list(@Query() query: ListQueryDto): Result<ListResponseDto[]> {
+  async list(@Query() query: ListQueryDto): Result<Paginated<ListResponseDto[]>> {
     const { stacks, purpose, job, status, sort, page, limit } = query;
     const { projects, count } = await this.projectService.list({
       stacks,

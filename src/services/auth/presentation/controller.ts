@@ -70,7 +70,7 @@ export class AuthController {
         refreshToken,
       });
 
-      return { data: { data: result } };
+      return { data: result };
     }
     if (provider === 'github') {
       const { access_token } = await axios
@@ -102,7 +102,7 @@ export class AuthController {
         refreshToken,
       });
 
-      return { data: { data: result } };
+      return { data: result };
     }
 
     const { access_token } = await axios
@@ -133,7 +133,7 @@ export class AuthController {
       refreshToken,
     });
 
-    return { data: { data: result } };
+    return { data: result };
   }
 
   @Post('/email-verification')
@@ -146,7 +146,7 @@ export class AuthController {
       id,
     });
 
-    return { data: { data: result } };
+    return { data: result };
   }
 
   @Post('/email-verification/:id')

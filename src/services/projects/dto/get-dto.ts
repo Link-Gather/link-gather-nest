@@ -128,7 +128,7 @@ export class ListResponseDto {
   @ApiProperty({ example: 10, description: '프로젝트 북마크 갯수' })
   @IsNotEmpty()
   @IsNumber()
-  bookMark!: number;
+  bookMarkCount!: number;
 
   constructor(args?: ListResponseDto) {
     if (args) {
@@ -139,7 +139,7 @@ export class ListResponseDto {
       this.recruitMember = args.recruitMember;
       this.period = args.period;
       this.stacks = args.stacks;
-      this.bookMark = args.bookMark;
+      this.bookMarkCount = args.bookMarkCount;
     }
   }
 }
