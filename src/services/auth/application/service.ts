@@ -38,6 +38,7 @@ export class AuthService {
     return { email };
   }
 
+  @Transactional()
   async revise(token: string) {
     const [user] = await this.userRepository.find({ refreshToken: token });
     if (user) {
