@@ -40,6 +40,7 @@ export class VerificationService {
     return { id: verification.id };
   }
 
+  @Transactional()
   async confirm({ code, id }: { code: string; id: string }) {
     const [verification] = await this.verificationRepository.findSpec(new ValidVerificationSpec({ id }));
 

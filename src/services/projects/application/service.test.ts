@@ -52,7 +52,7 @@ describe('ProjectService 테스트', () => {
         introduction: 'hello, my name is arthur',
         career: 1,
         job: 'backendDeveloper',
-        stacks: ['node.js', 'nest.js', 'koa.js', 'react.js', 'javascript', 'typescript'],
+        stacks: [1, 6, 22],
         urls: ['https://github.com/changchanghwang'],
       }),
     ],
