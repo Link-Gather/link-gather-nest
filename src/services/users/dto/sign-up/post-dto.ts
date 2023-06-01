@@ -61,10 +61,10 @@ export class SignUpBodyDto {
   @IsString()
   introduction!: string;
 
-  @ApiProperty({ example: ['node.js', 'react', 'spring'], description: '기술스택', required: true })
+  @ApiProperty({ example: [1, 3, 4, 5, 2], description: '기술스택', required: true })
   @IsArray()
   @IsString({ each: true })
-  stacks!: string[];
+  stacks!: number[];
 
   @ApiProperty({
     example: ['https://github.com/changchanghwang'],
