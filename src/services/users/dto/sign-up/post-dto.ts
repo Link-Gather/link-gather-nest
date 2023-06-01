@@ -63,7 +63,7 @@ export class SignUpBodyDto {
 
   @ApiProperty({ example: [1, 3, 4, 5, 2], description: '기술스택', required: true })
   @IsArray()
-  @IsString({ each: true })
+  @IsNumber({}, { each: true })
   stacks!: number[];
 
   @ApiProperty({

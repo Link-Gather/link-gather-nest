@@ -41,7 +41,7 @@ describe('UserController test', () => {
         id: 'IRFa-VaY2b',
         introduction: 'link-gather creator',
         job: 'Backend Developer',
-        stacks: ['node.js', 'typescript', 'react.js'],
+        stacks: [1, 6, 22],
         urls: ['https://github.com/changchanghwang'],
       }),
     ],
