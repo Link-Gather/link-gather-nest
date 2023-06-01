@@ -6,7 +6,7 @@ import { Repository } from '../../../libs/ddd';
 import { Project, PurposeType, SortType, StatusType } from '../domain/model';
 import { stripUndefined } from '../../../libs/common';
 
-function getSort(sort?: SortType): FindOrder {
+function getOrderOption(sort?: SortType): FindOrder {
   switch (sort) {
     case 'Hot':
       return { order: { bookMarkCount: 'DESC', id: 'DESC' } };
@@ -42,7 +42,7 @@ export class ProjectRepository extends Repository<Project, Project['id']> {
         }),
       },
       ...convertOptions(options),
-      ...getSort(sort),
+      ...getOrderOption(sort),
     });
   }
 
@@ -66,7 +66,7 @@ export class ProjectRepository extends Repository<Project, Project['id']> {
         }),
       },
       ...convertOptions(options),
-      ...getSort(sort),
+      ...getOrderOption(sort),
     });
   }
 }
