@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { nanoid } from 'nanoid';
 import { Aggregate } from '../../../libs/ddd/aggregate';
 
 export const statusType = <const>['Recruiting', 'Progressing', 'Finish', 'Close'];
@@ -26,8 +27,8 @@ type CtorType = {
 
 @Entity()
 export class Project extends Aggregate {
-  @PrimaryGeneratedColumn()
-  id!: number;
+  @PrimaryColumn()
+  id!: string;
 
   @Column()
   title!: string;
@@ -65,6 +66,7 @@ export class Project extends Aggregate {
   constructor(args: CtorType) {
     super();
     if (args) {
+      this.id = nanoid(10);
       this.title = args.title;
       this.description = args.description;
       this.purpose = args.purpose;

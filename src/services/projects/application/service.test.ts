@@ -80,6 +80,7 @@ describe('ProjectService 테스트', () => {
       expect(roleRepositorySaveSpy.mock.calls).toHaveLength(1);
       expect(projectRepositorySaveSpy.mock.calls[0][0]).toEqual([
         {
+          id: 'IRFa-VaY2b',
           description: 'description',
           isRecruiting: true,
           period: 1,

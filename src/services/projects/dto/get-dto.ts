@@ -78,10 +78,10 @@ export class ListQueryDto {
 }
 
 export class ListResponseDto {
-  @ApiProperty({ example: 'projectId', description: '프로젝트 id' })
+  @ApiProperty({ example: 'AB23QD428', description: '프로젝트 id' })
   @IsNotEmpty()
-  @IsNumber()
-  id!: number;
+  @IsString()
+  id!: string;
 
   @ApiProperty({ example: 'title', description: '프로젝트 제목' })
   @IsNotEmpty()
