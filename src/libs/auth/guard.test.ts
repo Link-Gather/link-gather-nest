@@ -45,7 +45,7 @@ describe('auth guard test', () => {
         id: 'profileId',
         introduction: 'hello, my name is arthur',
         career: 1,
-        job: 'Backend Developer',
+        job: 'backendDeveloper',
         stacks: ['node.js', 'nest.js', 'koa.js', 'react.js', 'javascript', 'typescript'],
         urls: ['https://github.com/changchanghwang'],
       }),

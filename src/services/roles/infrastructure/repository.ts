@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { FindOrder, PaginationOption, convertOptions, In } from '../../../libs/orm';
 import { Repository } from '../../../libs/ddd';
-import { JobType, Role, RoleType } from '../domain/model';
+import { Role, RoleType } from '../domain/model';
 import { stripUndefined } from '../../../libs/common';
+import { JobType } from '../../users/domain/model';
 
 @Injectable()
 export class RoleRepository extends Repository<Role, Role['id']> {

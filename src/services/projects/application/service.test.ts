@@ -51,7 +51,7 @@ describe('ProjectService 테스트', () => {
         id: 'profileId',
         introduction: 'hello, my name is arthur',
         career: 1,
-        job: 'Backend Developer',
+        job: 'backendDeveloper',
         stacks: ['node.js', 'nest.js', 'koa.js', 'react.js', 'javascript', 'typescript'],
         urls: ['https://github.com/changchanghwang'],
       }),
@@ -71,8 +71,8 @@ describe('ProjectService 테스트', () => {
           recruitMember: { frontendDeveloper: 2, backendDeveloper: 2, designer: 1, productManager: 1 },
           stacks: ['node.js'],
           period: 1,
-          purpose: 'Business',
-          leaderJob: 'BackendDeveloper',
+          purpose: 'business',
+          leaderJob: 'backendDeveloper',
         },
       );
 
@@ -84,7 +84,7 @@ describe('ProjectService 테스트', () => {
           description: 'description',
           isRecruiting: true,
           period: 1,
-          purpose: 'Business',
+          purpose: 'business',
           recruitMember: {
             backendDeveloper: 2,
             designer: 1,
@@ -93,15 +93,15 @@ describe('ProjectService 테스트', () => {
           },
           stacks: ['node.js'],
           bookMarkCount: 0,
-          status: 'Recruiting',
+          status: 'recruiting',
           title: 'title',
         },
       ]);
       expect(roleRepositorySaveSpy.mock.calls[0][0]).toEqual([
         {
-          job: 'BackendDeveloper',
+          job: 'backendDeveloper',
           projectId: project.id,
-          type: 'Leader',
+          type: 'leader',
           userId: 'userId',
         },
       ]);

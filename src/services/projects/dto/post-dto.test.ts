@@ -7,7 +7,7 @@ describe('post dto 테스트', () => {
     const dto = plainToInstance(CreateBodyDto, {
       title: 'title',
       description: 'description',
-      purpose: 'Fun',
+      purpose: 'fun',
       recruitMember: {
         frontendDeveloper: 2,
         backendDeveloper: 2,
@@ -15,7 +15,7 @@ describe('post dto 테스트', () => {
         productManager: 1,
       },
       period: 1,
-      leaderJob: 'BackendDeveloper',
+      leaderJob: 'backendDeveloper',
       stacks: ['node.js'],
     });
 

@@ -61,7 +61,7 @@ describe('AuthService 테스트', () => {
           plainToClass(Profile, {
             id: '1',
             career: 1,
-            job: 'Backend Developer',
+            job: 'backendDeveloper',
             introduction: 'Hello world!',
             urls: ['https://github.com/yoon-bomi'],
             stacks: ['node.js', 'typescript', 'react.js'],
@@ -103,7 +103,7 @@ describe('AuthService 테스트', () => {
           id: 'profileId',
           introduction: 'hello, my name is arthur',
           career: 1,
-          job: 'Backend Developer',
+          job: 'backendDeveloper',
           stacks: ['node.js', 'nest.js', 'koa.js', 'react.js', 'javascript', 'typescript'],
           urls: ['https://github.com/changchanghwang'],
         }),

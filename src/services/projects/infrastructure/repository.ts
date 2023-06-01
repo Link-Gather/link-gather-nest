@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { Raw } from 'typeorm';
-import { JobType } from '../../roles/domain/model';
 import { FindOrder, PaginationOption, convertOptions, In } from '../../../libs/orm';
 import { Repository } from '../../../libs/ddd';
 import { Project, PurposeType, SortType, StatusType } from '../domain/model';
 import { stripUndefined } from '../../../libs/common';
+import { JobType } from '../../users/domain/model';
 
 function getOrderOption(sort?: SortType): FindOrder {
   switch (sort) {
-    case 'Hot':
+    case 'popularity':
       return { order: { bookMarkCount: 'DESC', id: 'DESC' } };
-    case 'Oldest':
+    case 'oldest':
       return { order: { id: 'ASC' } };
-    case 'Latest':
+    case 'latest':
     default:
       return { order: { id: 'DESC' } };
   }

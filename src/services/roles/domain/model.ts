@@ -1,10 +1,8 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { JobType } from '../../users/domain/model';
 import { Aggregate } from '../../../libs/ddd/aggregate';
 
-export const jobType = <const>['FrontendDeveloper', 'BackendDeveloper', 'Designer', 'ProductManager'];
-export type JobType = (typeof jobType)[number];
-
-export type RoleType = 'Leader' | 'Member';
+export type RoleType = 'leader' | 'member';
 
 type CtorType = {
   userId: string;

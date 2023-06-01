@@ -2,11 +2,11 @@ import { Column, Entity, PrimaryColumn } from 'typeorm';
 import { nanoid } from 'nanoid';
 import { Aggregate } from '../../../libs/ddd/aggregate';
 
-export const statusType = <const>['Recruiting', 'Progressing', 'Finish', 'Close'];
+export const statusType = <const>['recruiting', 'progressing', 'finish', 'close'];
 export type StatusType = (typeof statusType)[number];
-export const purposeType = <const>['Improvement', 'Business', 'Fun', 'Study'];
+export const purposeType = <const>['improvement', 'business', 'fun', 'study'];
 export type PurposeType = (typeof purposeType)[number];
-export const sortType = <const>['Latest', 'Hot', 'Oldest'];
+export const sortType = <const>['latest', 'popularity', 'oldest'];
 export type SortType = (typeof sortType)[number];
 
 type RecruitMember = {
@@ -73,7 +73,7 @@ export class Project extends Aggregate {
       this.recruitMember = args.recruitMember;
       this.period = args.period;
       this.stacks = args.stacks;
-      this.status = 'Recruiting';
+      this.status = 'recruiting';
       this.bookMarkCount = 0;
       this.isRecruiting = true;
     }

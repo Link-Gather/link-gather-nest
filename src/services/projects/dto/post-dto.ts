@@ -2,7 +2,7 @@ import { IsArray, IsIn, IsNotEmpty, IsNumber, IsOptional, IsString, Max, Min, Va
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import { purposeType, PurposeType } from '../domain/model';
-import { JobType, jobType } from '../../roles/domain/model';
+import { JobType, jobType } from '../../users/domain/model';
 
 class RecruitMemberDto {
   @IsNumber()
@@ -41,7 +41,7 @@ export class CreateBodyDto {
   @IsString()
   description!: string;
 
-  @ApiProperty({ example: 'Fun', description: '프로젝트 목적' })
+  @ApiProperty({ example: 'fun', description: '프로젝트 목적' })
   @IsNotEmpty()
   @IsIn(purposeType)
   purpose!: PurposeType;
@@ -68,7 +68,7 @@ export class CreateBodyDto {
 
   @IsString()
   @IsIn(jobType)
-  @ApiProperty({ example: 'FrontendDeveloper', description: '리더 직업 id' })
+  @ApiProperty({ example: 'frontendDeveloper', description: '리더 직업 id' })
   leaderJob!: JobType;
 }
 
@@ -88,7 +88,7 @@ export class CreateResponseDto {
   @IsString()
   description!: string;
 
-  @ApiProperty({ example: 'Fun', description: '프로젝트 목적' })
+  @ApiProperty({ example: 'fun', description: '프로젝트 목적' })
   @IsNotEmpty()
   @IsIn(purposeType)
   purpose!: PurposeType;

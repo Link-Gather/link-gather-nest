@@ -2,7 +2,7 @@ import { IsArray, IsIn, IsNotEmpty, IsNumber, IsOptional, IsString, Max, Min, Va
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import { purposeType, PurposeType, statusType, StatusType, sortType, SortType } from '../domain/model';
-import { JobType, jobType } from '../../roles/domain/model';
+import { JobType, jobType } from '../../users/domain/model';
 
 class RecruitMemberDto {
   @IsNumber()
@@ -43,7 +43,7 @@ export class ListQueryDto {
   @IsIn(purposeType)
   purpose?: PurposeType;
 
-  @ApiProperty({ example: 'BackendDeveloper', description: '직무', required: false })
+  @ApiProperty({ example: 'backendDeveloper', description: '직무', required: false })
   @IsOptional()
   @IsNotEmpty()
   @IsString()
@@ -57,12 +57,12 @@ export class ListQueryDto {
   @IsIn(statusType)
   status?: StatusType;
 
-  @ApiProperty({ example: 'Latest', description: '프로젝트 목록 정렬 기준', default: 'Latest', required: false })
+  @ApiProperty({ example: 'latest', description: '프로젝트 목록 정렬 기준', default: 'Latest', required: false })
   @IsOptional()
   @IsNotEmpty()
   @IsString()
   @IsIn(sortType)
-  sort?: SortType = 'Latest';
+  sort?: SortType = 'latest';
 
   @ApiProperty({ example: '1', description: '페이지네이션용 page', default: '1', required: false })
   @IsOptional()

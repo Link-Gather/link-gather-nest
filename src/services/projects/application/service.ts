@@ -60,7 +60,7 @@ export class ProjectService {
     const role = new Role({
       userId: user.id,
       projectId: project.id,
-      type: 'Leader',
+      type: 'leader',
       job: args.leaderJob,
     });
     await this.roleRepository.save([role]);

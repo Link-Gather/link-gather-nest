@@ -28,7 +28,7 @@ class ProfileDto {
   @Min(0)
   career!: number;
 
-  @ApiProperty({ example: 'Developer', description: '직무', required: true })
+  @ApiProperty({ example: 'frontendDeveloper', description: '직무', required: true })
   @IsNotEmpty()
   @IsString()
   @IsIn(jobType)
