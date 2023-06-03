@@ -1,6 +1,6 @@
 import { join } from 'path';
 
-export const ormConfig = {
+const ormConfig = {
   type: 'mysql',
   host: { $env: 'DB_HOST' },
   port: { $env: 'DB_PORT' },
@@ -8,6 +8,24 @@ export const ormConfig = {
   username: { $env: 'DB_USER' },
   password: { $env: 'DB_PASSWORD' },
   entities: [join(__dirname, '..', 'services', '**', 'domain', 'model.{ts,js}')],
-  synchronize: true,
-  logging: true,
+};
+
+export default {
+  $filter: { $env: 'NODE_ENV' },
+  production: {
+    ...ormConfig,
+    synchronize: false,
+    logging: true,
+    // migrations: ['src/migration/**/*.ts'],
+    supportBigNumbers: true,
+    bigNumberStrings: false,
+  },
+  $default: {
+    ...ormConfig,
+    synchronize: true,
+    logging: true,
+    // migrations: ['src/migration/**/*.ts'],
+    supportBigNumbers: true,
+    bigNumberStrings: false,
+  },
 };
