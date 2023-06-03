@@ -16,7 +16,7 @@ describe('post dto 테스트', () => {
       },
       period: 1,
       leaderJob: 'backendDeveloper',
-      stacks: ['node.js'],
+      stacks: [1, 2],
     });
 
     const errors = await validate(dto);

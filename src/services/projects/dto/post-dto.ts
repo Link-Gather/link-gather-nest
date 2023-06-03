@@ -60,11 +60,11 @@ export class CreateBodyDto {
   @IsNumber()
   period!: number;
 
-  @ApiProperty({ example: ['node.js', 'react', 'spring'], description: '기술스택', required: false })
+  @ApiProperty({ example: [1, 6, 18], description: '기술스택', required: false })
   @IsOptional()
   @IsArray()
-  @IsString({ each: true })
-  stacks?: string[];
+  @IsNumber({}, { each: true })
+  stacks?: number[];
 
   @IsString()
   @IsIn(jobType)

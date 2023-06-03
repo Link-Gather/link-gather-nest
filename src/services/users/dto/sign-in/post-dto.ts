@@ -121,7 +121,7 @@ export class SignInResponseDto {
         career: 1,
         job: 'Backend Developer',
         introduction: 'hi',
-        stacks: ['node.js'],
+        stacks: [1, 2],
         urls: ['www.naver.com'],
       },
     ],

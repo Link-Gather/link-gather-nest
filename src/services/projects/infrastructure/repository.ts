@@ -23,7 +23,7 @@ export class ProjectRepository extends Repository<Project, Project['id']> {
   entityClass = Project;
 
   async find(
-    conditions: { stacks?: string[]; purpose?: PurposeType; job?: JobType; status?: StatusType },
+    conditions: { stacks?: number[]; purpose?: PurposeType; job?: JobType; status?: StatusType },
     options?: PaginationOption,
     sort?: SortType,
   ): Promise<Project[]> {
@@ -47,7 +47,7 @@ export class ProjectRepository extends Repository<Project, Project['id']> {
   }
 
   async count(
-    conditions: { stacks?: string[]; purpose?: PurposeType; job?: JobType; status?: StatusType },
+    conditions: { stacks?: number[]; purpose?: PurposeType; job?: JobType; status?: StatusType },
     options?: PaginationOption,
     sort?: SortType,
   ): Promise<number> {

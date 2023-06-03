@@ -31,11 +31,11 @@ class RecruitMemberDto {
 }
 
 export class ListQueryDto {
-  @ApiProperty({ example: ['node.js', 'react', 'spring'], description: '기술스택', required: false })
+  @ApiProperty({ example: [1, 6, 18], description: '기술스택', required: false })
   @IsOptional()
   @IsArray()
-  @IsString({ each: true })
-  stacks?: string[];
+  @IsNumber({}, { each: true })
+  stacks?: number[];
 
   @ApiProperty({ example: 'Fun', description: '프로젝트 목적', required: false })
   @IsOptional()
@@ -119,11 +119,11 @@ export class ListResponseDto {
   @IsNumber()
   period!: number;
 
-  @ApiProperty({ example: ['node.js', 'react', 'spring'], description: '기술스택', required: false })
+  @ApiProperty({ example: [1, 6, 18], description: '기술스택', required: false })
   @IsOptional()
   @IsArray()
-  @IsString({ each: true })
-  stacks?: string[];
+  @IsNumber({}, { each: true })
+  stacks?: number[];
 
   @ApiProperty({ example: 10, description: '프로젝트 북마크 갯수' })
   @IsNotEmpty()

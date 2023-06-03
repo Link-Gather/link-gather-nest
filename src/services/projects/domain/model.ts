@@ -22,7 +22,7 @@ type CtorType = {
   purpose: PurposeType;
   recruitMember: RecruitMember;
   period: number;
-  stacks?: string[];
+  stacks?: number[];
 };
 
 @Entity()
@@ -52,7 +52,7 @@ export class Project extends Aggregate {
   period!: number;
 
   @Column('simple-array', { nullable: true })
-  stacks?: string[];
+  stacks?: number[];
 
   @Column()
   bookMarkCount!: number;
