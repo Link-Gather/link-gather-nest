@@ -63,7 +63,7 @@ describe('ProjectService 테스트', () => {
       const projectRepositorySaveSpy = jest.spyOn(projectRepository, 'save');
       const roleRepositorySaveSpy = jest.spyOn(roleRepository, 'save');
 
-      const project = await projectService.create(
+      await projectService.create(
         { user },
         {
           title: 'title',
@@ -100,7 +100,7 @@ describe('ProjectService 테스트', () => {
       expect(roleRepositorySaveSpy.mock.calls[0][0]).toEqual([
         {
           job: 'backendDeveloper',
-          projectId: project.id,
+          projectId: 'IRFa-VaY2b',
           type: 'leader',
           userId: 'userId',
         },
