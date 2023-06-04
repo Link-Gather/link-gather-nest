@@ -10,15 +10,16 @@ export class RoleRepository extends Repository<Role, Role['id']> {
   entityClass = Role;
 
   async find(
-    conditions: { types: RoleType; jobs?: JobType[] },
+    conditions: { type?: RoleType; jobs?: JobType[]; projectIds?: string[] },
     options?: PaginationOption,
     order?: FindOrder,
   ): Promise<Role[]> {
     return this.getManager().find(Role, {
       where: {
         ...stripUndefined({
-          type: conditions.types,
+          type: conditions.type,
           job: In(conditions.jobs),
+          projectId: In(conditions.projectIds),
         }),
       },
       ...convertOptions(options),
