@@ -12,6 +12,10 @@ import { hashPassword } from '../../../libs/password';
 export class UserService {
   constructor(private userRepository: UserRepository, private jwtService: JwtService) {}
 
+  async list({ ids }: { ids?: string[] }) {
+    return this.userRepository.find({ ids });
+  }
+
   @Transactional()
   async signUp(args: SignUpBodyDto) {
     const [newUser] = await this.userRepository.find({ email: args.email });

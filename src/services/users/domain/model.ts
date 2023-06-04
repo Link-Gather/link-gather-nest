@@ -7,7 +7,7 @@ import { badRequest } from '../../../libs/exception';
 
 export const providerType = <const>['kakao', 'github', 'google', 'link-gather'];
 export type ProviderType = (typeof providerType)[number];
-export const jobType = <const>['Frontend Developer', 'Backend Developer', 'Designer', 'Product Manager', 'Other'];
+export const jobType = <const>['frontendDeveloper', 'backendDeveloper', 'designer', 'productManager'];
 export type JobType = (typeof jobType)[number];
 
 type CtorType = {
@@ -19,7 +19,7 @@ type CtorType = {
   introduction: string;
   career: number;
   job: JobType;
-  stacks: string[];
+  stacks: number[];
   urls?: string[];
 };
 
@@ -130,12 +130,12 @@ export class Profile {
   urls!: string[];
 
   @Column('simple-array')
-  stacks!: string[];
+  stacks!: number[];
 
   @ManyToOne(() => User, (user) => user.profiles)
   user!: never;
 
-  constructor(args: { career: number; job: JobType; introduction: string; urls?: string[]; stacks: string[] }) {
+  constructor(args: { career: number; job: JobType; introduction: string; urls?: string[]; stacks: number[] }) {
     if (args) {
       this.id = nanoid(10);
       this.career = args.career;

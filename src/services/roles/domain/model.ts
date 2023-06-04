@@ -1,14 +1,13 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { JobType } from '../../users/domain/model';
 import { Aggregate } from '../../../libs/ddd/aggregate';
 
-export const jobType = <const>['FrontendDeveloper', 'BackendDeveloper', 'Designer', 'ProductManager'];
-export type JobType = (typeof jobType)[number];
-
-export type RoleType = 'Leader' | 'Member';
+export const roleType = <const>['leader', 'member'];
+export type RoleType = (typeof roleType)[number];
 
 type CtorType = {
   userId: string;
-  projectId: number;
+  projectId: string;
   type: RoleType;
   job: JobType;
 };
@@ -22,7 +21,7 @@ export class Role extends Aggregate {
   userId!: string;
 
   @Column()
-  projectId!: number;
+  projectId!: string;
 
   @Column()
   type!: RoleType;

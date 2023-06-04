@@ -1,19 +1,31 @@
 import { Injectable } from '@nestjs/common';
 import { Raw } from 'typeorm';
-import { JobType } from '../../roles/domain/model';
 import { FindOrder, PaginationOption, convertOptions, In } from '../../../libs/orm';
 import { Repository } from '../../../libs/ddd';
-import { Project, PurposeType, StatusType } from '../domain/model';
+import { Project, PurposeType, SortType, StatusType } from '../domain/model';
 import { stripUndefined } from '../../../libs/common';
+import { JobType } from '../../users/domain/model';
+
+function getOrderOption(sort?: SortType): FindOrder {
+  switch (sort) {
+    case 'popularity':
+      return { order: { bookMarkCount: 'DESC', id: 'DESC' } };
+    case 'oldest':
+      return { order: { id: 'ASC' } };
+    case 'latest':
+    default:
+      return { order: { id: 'DESC' } };
+  }
+}
 
 @Injectable()
 export class ProjectRepository extends Repository<Project, Project['id']> {
   entityClass = Project;
 
   async find(
-    conditions: { stacks?: string[]; purpose?: PurposeType; job?: JobType; status?: StatusType },
+    conditions: { stacks?: number[]; purpose?: PurposeType; job?: JobType; status?: StatusType },
     options?: PaginationOption,
-    order?: FindOrder,
+    sort?: SortType,
   ): Promise<Project[]> {
     return this.getManager().find(Project, {
       where: {
@@ -30,14 +42,14 @@ export class ProjectRepository extends Repository<Project, Project['id']> {
         }),
       },
       ...convertOptions(options),
-      ...order,
+      ...getOrderOption(sort),
     });
   }
 
   async count(
-    conditions: { stacks?: string[]; purpose?: PurposeType; job?: JobType; status?: StatusType },
+    conditions: { stacks?: number[]; purpose?: PurposeType; job?: JobType; status?: StatusType },
     options?: PaginationOption,
-    order?: FindOrder,
+    sort?: SortType,
   ): Promise<number> {
     return this.getManager().count(Project, {
       where: {
@@ -54,7 +66,7 @@ export class ProjectRepository extends Repository<Project, Project['id']> {
         }),
       },
       ...convertOptions(options),
-      ...order,
+      ...getOrderOption(sort),
     });
   }
 }

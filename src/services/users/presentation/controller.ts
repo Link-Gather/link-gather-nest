@@ -90,6 +90,6 @@ export class UserController {
     const isDuplicated = await this.userService.isNicknameDuplicated({ nickname });
 
     const data = new NicknameCheckResponseDto({ isDuplicated });
-    return { data: { data } };
+    return { data };
   }
 }

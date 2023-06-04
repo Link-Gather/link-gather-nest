@@ -28,7 +28,7 @@ class ProfileDto {
   @Min(0)
   career!: number;
 
-  @ApiProperty({ example: 'Developer', description: '직무', required: true })
+  @ApiProperty({ example: 'frontendDeveloper', description: '직무', required: true })
   @IsNotEmpty()
   @IsString()
   @IsIn(jobType)
@@ -39,10 +39,10 @@ class ProfileDto {
   @IsString()
   introduction!: string;
 
-  @ApiProperty({ example: ['node.js', 'react', 'spring'], description: '기술스택', required: true })
+  @ApiProperty({ example: [1, 6, 22], description: '기술스택', required: true })
   @IsArray()
-  @IsString({ each: true })
-  stacks!: string[];
+  @IsNumber({}, { each: true })
+  stacks!: number[];
 
   @ApiProperty({
     example: ['https://github.com/changchanghwang'],
@@ -58,7 +58,7 @@ class ProfileDto {
     career: number;
     introduction: string;
     job: JobType;
-    stacks: string[];
+    stacks: number[];
     urls: string[];
   }) {
     this.id = args.id;
@@ -121,7 +121,7 @@ export class SignInResponseDto {
         career: 1,
         job: 'Backend Developer',
         introduction: 'hi',
-        stacks: ['node.js'],
+        stacks: [1, 2],
         urls: ['www.naver.com'],
       },
     ],

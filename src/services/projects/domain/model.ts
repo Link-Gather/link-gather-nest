@@ -1,11 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { nanoid } from 'nanoid';
 import { Aggregate } from '../../../libs/ddd/aggregate';
 
-export const statusType = <const>['Recruiting', 'Progressing', 'Finish', 'Close'];
+export const statusType = <const>['recruiting', 'progressing', 'finish', 'close'];
 export type StatusType = (typeof statusType)[number];
-export const purposeType = <const>['Improvement', 'Business', 'Fun', 'Study'];
+export const purposeType = <const>['improvement', 'business', 'fun', 'study'];
 export type PurposeType = (typeof purposeType)[number];
-export const sortType = <const>['Latest', 'Hot', 'Oldest'];
+export const sortType = <const>['latest', 'popularity', 'oldest'];
 export type SortType = (typeof sortType)[number];
 
 type RecruitMember = {
@@ -21,13 +22,13 @@ type CtorType = {
   purpose: PurposeType;
   recruitMember: RecruitMember;
   period: number;
-  stacks?: string[];
+  stacks?: number[];
 };
 
 @Entity()
 export class Project extends Aggregate {
-  @PrimaryGeneratedColumn()
-  id!: number;
+  @PrimaryColumn()
+  id!: string;
 
   @Column()
   title!: string;
@@ -51,10 +52,10 @@ export class Project extends Aggregate {
   period!: number;
 
   @Column('simple-array', { nullable: true })
-  stacks?: string[];
+  stacks?: number[];
 
   @Column()
-  bookMark!: number;
+  bookMarkCount!: number;
 
   @Column({ type: 'date', nullable: true })
   startDate?: Date;
@@ -65,14 +66,15 @@ export class Project extends Aggregate {
   constructor(args: CtorType) {
     super();
     if (args) {
+      this.id = nanoid(10);
       this.title = args.title;
       this.description = args.description;
       this.purpose = args.purpose;
       this.recruitMember = args.recruitMember;
       this.period = args.period;
       this.stacks = args.stacks;
-      this.status = 'Recruiting';
-      this.bookMark = 0;
+      this.status = 'recruiting';
+      this.bookMarkCount = 0;
       this.isRecruiting = true;
     }
   }

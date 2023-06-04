@@ -50,7 +50,7 @@ export class SignUpBodyDto {
   @Min(0)
   career!: number;
 
-  @ApiProperty({ example: 'Developer', description: '직무', required: true })
+  @ApiProperty({ example: 'frontendDeveloper', description: '직무', required: true })
   @IsNotEmpty()
   @IsString()
   @IsIn(jobType)
@@ -61,10 +61,10 @@ export class SignUpBodyDto {
   @IsString()
   introduction!: string;
 
-  @ApiProperty({ example: ['node.js', 'react', 'spring'], description: '기술스택', required: true })
+  @ApiProperty({ example: [1, 3, 4, 5, 2], description: '기술스택', required: true })
   @IsArray()
-  @IsString({ each: true })
-  stacks!: string[];
+  @IsNumber({}, { each: true })
+  stacks!: number[];
 
   @ApiProperty({
     example: ['https://github.com/changchanghwang'],

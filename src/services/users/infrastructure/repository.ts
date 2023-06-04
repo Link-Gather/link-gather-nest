@@ -10,6 +10,7 @@ export class UserRepository extends Repository<User, User['id']> {
 
   async find(
     conditions: {
+      ids?: string[];
       email?: string;
       nickname?: string;
       refreshToken?: string;
@@ -22,6 +23,7 @@ export class UserRepository extends Repository<User, User['id']> {
     return this.getManager().find(User, {
       where: {
         ...stripUndefined({
+          id: In(conditions.ids),
           email: conditions.email,
           nickname: conditions.nickname,
           profiles: {
