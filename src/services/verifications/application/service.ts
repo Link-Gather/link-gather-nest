@@ -48,6 +48,7 @@ export class VerificationService {
     await this.verificationRepository.save([verification]);
   }
 
+  @Transactional()
   async isValidVerification(id: string) {
     const [verification] = await this.verificationRepository.findSpec(new ValidVerificationSpec({ id }), {
       lock: {
