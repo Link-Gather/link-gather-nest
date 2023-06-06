@@ -24,13 +24,13 @@ export class VerificationService {
 
     if (type === 'signup' && user) {
       throw badRequest(`Invalid email(${email}) is entered. Please check the email.`, {
-        errorMessage: `중복된 이메일입니다. 다시 입력해주세요.`,
+        errorMessage: `이미 존재하는 이메일입니다`,
       });
     }
 
     if (type === 'password' && !user) {
       throw badRequest(`Invalid email(${email}) is entered. Please check the email.`, {
-        errorMessage: `이메일이 존재하지 않습니다. 다시 입력해주세요.`,
+        errorMessage: `올바른 이메일인지 확인해주세요.`,
       });
     }
 
