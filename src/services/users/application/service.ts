@@ -17,7 +17,9 @@ export class UserService {
     const [newUser] = await this.userRepository.find({ email: args.email });
 
     if (newUser) {
-      throw unauthorized('이미 존재하는 이메일입니다.');
+      throw unauthorized(`Email(${args.email}) is already exist.`, {
+        errorMessage: '이미 존재하는 이메일입니다.',
+      });
     }
 
     // NOTE: provider === 'link-gather' 일 경우 args.password 는 required 이다.
