@@ -167,7 +167,7 @@ describe('UserService 테스트', () => {
           profileImage: 'image url',
         });
       } catch (err) {
-        expect(err).toEqual(unauthorized('이미 존재하는 이메일입니다.'));
+        expect(err).toEqual(unauthorized('Email(email@test.com) is already exist.'));
       }
     });
   });

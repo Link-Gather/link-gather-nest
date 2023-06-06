@@ -24,7 +24,7 @@ export class VerificationService {
 
     if (type === 'signup' && user) {
       throw badRequest(`Invalid email(${email}) is entered. Please check the email.`, {
-        errorMessage: `이미 존재하는 이메일입니다`,
+        errorMessage: `이미 존재하는 이메일입니다.`,
       });
     }
 

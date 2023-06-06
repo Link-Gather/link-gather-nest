@@ -17,7 +17,7 @@ export class UserService {
     const [newUser] = await this.userRepository.find({ email: args.email });
 
     if (newUser) {
-      throw unauthorized(`Email${args.email} is already exist.`, {
+      throw unauthorized(`Email(${args.email}) is already exist.`, {
         errorMessage: '이미 존재하는 이메일입니다.',
       });
     }
