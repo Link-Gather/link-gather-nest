@@ -3,7 +3,12 @@ import { ApiProperty } from '@nestjs/swagger';
 import { ProviderType, providerType } from '../../../../users/domain/model';
 
 export class OauthParamDto {
-  @ApiProperty({ example: 'kakao', description: '회원가입 정보 제공자', required: true })
+  @ApiProperty({
+    example: 'kakao',
+    description: '회원가입 정보 제공자',
+    required: true,
+    enum: ['kakao', 'github', 'google'],
+  })
   @IsIn(['kakao', 'github', 'google'])
   provider!: 'kakao' | 'github' | 'google';
 }
@@ -28,7 +33,7 @@ export class OauthResponseDto {
   @IsOptional()
   nickname?: string;
 
-  @ApiProperty({ example: 'kakao', description: '회원가입 정보 제공자', required: true })
+  @ApiProperty({ example: 'kakao', description: '회원가입 정보 제공자', required: true, enum: providerType })
   @IsNotEmpty()
   @IsIn(providerType)
   provider!: ProviderType;

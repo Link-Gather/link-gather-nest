@@ -28,7 +28,7 @@ class ProfileDto {
   @Min(0)
   career!: number;
 
-  @ApiProperty({ example: 'frontendDeveloper', description: '직무', required: true })
+  @ApiProperty({ example: 'frontendDeveloper', description: '직무', required: true, enum: jobType })
   @IsNotEmpty()
   @IsString()
   @IsIn(jobType)
@@ -99,7 +99,7 @@ export class SignInResponseDto {
   @IsString()
   nickname!: string;
 
-  @ApiProperty({ example: 'kakao', description: '회원가입 정보 제공자', required: true })
+  @ApiProperty({ example: 'kakao', description: '회원가입 정보 제공자', required: true, enum: providerType })
   @IsNotEmpty()
   @IsIn(providerType)
   provider!: ProviderType;

@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { AfterLoad, Column, Entity, PrimaryColumn } from 'typeorm';
 import { nanoid } from 'nanoid';
 import { Aggregate } from '../../../libs/ddd/aggregate';
 
@@ -51,7 +51,7 @@ export class Project extends Aggregate {
   @Column()
   period!: number;
 
-  @Column('simple-json', { nullable: true })
+  @Column('simple-array', { nullable: true })
   stacks?: number[];
 
   @Column()
@@ -77,5 +77,10 @@ export class Project extends Aggregate {
       this.bookMarkCount = 0;
       this.isRecruiting = true;
     }
+  }
+
+  @AfterLoad()
+  private postLoad() {
+    this.stacks = this.stacks?.map(Number);
   }
 }

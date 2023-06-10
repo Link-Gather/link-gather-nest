@@ -9,7 +9,7 @@ export class EmailVerificationBodyDto {
   @IsEmail()
   email!: string;
 
-  @ApiProperty({ example: 'signup', description: '인증 타입', required: true, enum: ['signup', 'password'] })
+  @ApiProperty({ example: 'signup', description: '인증 타입', required: true, enum: verificationType })
   @IsNotEmpty()
   @IsIn(verificationType)
   @IsString()
