@@ -5,7 +5,7 @@ import { ListQueryDto, ListResponseDto } from './get-dto';
 describe('get dto 테스트', () => {
   test('ListQueryDto 테스트', async () => {
     const dto = plainToInstance(ListQueryDto, {
-      stacks: [1, 2, 3, 45, 5],
+      stacks: ['1', '2', '3', '45', '5'],
       job: 'backendDeveloper',
       page: '1',
       limit: '8',

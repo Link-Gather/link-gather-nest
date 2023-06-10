@@ -6,8 +6,8 @@ export class ListQueryDto {
   @ApiProperty({ example: [1, 6, 18], description: '기술스택', required: false })
   @IsOptional()
   @IsArray()
-  @IsNumber({}, { each: true })
-  stacks?: number[];
+  @IsString({ each: true })
+  stacks?: string[];
 
   @ApiProperty({ example: 'backendDeveloper', description: '직무', required: false })
   @IsOptional()
