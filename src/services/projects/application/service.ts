@@ -24,7 +24,7 @@ export class ProjectService {
           limit: Number(args.limit),
           page: Number(args.page),
         },
-        args.sort,
+        args.order,
       ),
       this.projectRepository.count(
         {
@@ -37,7 +37,7 @@ export class ProjectService {
           limit: Number(args.limit),
           page: Number(args.page),
         },
-        args.sort,
+        args.order,
       ),
     ]);
 

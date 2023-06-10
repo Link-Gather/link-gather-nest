@@ -4,7 +4,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { purposeType, PurposeType } from '../domain/model';
 import { JobType, jobType } from '../../users/domain/model';
 
-class RecruitMemberDto {
+export class RecruitMemberDto {
   @IsNumber()
   @Min(0)
   @Max(5)

@@ -6,7 +6,6 @@ import { groupBy } from 'lodash';
 import { ProjectService } from '../application/service';
 import { CreateBodyDto, ListQueryDto, ListResponseDto } from '../dto';
 import { AuthGuard } from '../../../libs/auth/guard';
-import { User } from '../../users/domain/model';
 
 @Controller('projects')
 @ApiTags('Project')
@@ -21,13 +20,13 @@ export class ProjectController {
   @Get('/')
   @ApiOperation({ summary: '프로젝트 목록 API', description: '프로젝트 목록을 리턴한다. 필터와 정렬이 가능하다.' })
   async list(@Query() query: ListQueryDto): Result<Paginated<ListResponseDto[]>> {
-    const { stacks, purpose, job, status, sort, page, limit } = query;
+    const { stacks, purpose, job, status, order, page, limit } = query;
     const { projects, count } = await this.projectService.list({
       stacks,
       purpose,
       job,
       status,
-      sort,
+      order,
       page,
       limit,
     });
@@ -52,7 +51,7 @@ export class ProjectController {
       return {
         ...project,
         members: roles.map((role) => {
-          const user = users.find((user) => user.id === role.userId) as User;
+          const user = users.find((user) => user.id === role.userId)!;
           return {
             id: user.id,
             email: user.email,
@@ -67,7 +66,7 @@ export class ProjectController {
     });
 
     const data = projectList.map((project) => new ListResponseDto(project));
-    return { data: { data, count } };
+    return { data: { items: data, count } };
   }
 
   @Post('/')
