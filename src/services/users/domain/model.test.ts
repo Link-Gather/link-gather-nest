@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 import { plainToClass } from '../../../libs/test';
-import { Profile, User } from './model';
+import { User } from './model';
 import { compareHash } from '../../../libs/password';
 import { badRequest } from '../../../libs/exception';
 
@@ -18,11 +18,6 @@ describe('User 테스트', () => {
       password: 'qhupr22qp3ir23qrn2-23rnj1p',
       nickname: 'arthur',
       provider: 'link-gather',
-      career: 1,
-      job: 'backendDeveloper',
-      introduction: 'link-gather creator',
-      stacks: [1, 6, 22],
-      urls: ['https://github.com/changchanghwang'],
       profileImage: 'linkgather image url',
     });
 
@@ -33,16 +28,6 @@ describe('User 테스트', () => {
       password: 'qhupr22qp3ir23qrn2-23rnj1p',
       profileImage: 'linkgather image url',
       provider: 'link-gather',
-      profiles: [
-        plainToClass(Profile, {
-          career: 1,
-          id: 'IRFa-VaY2b',
-          introduction: 'link-gather creator',
-          job: 'backendDeveloper',
-          stacks: [1, 6, 22],
-          urls: ['https://github.com/changchanghwang'],
-        }),
-      ],
     });
   });
   describe('validatePassword test', () => {
@@ -53,16 +38,6 @@ describe('User 테스트', () => {
       password: expect.not.stringMatching('qhupr22qp3ir23qrn2-23rnj1p'),
       profileImage: 'image url',
       provider: 'link-gather',
-      profiles: [
-        plainToClass(Profile, {
-          career: 1,
-          id: 'IRFa-VaY2b',
-          introduction: 'link-gather creator',
-          job: 'backendDeveloper',
-          stacks: [1, 6, 22],
-          urls: ['https://github.com/changchanghwang'],
-        }),
-      ],
     });
     test('패스워드가 일치하면 성공', async () => {
       const mockedCompareHash = compareHash as jest.Mock;
@@ -104,16 +79,6 @@ describe('User 테스트', () => {
       password: expect.not.stringMatching('qhupr22qp3ir23qrn2-23rnj1p'),
       profileImage: 'image url',
       provider: 'link-gather',
-      profiles: [
-        plainToClass(Profile, {
-          career: 1,
-          id: 'IRFa-VaY2b',
-          introduction: 'link-gather creator',
-          job: 'backendDeveloper',
-          stacks: [1, 6, 22],
-          urls: ['https://github.com/changchanghwang'],
-        }),
-      ],
     });
 
     test('비밀번호와 비밀번호확인이 일치하지 않으면 에러를 뱉는다.', async () => {

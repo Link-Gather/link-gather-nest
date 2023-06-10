@@ -7,10 +7,16 @@ import { Transactional } from '../../../libs/orm/transactional';
 import type { SignInBodyDto, SignUpBodyDto } from '../dto';
 import { badRequest, unauthorized } from '../../../libs/exception';
 import { hashPassword } from '../../../libs/password';
+import { Profile } from '../../profiles/domain/model';
+import { ProfileRepository } from '../../profiles/infrastructure/repository';
 
 @Injectable()
 export class UserService {
-  constructor(private userRepository: UserRepository, private jwtService: JwtService) {}
+  constructor(
+    private userRepository: UserRepository,
+    private jwtService: JwtService,
+    private profileRepository: ProfileRepository,
+  ) {}
 
   async list({ ids }: { ids?: string[] }) {
     return this.userRepository.find({ ids });
@@ -28,10 +34,24 @@ export class UserService {
     const password = await hashPassword(args.provider === 'link-gather' ? args.password! : nanoid(10));
 
     const user = new User({
-      ...args,
+      email: args.email,
+      nickname: args.nickname,
+      profileImage: args.profileImage,
+      provider: args.provider,
       password,
     });
+
+    const profile = new Profile({
+      career: args.career,
+      job: args.job,
+      introduction: args.introduction,
+      stacks: args.stacks,
+      urls: args.urls,
+      userId: user.id,
+    });
+
     await this.userRepository.save([user]);
+    await this.profileRepository.save([profile]);
   }
 
   async isNicknameDuplicated({ nickname }: { nickname: string }) {
