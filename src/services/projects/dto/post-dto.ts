@@ -41,7 +41,7 @@ export class CreateBodyDto {
   @IsString()
   description!: string;
 
-  @ApiProperty({ example: 'fun', description: '프로젝트 목적' })
+  @ApiProperty({ example: 'fun', description: '프로젝트 목적', enum: purposeType })
   @IsNotEmpty()
   @IsIn(purposeType)
   purpose!: PurposeType;
@@ -60,7 +60,7 @@ export class CreateBodyDto {
   @IsNumber()
   period!: number;
 
-  @ApiProperty({ example: [1, 6, 18], description: '기술스택', required: false })
+  @ApiProperty({ example: [1, 6, 18], description: '기술스택', required: false, enum: jobType })
   @IsOptional()
   @IsArray()
   @IsNumber({}, { each: true })
