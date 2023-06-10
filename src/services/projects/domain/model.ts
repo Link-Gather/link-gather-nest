@@ -6,8 +6,8 @@ export const statusType = <const>['recruiting', 'progressing', 'finish', 'close'
 export type StatusType = (typeof statusType)[number];
 export const purposeType = <const>['improvement', 'business', 'fun', 'study'];
 export type PurposeType = (typeof purposeType)[number];
-export const sortType = <const>['latest', 'popularity', 'oldest'];
-export type SortType = (typeof sortType)[number];
+export const orderType = <const>['latest', 'popularity', 'oldest'];
+export type OrderType = (typeof orderType)[number];
 
 type RecruitMember = {
   frontendDeveloper: number;
@@ -51,7 +51,7 @@ export class Project extends Aggregate {
   @Column()
   period!: number;
 
-  @Column('simple-array', { nullable: true })
+  @Column('simple-json', { nullable: true })
   stacks?: number[];
 
   @Column()

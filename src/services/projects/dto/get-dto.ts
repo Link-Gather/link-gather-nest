@@ -8,41 +8,14 @@ import {
   IsNumber,
   IsOptional,
   IsString,
-  Max,
-  Min,
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
-import { purposeType, PurposeType, statusType, StatusType, sortType, SortType } from '../domain/model';
+import { purposeType, PurposeType, statusType, StatusType, orderType, OrderType } from '../domain/model';
 import { JobType, ProviderType, jobType, providerType } from '../../users/domain/model';
 import { RoleType, roleType } from '../../roles/domain/model';
-
-class RecruitMemberDto {
-  @IsNumber()
-  @Min(0)
-  @Max(5)
-  @ApiProperty({ example: 1, description: '프론트 개발자 인원 수' })
-  frontendDeveloper!: number;
-
-  @IsNumber()
-  @Min(0)
-  @Max(5)
-  @ApiProperty({ example: 3, description: '백엔드 개발자 인원 수' })
-  backendDeveloper!: number;
-
-  @IsNumber()
-  @Min(0)
-  @Max(5)
-  @ApiProperty({ example: 2, description: '디자이너 인원 수' })
-  designer!: number;
-
-  @IsNumber()
-  @Min(0)
-  @Max(5)
-  @ApiProperty({ example: 4, description: '기획 인원 수' })
-  productManager!: number;
-}
+import { RecruitMemberDto } from './post-dto';
 
 class MemberDto {
   @ApiProperty({ example: 'C03n5-28', description: '유저 id' })
@@ -113,8 +86,8 @@ export class ListQueryDto {
   @IsOptional()
   @IsNotEmpty()
   @IsString()
-  @IsIn(sortType)
-  sort?: SortType = 'latest';
+  @IsIn(orderType)
+  order?: OrderType = 'latest';
 
   @ApiProperty({ example: '1', description: '페이지네이션용 page', default: '1', required: false })
   @IsOptional()
@@ -226,6 +199,7 @@ export class ListResponseDto {
       this.isRecruiting = args.isRecruiting;
       this.recruitMember = args.recruitMember;
       this.members = args.members;
+      this.status = args.status;
       this.period = args.period;
       this.stacks = args.stacks;
       this.bookMarkCount = args.bookMarkCount;
