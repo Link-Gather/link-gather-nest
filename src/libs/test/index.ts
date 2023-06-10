@@ -9,6 +9,10 @@ export const plainToClass = <T>(classType: new (...args: any[]) => T, plain: Non
   return ct.plainToClass(classType, plain);
 };
 
+export const plainToInstance = <T>(classType: new (...args: any[]) => T, plain: NonFunctionProperties<T>) => {
+  return ct.plainToClass(classType, plain);
+};
+
 let date: typeof Date;
 
 export function mockDate(value: number | string | Date) {

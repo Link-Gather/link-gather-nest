@@ -28,11 +28,11 @@ export class ProfileController {
       data: {
         data: profiles.map((profile) => {
           const user = userOf[profile.userId];
-          return {
+          return new ListResponseDto({
             ...profile,
             nickname: user.nickname,
             profileImage: user.profileImage,
-          };
+          });
         }),
         count,
       },

@@ -40,29 +40,29 @@ export class ListResponseDto {
   @ApiProperty({ example: 'a1b2c3d4e5', description: '프로필 id', required: true })
   @IsNotEmpty()
   @IsString()
-  id!: string;
+  id: string;
 
   @ApiProperty({ example: 3, description: '경력', required: true })
   @IsNotEmpty()
   @IsNumber()
   @Min(0)
-  career!: number;
+  career: number;
 
   @ApiProperty({ example: 'frontendDeveloper', description: '직무', required: true })
   @IsNotEmpty()
   @IsString()
   @IsIn(jobType)
-  job!: JobType;
+  job: JobType;
 
   @ApiProperty({ example: 'I am developer', description: '자기소개', required: true })
   @IsNotEmpty()
   @IsString()
-  introduction!: string;
+  introduction: string;
 
   @ApiProperty({ example: [1, 6, 22], description: '기술스택', required: true })
   @IsArray()
   @IsNumber({}, { each: true })
-  stacks!: number[];
+  stacks: number[];
 
   @ApiProperty({
     example: ['https://github.com/changchanghwang'],
@@ -71,7 +71,7 @@ export class ListResponseDto {
   })
   @IsArray()
   @IsString({ each: true })
-  urls!: string[];
+  urls: string[];
 
   @ApiProperty({
     example: 'qg35g345',
@@ -79,7 +79,23 @@ export class ListResponseDto {
     required: true,
   })
   @IsString()
-  userId!: string;
+  userId: string;
+
+  @ApiProperty({
+    example: 'arthur',
+    description: '닉네임',
+    required: true,
+  })
+  @IsString()
+  nickname: string;
+
+  @ApiProperty({
+    example: 'img url',
+    description: '프로필 이미지',
+    required: true,
+  })
+  @IsString()
+  profileImage: string;
 
   constructor(args: {
     id: string;
@@ -89,6 +105,8 @@ export class ListResponseDto {
     stacks: number[];
     urls: string[];
     userId: string;
+    nickname: string;
+    profileImage: string;
   }) {
     this.id = args.id;
     this.career = args.career;
@@ -97,5 +115,7 @@ export class ListResponseDto {
     this.stacks = args.stacks;
     this.urls = args.urls;
     this.userId = args.userId;
+    this.nickname = args.nickname;
+    this.profileImage = args.profileImage;
   }
 }
