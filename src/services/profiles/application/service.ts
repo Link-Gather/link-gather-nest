@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { ProfileRepository } from '../infrastructure/repository';
-import { ListQueryDto } from '../dto';
+import { CreateBodyDto, ListQueryDto } from '../dto';
+import { Transactional } from '../../../libs/orm/transactional';
+import { User } from '../../users/domain/model';
+import { Profile } from '../domain/model';
 
 @Injectable()
 export class ProfileService {
@@ -36,5 +39,19 @@ export class ProfileService {
       items,
       count,
     };
+  }
+
+  @Transactional()
+  async create({ user }: { user: User }, args: CreateBodyDto) {
+    const profile = new Profile({
+      job: args.job,
+      career: args.career,
+      introduction: args.introduction,
+      urls: args.urls,
+      stacks: args.stacks,
+      userId: user.id,
+    });
+
+    return this.profileRepository.save([profile]);
   }
 }
