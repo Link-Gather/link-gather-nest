@@ -47,7 +47,7 @@ export class ListResponseDto {
   @Min(0)
   career: number;
 
-  @ApiProperty({ example: 'frontendDeveloper', description: '직무', required: true })
+  @ApiProperty({ example: 'frontendDeveloper', description: '직무', required: true, enum: jobType })
   @IsNotEmpty()
   @IsString()
   @IsIn(jobType)
