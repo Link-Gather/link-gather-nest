@@ -91,6 +91,12 @@ export class UserService {
   }
 
   async retrieve({ id }: { id: string }) {
-    return this.userRepository.findOneOrFail(id);
+    const user = await this.userRepository.findOneOrFail(id);
+    const profiles = await this.profileRepository.find({ userId: user.id });
+
+    return {
+      ...user,
+      profiles,
+    };
   }
 }

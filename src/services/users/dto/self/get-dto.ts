@@ -1,6 +1,64 @@
-import { IsDate, IsEmail, IsIn, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsDate,
+  IsEmail,
+  IsIn,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Min,
+  ValidateNested,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { ProviderType, providerType } from '../../domain/model';
+import { Type } from 'class-transformer';
+import { JobType, ProviderType, jobType, providerType } from '../../domain/model';
+
+class ProfileDto {
+  @ApiProperty({ example: 'a1b2c3d4e5', description: '프로필 id', required: true })
+  @IsNotEmpty()
+  @IsString()
+  id!: string;
+
+  @ApiProperty({ example: 3, description: '경력', required: true })
+  @IsNotEmpty()
+  @IsNumber()
+  @Min(0)
+  career!: number;
+
+  @ApiProperty({ example: 'frontendDeveloper', description: '직무', required: true })
+  @IsNotEmpty()
+  @IsString()
+  @IsIn(jobType)
+  job!: JobType;
+
+  @ApiProperty({ example: 'I am developer', description: '자기소개', required: true })
+  @IsNotEmpty()
+  @IsString()
+  introduction!: string;
+
+  @ApiProperty({ example: [1, 6, 22], description: '기술스택', required: true })
+  @IsArray()
+  @IsNumber({}, { each: true })
+  stacks!: number[];
+
+  @ApiProperty({
+    example: ['https://github.com/changchanghwang'],
+    description: '블로그, 깃허브 등 주소',
+    required: true,
+  })
+  @IsArray()
+  @IsString({ each: true })
+  urls!: string[];
+
+  @ApiProperty({
+    example: 'qg35g345',
+    description: 'user id',
+    required: true,
+  })
+  @IsString()
+  userId!: string;
+}
 
 export class RetrieveResponseDto {
   @ApiProperty({ example: 'a1b2c3d4e5', description: '유저 id', required: true })
@@ -33,19 +91,32 @@ export class RetrieveResponseDto {
   @IsOptional()
   nicknameUpdatedOn?: CalendarDate;
 
-  constructor(args: {
-    id: string;
-    email: string;
-    nickname: string;
-    provider: ProviderType;
-    profileImage: string;
-    nicknameUpdatedOn?: CalendarDate;
-  }) {
+  @ApiProperty({
+    example: [
+      {
+        id: 'asdf12',
+        stacks: [1, 3, 345, 75, 765],
+        job: 'backendDeveloper',
+        career: 3,
+        introduction: 'I am developer',
+        urls: ['https://www.naver.com'],
+        userId: 'userId',
+      },
+    ],
+    description: '유저의 프로필 목록',
+  })
+  @IsNotEmpty()
+  @Type(() => ProfileDto)
+  @ValidateNested({ each: true })
+  profiles!: ProfileDto[];
+
+  constructor(args: RetrieveResponseDto) {
     this.id = args.id;
     this.email = args.email;
     this.nickname = args.nickname;
     this.provider = args.provider;
     this.profileImage = args.profileImage;
     this.nicknameUpdatedOn = args.nicknameUpdatedOn;
+    this.profiles = args.profiles;
   }
 }

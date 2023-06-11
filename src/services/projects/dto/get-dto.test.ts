@@ -1,6 +1,6 @@
 import { validate } from 'class-validator';
-import { plainToInstance } from 'class-transformer';
 import { ListQueryDto, ListResponseDto } from './get-dto';
+import { plainToInstance } from '../../../libs/test';
 
 describe('get dto 테스트', () => {
   test('ListQueryDto 테스트', async () => {
