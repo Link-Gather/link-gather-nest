@@ -2,12 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { Raw } from 'typeorm';
 import { FindOrder, PaginationOption, convertOptions, In } from '../../../libs/orm';
 import { Repository } from '../../../libs/ddd';
-import { Project, PurposeType, SortType, StatusType } from '../domain/model';
+import { Project, PurposeType, OrderType, StatusType } from '../domain/model';
 import { stripUndefined } from '../../../libs/common';
 import { JobType } from '../../users/domain/model';
 
-function getOrderOption(sort?: SortType): FindOrder {
-  switch (sort) {
+function getOrderOption(order?: OrderType): FindOrder {
+  switch (order) {
     case 'popularity':
       return { order: { bookMarkCount: 'DESC', id: 'DESC' } };
     case 'oldest':
@@ -23,9 +23,9 @@ export class ProjectRepository extends Repository<Project, Project['id']> {
   entityClass = Project;
 
   async find(
-    conditions: { stacks?: number[]; purpose?: PurposeType; job?: JobType; status?: StatusType },
+    conditions: { stacks?: string[]; purpose?: PurposeType; job?: JobType; status?: StatusType },
     options?: PaginationOption,
-    sort?: SortType,
+    order?: OrderType,
   ): Promise<Project[]> {
     return this.getManager().find(Project, {
       where: {
@@ -42,14 +42,14 @@ export class ProjectRepository extends Repository<Project, Project['id']> {
         }),
       },
       ...convertOptions(options),
-      ...getOrderOption(sort),
+      ...getOrderOption(order),
     });
   }
 
   async count(
-    conditions: { stacks?: number[]; purpose?: PurposeType; job?: JobType; status?: StatusType },
+    conditions: { stacks?: string[]; purpose?: PurposeType; job?: JobType; status?: StatusType },
     options?: PaginationOption,
-    sort?: SortType,
+    order?: OrderType,
   ): Promise<number> {
     return this.getManager().count(Project, {
       where: {
@@ -66,7 +66,7 @@ export class ProjectRepository extends Repository<Project, Project['id']> {
         }),
       },
       ...convertOptions(options),
-      ...getOrderOption(sort),
+      ...getOrderOption(order),
     });
   }
 }

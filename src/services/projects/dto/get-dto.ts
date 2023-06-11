@@ -8,41 +8,14 @@ import {
   IsNumber,
   IsOptional,
   IsString,
-  Max,
-  Min,
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
-import { purposeType, PurposeType, statusType, StatusType, sortType, SortType } from '../domain/model';
+import { purposeType, PurposeType, statusType, StatusType, orderType, OrderType } from '../domain/model';
 import { JobType, ProviderType, jobType, providerType } from '../../users/domain/model';
 import { RoleType, roleType } from '../../roles/domain/model';
-
-class RecruitMemberDto {
-  @IsNumber()
-  @Min(0)
-  @Max(5)
-  @ApiProperty({ example: 1, description: '프론트 개발자 인원 수' })
-  frontendDeveloper!: number;
-
-  @IsNumber()
-  @Min(0)
-  @Max(5)
-  @ApiProperty({ example: 3, description: '백엔드 개발자 인원 수' })
-  backendDeveloper!: number;
-
-  @IsNumber()
-  @Min(0)
-  @Max(5)
-  @ApiProperty({ example: 2, description: '디자이너 인원 수' })
-  designer!: number;
-
-  @IsNumber()
-  @Min(0)
-  @Max(5)
-  @ApiProperty({ example: 4, description: '기획 인원 수' })
-  productManager!: number;
-}
+import { RecruitMemberDto } from './post-dto';
 
 class MemberDto {
   @ApiProperty({ example: 'C03n5-28', description: '유저 id' })
@@ -65,56 +38,62 @@ class MemberDto {
   @IsString()
   profileImage!: string;
 
-  @ApiProperty({ example: 'kakao', description: '회원가입 정보 제공자' })
+  @ApiProperty({ example: 'kakao', description: '회원가입 정보 제공자', enum: providerType })
   @IsNotEmpty()
   @IsIn(providerType)
   provider!: ProviderType;
 
-  @ApiProperty({ example: 'backendDeveloper', description: '직무' })
+  @ApiProperty({ example: 'backendDeveloper', description: '직무', enum: jobType })
   @IsNotEmpty()
   @IsString()
   @IsIn(jobType)
   job!: JobType;
 
-  @ApiProperty({ example: 'kakao', description: '회원가입 정보 제공자' })
+  @ApiProperty({ example: 'kakao', description: '회원가입 정보 제공자', enum: roleType })
   @IsNotEmpty()
   @IsIn(roleType)
   type!: RoleType;
 }
 
 export class ListQueryDto {
-  @ApiProperty({ example: [1, 6, 18], description: '기술스택', required: false })
+  @ApiProperty({ example: ['1', '6', '18'], description: '기술스택', required: false })
   @IsOptional()
   @IsArray()
-  @IsNumber({}, { each: true })
-  stacks?: number[];
+  @IsString({ each: true })
+  stacks?: string[];
 
-  @ApiProperty({ example: 'fun', description: '프로젝트 목적', required: false })
+  @ApiProperty({ example: 'fun', description: '프로젝트 목적', required: false, enum: purposeType })
   @IsOptional()
   @IsNotEmpty()
   @IsIn(purposeType)
   purpose?: PurposeType;
 
-  @ApiProperty({ example: 'backendDeveloper', description: '직무', required: false })
+  @ApiProperty({ example: 'backendDeveloper', description: '직무', required: false, enum: jobType })
   @IsOptional()
   @IsNotEmpty()
   @IsString()
   @IsIn(jobType)
   job?: JobType;
 
-  @ApiProperty({ example: 'progressing', description: '프로젝트 진행 상태', required: false })
+  @ApiProperty({ example: 'progressing', description: '프로젝트 진행 상태', required: false, enum: statusType })
   @IsOptional()
   @IsNotEmpty()
   @IsString()
   @IsIn(statusType)
   status?: StatusType;
 
-  @ApiProperty({ example: 'latest', description: '프로젝트 목록 정렬 기준', default: 'Latest', required: false })
+  @ApiProperty({
+    example: 'latest',
+    description: '프로젝트 목록 정렬 기준',
+    default: 'Latest',
+    required: false,
+    enum: orderType,
+  })
   @IsOptional()
   @IsNotEmpty()
   @IsString()
-  @IsIn(sortType)
-  sort?: SortType = 'latest';
+  @IsIn(orderType)
+  order?: OrderType = 'latest';
 
   @ApiProperty({ example: '1', description: '페이지네이션용 page', default: '1', required: false })
   @IsOptional()
@@ -145,7 +124,7 @@ export class ListResponseDto {
   @IsString()
   description!: string;
 
-  @ApiProperty({ example: 'fun', description: '프로젝트 목적' })
+  @ApiProperty({ example: 'fun', description: '프로젝트 목적', enum: purposeType })
   @IsNotEmpty()
   @IsIn(purposeType)
   purpose!: PurposeType;
@@ -182,7 +161,7 @@ export class ListResponseDto {
   @Type(() => MemberDto)
   members!: MemberDto[];
 
-  @ApiProperty({ example: 'progressing', description: '프로젝트 진행 상태', required: false })
+  @ApiProperty({ example: 'progressing', description: '프로젝트 진행 상태', required: false, enum: statusType })
   @IsOptional()
   @IsNotEmpty()
   @IsString()
@@ -226,6 +205,7 @@ export class ListResponseDto {
       this.isRecruiting = args.isRecruiting;
       this.recruitMember = args.recruitMember;
       this.members = args.members;
+      this.status = args.status;
       this.period = args.period;
       this.stacks = args.stacks;
       this.bookMarkCount = args.bookMarkCount;

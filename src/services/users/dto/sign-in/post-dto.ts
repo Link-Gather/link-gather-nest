@@ -31,7 +31,7 @@ export class SignInResponseDto {
   @IsString()
   nickname!: string;
 
-  @ApiProperty({ example: 'kakao', description: '회원가입 정보 제공자', required: true })
+  @ApiProperty({ example: 'kakao', description: '회원가입 정보 제공자', required: true, enum: providerType })
   @IsNotEmpty()
   @IsIn(providerType)
   provider!: ProviderType;
