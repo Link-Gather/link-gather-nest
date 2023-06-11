@@ -10,7 +10,7 @@ import {
   Post,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBody } from '@nestjs/swagger';
 import axios from 'axios';
 import { getConfig } from '../../../config';
 import { VerificationService } from '../../verifications/application/service';
@@ -138,6 +138,7 @@ export class AuthController {
 
   @Post('/email-verification')
   @ApiOperation({ summary: 'email 인증 코드 발송', description: 'email 인증' })
+  @ApiBody({ type: EmailVerificationBodyDto })
   async verifyEmail(@Body() body: EmailVerificationBodyDto): Result<EmailVerificationResponseDto> {
     const { email, type } = body;
     const { id } = await this.verificationService.start({ email, type });

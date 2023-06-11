@@ -7,7 +7,7 @@ import { badRequest } from '../../../libs/exception';
 
 export const providerType = <const>['kakao', 'github', 'google', 'link-gather'];
 export type ProviderType = (typeof providerType)[number];
-export const jobType = <const>['Frontend Developer', 'Backend Developer', 'Designer', 'Product Manager', 'Other'];
+export const jobType = <const>['frontendDeveloper', 'backendDeveloper', 'designer', 'productManager'];
 export type JobType = (typeof jobType)[number];
 
 type CtorType = {

@@ -3,13 +3,13 @@ import { IsEmail, IsIn, IsNotEmpty, IsString } from 'class-validator';
 import { type VerificationType, verificationType } from '../../../verifications/domain/model';
 
 export class EmailVerificationBodyDto {
-  @ApiProperty({ example: 'test@test.com', description: 'email', required: true })
+  @ApiProperty({ example: 'test@test.com', description: '이메일', required: true })
   @IsNotEmpty()
   @IsString()
   @IsEmail()
   email!: string;
 
-  @ApiProperty({ example: 'signup', description: '인증 타입', required: true })
+  @ApiProperty({ example: 'signup', description: '인증 타입', required: true, enum: verificationType })
   @IsNotEmpty()
   @IsIn(verificationType)
   @IsString()

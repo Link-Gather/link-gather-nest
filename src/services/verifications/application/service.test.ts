@@ -61,7 +61,7 @@ describe('VerificationService 테스트', () => {
       plainToClass(Profile, {
         id: '1',
         career: 1,
-        job: 'Backend Developer',
+        job: 'backendDeveloper',
         introduction: 'Hello world!',
         urls: ['https://github.com/Link-Gather'],
         stacks: [1, 6, 22],

@@ -51,7 +51,7 @@ describe('ProjectService 테스트', () => {
         id: 'profileId',
         introduction: 'hello, my name is arthur',
         career: 1,
-        job: 'Backend Developer',
+        job: 'backendDeveloper',
         stacks: [1, 6, 22],
         urls: ['https://github.com/changchanghwang'],
       }),
@@ -69,10 +69,10 @@ describe('ProjectService 테스트', () => {
           title: 'title',
           description: 'description',
           recruitMember: { frontendDeveloper: 2, backendDeveloper: 2, designer: 1, productManager: 1 },
-          stacks: ['node.js'],
+          stacks: [1, 6],
           period: 1,
-          purpose: 'Business',
-          leaderJob: 'BackendDeveloper',
+          purpose: 'business',
+          leaderJob: 'backendDeveloper',
         },
       );
 
@@ -80,27 +80,28 @@ describe('ProjectService 테스트', () => {
       expect(roleRepositorySaveSpy.mock.calls).toHaveLength(1);
       expect(projectRepositorySaveSpy.mock.calls[0][0]).toEqual([
         {
-          description: 'description',
           id: 'IRFa-VaY2b',
+          description: 'description',
           isRecruiting: true,
           period: 1,
-          purpose: 'Business',
+          purpose: 'business',
           recruitMember: {
             backendDeveloper: 2,
             designer: 1,
             frontendDeveloper: 2,
             productManager: 1,
           },
-          stacks: ['node.js'],
-          status: 'Recruiting',
+          stacks: [1, 6],
+          bookMarkCount: 0,
+          status: 'recruiting',
           title: 'title',
         },
       ]);
       expect(roleRepositorySaveSpy.mock.calls[0][0]).toEqual([
         {
-          job: 'BackendDeveloper',
+          job: 'backendDeveloper',
           projectId: 'IRFa-VaY2b',
-          type: 'Leader',
+          type: 'leader',
           userId: 'userId',
         },
       ]);
