@@ -6,7 +6,7 @@ import { UserRepository } from '../../users/infrastructure/repository';
 import { VerificationService } from './service';
 import { dataSource } from '../../../libs/orm';
 import { plainToClass } from '../../../libs/test';
-import { Profile, User } from '../../users/domain/model';
+import { User } from '../../users/domain/model';
 import { VerificationRepository } from '../infrastructure/repository';
 import { badRequest } from '../../../libs/exception';
 import { Verification } from '../domain/model';
@@ -57,16 +57,6 @@ describe('VerificationService 테스트', () => {
     nickname: 'arthur',
     profileImage: '',
     provider: 'link-gather',
-    profiles: [
-      plainToClass(Profile, {
-        id: '1',
-        career: 1,
-        job: 'backendDeveloper',
-        introduction: 'Hello world!',
-        urls: ['https://github.com/Link-Gather'],
-        stacks: [1, 6, 22],
-      }),
-    ],
   });
 
   const verification = plainToClass(Verification, {

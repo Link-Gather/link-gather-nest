@@ -6,7 +6,9 @@ import {
   Injectable,
   Post,
   Query,
+  Req,
   Res,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
@@ -19,8 +21,10 @@ import {
   NicknameCheckQueryDto,
   NicknameCheckResponseDto,
   SignInResponseDto,
+  RetrieveResponseDto,
 } from '../dto';
 import { badRequest } from '../../../libs/exception';
+import { AuthGuard } from '../../../libs/auth/guard';
 
 @Controller('users')
 @ApiTags('User')
@@ -63,7 +67,6 @@ export class UserController {
       provider: data.user.provider,
       profileImage: data.user.profileImage,
       nicknameUpdatedOn: data.user.nicknameUpdatedOn,
-      profiles: data.user.profiles,
     });
 
     const errors = await validate(user);
@@ -90,6 +93,20 @@ export class UserController {
     const isDuplicated = await this.userService.isNicknameDuplicated({ nickname });
 
     const data = new NicknameCheckResponseDto({ isDuplicated });
+    return { data };
+  }
+
+  @Get('/self')
+  @UseGuards(AuthGuard)
+  @ApiOperation({
+    summary: '사용자 자신 정보 조회 API',
+    description: '로그인한 사용자 자신의 정보를 반환한다.',
+  })
+  async retrieve(@Req() req: Request): Result<RetrieveResponseDto> {
+    const { user: actor } = req.state;
+    const user = await this.userService.retrieve({ id: actor.id });
+
+    const data = new RetrieveResponseDto(user);
     return { data };
   }
 }

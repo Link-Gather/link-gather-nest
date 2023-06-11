@@ -7,7 +7,7 @@ import { AuthService } from '../../services/auth/application/service';
 import { UserRepository } from '../../services/users/infrastructure/repository';
 import { AuthGuard } from './guard';
 import { plainToClass } from '../test';
-import { Profile, User } from '../../services/users/domain/model';
+import { User } from '../../services/users/domain/model';
 import { dataSource } from '../orm';
 import { unauthorized } from '../exception';
 
@@ -40,16 +40,6 @@ describe('auth guard test', () => {
     nickname: 'arthur',
     profileImage: '',
     provider: 'link-gather',
-    profiles: [
-      plainToClass(Profile, {
-        id: 'profileId',
-        introduction: 'hello, my name is arthur',
-        career: 1,
-        job: 'backendDeveloper',
-        stacks: [1, 6, 22],
-        urls: ['https://github.com/changchanghwang'],
-      }),
-    ],
   });
 
   describe('access token 관련 로직 테스트', () => {

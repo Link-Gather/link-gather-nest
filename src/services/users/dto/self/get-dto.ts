@@ -1,21 +1,8 @@
-import { IsDate, IsEmail, IsIn, IsNotEmpty, IsOptional, IsString, MinLength } from 'class-validator';
+import { IsDate, IsEmail, IsIn, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { ProviderType, providerType } from '../../domain/model';
 
-export class SignInBodyDto {
-  @ApiProperty({ example: 'test@test.com', description: '이메일', required: true })
-  @IsNotEmpty()
-  @IsEmail()
-  email!: string;
-
-  @ApiProperty({ example: 'asdf1234!@', description: '패스워드', required: true })
-  @IsNotEmpty()
-  @IsString()
-  @MinLength(8, { message: 'Password required at least 8' })
-  password!: string;
-}
-
-export class SignInResponseDto {
+export class RetrieveResponseDto {
   @ApiProperty({ example: 'a1b2c3d4e5', description: '유저 id', required: true })
   @IsNotEmpty()
   @IsString()

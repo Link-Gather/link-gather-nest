@@ -47,6 +47,7 @@ export class AuthGuard implements CanActivate {
         throw err;
       }
     }
-    return false;
+
+    throw unauthorized('Authentication failed.', { errorMessage: '권한 인증에 실패했습니다.' });
   }
 }

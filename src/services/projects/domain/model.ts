@@ -2,7 +2,7 @@ import { AfterLoad, Column, Entity, PrimaryColumn } from 'typeorm';
 import { nanoid } from 'nanoid';
 import { Aggregate } from '../../../libs/ddd/aggregate';
 
-export const statusType = <const>['recruiting', 'progressing', 'finish', 'close'];
+export const statusType = <const>['recruiting', 'progressing', 'additionalRecruitment', 'finish', 'close'];
 export type StatusType = (typeof statusType)[number];
 export const purposeType = <const>['improvement', 'business', 'fun', 'study'];
 export type PurposeType = (typeof purposeType)[number];
