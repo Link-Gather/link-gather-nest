@@ -9,14 +9,22 @@ export class ProfileService {
   async list(args: ListQueryDto) {
     const [items, count] = await Promise.all([
       this.profileRepository.find(
-        { stacks: args.stacks?.map(Number), job: args.job },
+        {
+          stacks: args.stacks?.map(Number),
+          job: args.job,
+          career: args.career ? Number(args.career) : undefined,
+        },
         {
           limit: Number(args.limit),
           page: Number(args.page),
         },
       ),
       this.profileRepository.count(
-        { stacks: args.stacks?.map(Number), job: args.job },
+        {
+          stacks: args.stacks?.map(Number),
+          job: args.job,
+          career: args.career ? Number(args.career) : undefined,
+        },
         {
           limit: Number(args.limit),
           page: Number(args.page),

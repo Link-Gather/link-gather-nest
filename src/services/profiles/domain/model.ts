@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { AfterLoad, Column, Entity, PrimaryColumn } from 'typeorm';
 import { nanoid } from 'nanoid';
 import { Aggregate } from '../../../libs/ddd/aggregate';
 import { JobType } from '../../users/domain/model';
@@ -46,5 +46,10 @@ export class Profile extends Aggregate {
       this.stacks = args.stacks;
       this.userId = args.userId;
     }
+  }
+
+  @AfterLoad()
+  private afterLoad() {
+    this.stacks = this.stacks?.map(Number);
   }
 }

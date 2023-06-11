@@ -12,11 +12,12 @@ export class ProfileController {
   constructor(private readonly profileService: ProfileService, private readonly userService: UserService) {}
 
   @Get('/')
-  @ApiOperation({ summary: '프로젝트 목록 API', description: '프로젝트 목록을 리턴한다. 필터와 정렬이 가능하다.' })
+  @ApiOperation({ summary: '프로필 목록 API', description: '프로젝트 목록을 리턴한다. 필터와 정렬이 가능하다.' })
   async list(@Query() query: ListQueryDto): Result<Paginated<ListResponseDto[]>> {
-    const { stacks, job, page, limit } = query;
+    const { stacks, job, career, page, limit } = query;
     const { items: profiles, count } = await this.profileService.list({
       stacks,
+      career,
       job,
       page,
       limit,
@@ -26,7 +27,7 @@ export class ProfileController {
 
     return {
       data: {
-        data: profiles.map((profile) => {
+        items: profiles.map((profile) => {
           const user = userOf[profile.userId];
           return new ListResponseDto({
             ...profile,
