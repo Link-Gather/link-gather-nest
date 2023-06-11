@@ -100,12 +100,13 @@ export class UserController {
   @UseGuards(AuthGuard)
   @ApiOperation({
     summary: '사용자 자신 정보 조회 API',
-    description: '로그인한 사용자 자신의 정보를 반환한다.',
+    description: '로그인한 사용자 자신의 정보와 프로필을 모두 반환한다.',
   })
   async retrieve(@Req() req: Request): Result<RetrieveResponseDto> {
     const { user: actor } = req.state;
     const user = await this.userService.retrieve({ id: actor.id });
 
+    // FIXME: nested 된 프로퍼티에 whitelist 가 동작하지 않는다.
     const data = new RetrieveResponseDto(user);
     return { data };
   }
