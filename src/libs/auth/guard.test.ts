@@ -142,6 +142,10 @@ describe('auth guard test', () => {
     mockContext.switchToHttp().getRequest.mockReturnValue({
       signedCookies: {},
     });
-    expect(await authGuard.canActivate(mockContext)).toBe(false);
+    try {
+      await authGuard.canActivate(mockContext);
+    } catch (err) {
+      expect(err).toEqual(unauthorized('Authentication failed.', { errorMessage: '권한 인증에 실패했습니다.' }));
+    }
   });
 });
