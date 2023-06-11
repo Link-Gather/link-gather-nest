@@ -89,4 +89,8 @@ export class UserService {
 
     return { accessToken, refreshToken, user };
   }
+
+  async retrieve({ id }: { id: string }) {
+    return this.userRepository.findOneOrFail(id);
+  }
 }
