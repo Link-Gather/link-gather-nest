@@ -165,7 +165,7 @@ export class AuthController {
   @ApiOperation({ summary: 'email 인증 코드 확인 (화면 접근)', description: '인증이 실패하면 error를 던진다.' })
   async isValidVerification(@Param() param: EmailVerificationConfirmParamDto): Promise<void> {
     const { id } = param;
-    this.verificationService.isValidVerification(id);
+    await this.verificationService.isValidVerification(id);
   }
 
   @Patch('/password-change/:verificationId')

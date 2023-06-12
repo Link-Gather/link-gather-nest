@@ -13,6 +13,10 @@ export class ValidVerificationSpec implements VerificationSpec {
   async find(verificationRepository: VerificationRepository, options?: Partial<FindOption>) {
     const [verification] = await verificationRepository.find({ id: this.id }, options);
 
+    if (!verification) {
+      return [];
+    }
+
     if (verification.expiredAt < new Date()) {
       throw forbidden(`Verification(${verification.id}) is expired.`, {
         errorMessage: '인증코드를 재요청 해주세요.',
