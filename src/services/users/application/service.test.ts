@@ -5,15 +5,20 @@ import { JwtService } from '@nestjs/jwt';
 import { UserRepository } from '../infrastructure/repository';
 import { UserService } from './service';
 import { dataSource } from '../../../libs/orm';
-import { Profile, User } from '../domain/model';
+import { User } from '../domain/model';
 import { plainToClass } from '../../../libs/test';
 import { unauthorized } from '../../../libs/exception';
+import { ProfileRepository } from '../../profiles/infrastructure/repository';
 
 jest.mock('nanoid');
+// HACK: 이거 안하면 user, profile metadata를 못찾겠다고 뭐라함
+jest.mock('../../profiles/infrastructure/repository');
+jest.mock('../infrastructure/repository');
 
 describe('UserService 테스트', () => {
   let userService: UserService;
   let userRepository: UserRepository;
+  let profileRepository: ProfileRepository;
   let jwtService: JwtService;
 
   beforeAll(async () => {
@@ -23,10 +28,12 @@ describe('UserService 테스트', () => {
         UserRepository,
         JwtService,
         { provide: 'entityManager', useValue: dataSource.createEntityManager() },
+        ProfileRepository,
       ],
     }).compile();
     userService = module.get<UserService>(UserService);
     userRepository = module.get<UserRepository>(UserRepository);
+    profileRepository = module.get<ProfileRepository>(ProfileRepository);
     jwtService = module.get<JwtService>(JwtService);
   });
 
@@ -41,7 +48,8 @@ describe('UserService 테스트', () => {
 
   describe('signUp test', () => {
     test('신규 유저는 회원가입을 진행할 수 있다.', async () => {
-      const userRepositorySaveSpy = jest.spyOn(userRepository, 'save').mockResolvedValue();
+      const userRepositorySaveSpy = jest.spyOn(userRepository, 'save');
+      const profileRepositorySaveSpy = jest.spyOn(profileRepository, 'save');
       const userRepositoryFindSpy = jest.spyOn(userRepository, 'find').mockResolvedValue([]);
       jest.spyOn(bcrypt, 'genSalt').mockImplementation(() => Promise.resolve('$2b$10$5CW3ftestSaltJ9wpFAShe'));
       const bcryptHashSpy = jest.spyOn(bcrypt, 'hash').mockImplementation(() => Promise.resolve('encrypt password'));
@@ -60,6 +68,7 @@ describe('UserService 테스트', () => {
       });
 
       expect(userRepositorySaveSpy.mock.calls).toHaveLength(1);
+      expect(profileRepositorySaveSpy.mock.calls).toHaveLength(1);
       expect(userRepositorySaveSpy.mock.calls[0][0]).toEqual([
         {
           email: 'email@test.com',
@@ -68,16 +77,17 @@ describe('UserService 테스트', () => {
           password: 'encrypt password',
           profileImage: 'image url',
           provider: 'link-gather',
-          profiles: [
-            {
-              career: 1,
-              id: 'IRFa-VaY2b',
-              introduction: 'link-gather creator',
-              job: 'backendDeveloper',
-              stacks: [1, 6, 22],
-              urls: ['https://github.com/changchanghwang'],
-            },
-          ],
+        },
+      ]);
+      expect(profileRepositorySaveSpy.mock.calls[0][0]).toEqual([
+        {
+          career: 1,
+          id: 'IRFa-VaY2b',
+          introduction: 'link-gather creator',
+          job: 'backendDeveloper',
+          stacks: [1, 6, 22],
+          urls: ['https://github.com/changchanghwang'],
+          userId: 'IRFa-VaY2b',
         },
       ]);
 
@@ -87,6 +97,7 @@ describe('UserService 테스트', () => {
 
     test('SNS 로 가입한 유저이면 nanoId 로 비밀번호를 새로 만들어준다.', async () => {
       const userRepositorySaveSpy = jest.spyOn(userRepository, 'save').mockResolvedValue();
+      const profileRepositorySaveSpy = jest.spyOn(profileRepository, 'save');
       const userRepositoryFindSpy = jest.spyOn(userRepository, 'find').mockResolvedValue([]);
       jest.spyOn(bcrypt, 'genSalt').mockImplementation(() => Promise.resolve('$2b$10$5CW3ftestSaltJ9wpFAShe'));
       const bcryptHashSpy = jest.spyOn(bcrypt, 'hash').mockImplementation(() => Promise.resolve('encrypt password'));
@@ -104,6 +115,7 @@ describe('UserService 테스트', () => {
       });
 
       expect(userRepositorySaveSpy.mock.calls).toHaveLength(1);
+      expect(profileRepositorySaveSpy.mock.calls).toHaveLength(1);
       expect(userRepositorySaveSpy.mock.calls[0][0]).toEqual([
         {
           email: 'email@test.com',
@@ -112,16 +124,6 @@ describe('UserService 테스트', () => {
           password: 'encrypt password',
           profileImage: 'profile image',
           provider: 'github',
-          profiles: [
-            {
-              career: 1,
-              id: 'IRFa-VaY2b',
-              introduction: 'sns user',
-              job: 'frontendDeveloper',
-              stacks: [1, 6, 22],
-              urls: ['https://github.com/'],
-            },
-          ],
         },
       ]);
 
@@ -137,16 +139,6 @@ describe('UserService 테스트', () => {
         password: expect.not.stringMatching('qhupr22qp3ir23qrn2-23rnj1p'),
         profileImage: 'image url',
         provider: 'link-gather',
-        profiles: [
-          plainToClass(Profile, {
-            career: 1,
-            id: 'IRFa-VaY2b',
-            introduction: 'link-gather creator',
-            job: 'backendDeveloper',
-            stacks: [1, 6, 22],
-            urls: ['https://github.com/changchanghwang'],
-          }),
-        ],
       });
 
       jest.spyOn(userRepository, 'find').mockResolvedValue([user]);
@@ -180,16 +172,6 @@ describe('UserService 테스트', () => {
       password: expect.not.stringMatching('qhupr22qp3ir23qrn2-23rnj1p'),
       profileImage: 'image url',
       provider: 'link-gather',
-      profiles: [
-        plainToClass(Profile, {
-          career: 1,
-          id: 'IRFa-VaY2b',
-          introduction: 'link-gather creator',
-          job: 'backendDeveloper',
-          stacks: [1, 6, 22],
-          urls: ['https://github.com/changchanghwang'],
-        }),
-      ],
     });
 
     test('이메일, 패스워드가 일치한다면 refreshToken을 업데이트 한 후, accessToken, refreshToken을 반환해야한다.', async () => {
@@ -216,16 +198,6 @@ describe('UserService 테스트', () => {
         password: expect.not.stringMatching('qhupr22qp3ir23qrn2-23rnj1p'),
         profileImage: 'image url',
         provider: 'link-gather',
-        profiles: [
-          plainToClass(Profile, {
-            career: 1,
-            id: 'IRFa-VaY2b',
-            introduction: 'link-gather creator',
-            job: 'backendDeveloper',
-            stacks: [1, 6, 22],
-            urls: ['https://github.com/changchanghwang'],
-          }),
-        ],
       });
       const userRepositoryFindSpy = jest.spyOn(userRepository, 'find').mockResolvedValue([user]);
 

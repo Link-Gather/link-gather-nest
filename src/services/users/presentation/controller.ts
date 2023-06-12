@@ -63,7 +63,6 @@ export class UserController {
       provider: data.user.provider,
       profileImage: data.user.profileImage,
       nicknameUpdatedOn: data.user.nicknameUpdatedOn,
-      profiles: data.user.profiles,
     });
 
     const errors = await validate(user);

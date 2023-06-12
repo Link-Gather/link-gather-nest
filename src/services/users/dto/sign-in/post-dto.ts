@@ -1,74 +1,6 @@
-import {
-  ArrayNotEmpty,
-  IsArray,
-  IsDate,
-  IsEmail,
-  IsIn,
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsString,
-  Min,
-  MinLength,
-  ValidateNested,
-} from 'class-validator';
+import { IsDate, IsEmail, IsIn, IsNotEmpty, IsOptional, IsString, MinLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { JobType, Profile, ProviderType, jobType, providerType } from '../../domain/model';
-
-class ProfileDto {
-  @ApiProperty({ example: 'a1b2c3d4e5', description: '프로필 id', required: true })
-  @IsNotEmpty()
-  @IsString()
-  id!: string;
-
-  @ApiProperty({ example: 3, description: '경력', required: true })
-  @IsNotEmpty()
-  @IsNumber()
-  @Min(0)
-  career!: number;
-
-  @ApiProperty({ example: 'frontendDeveloper', description: '직무', required: true, enum: jobType })
-  @IsNotEmpty()
-  @IsString()
-  @IsIn(jobType)
-  job!: JobType;
-
-  @ApiProperty({ example: 'I am developer', description: '자기소개', required: true })
-  @IsNotEmpty()
-  @IsString()
-  introduction!: string;
-
-  @ApiProperty({ example: [1, 6, 22], description: '기술스택', required: true })
-  @IsArray()
-  @IsNumber({}, { each: true })
-  stacks!: number[];
-
-  @ApiProperty({
-    example: ['https://github.com/changchanghwang'],
-    description: '블로그, 깃허브 등 주소',
-    required: true,
-  })
-  @IsArray()
-  @IsString({ each: true })
-  urls!: string[];
-
-  constructor(args: {
-    id: string;
-    career: number;
-    introduction: string;
-    job: JobType;
-    stacks: number[];
-    urls: string[];
-  }) {
-    this.id = args.id;
-    this.career = args.career;
-    this.introduction = args.introduction;
-    this.job = args.job;
-    this.stacks = args.stacks;
-    this.urls = args.urls;
-  }
-}
+import { ProviderType, providerType } from '../../domain/model';
 
 export class SignInBodyDto {
   @ApiProperty({ example: 'test@test.com', description: '이메일', required: true })
@@ -114,26 +46,6 @@ export class SignInResponseDto {
   @IsOptional()
   nicknameUpdatedOn?: CalendarDate;
 
-  @ApiProperty({
-    example: [
-      {
-        id: 'a1b2c3d4e5',
-        career: 1,
-        job: 'Backend Developer',
-        introduction: 'hi',
-        stacks: [1, 2],
-        urls: ['www.naver.com'],
-      },
-    ],
-    description: '유저 프로필',
-    required: true,
-  })
-  @IsArray()
-  @ArrayNotEmpty()
-  @ValidateNested({ each: true })
-  @Type(() => ProfileDto)
-  profiles!: ProfileDto[];
-
   constructor(args: {
     id: string;
     email: string;
@@ -141,7 +53,6 @@ export class SignInResponseDto {
     provider: ProviderType;
     profileImage: string;
     nicknameUpdatedOn?: CalendarDate;
-    profiles: Profile[];
   }) {
     this.id = args.id;
     this.email = args.email;
@@ -149,6 +60,5 @@ export class SignInResponseDto {
     this.provider = args.provider;
     this.profileImage = args.profileImage;
     this.nicknameUpdatedOn = args.nicknameUpdatedOn;
-    this.profiles = args.profiles.map((profile) => new ProfileDto(profile));
   }
 }

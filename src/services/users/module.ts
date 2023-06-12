@@ -4,6 +4,7 @@ import { UserRepository } from './infrastructure/repository';
 import { UserController } from './presentation/controller';
 import { UserService } from './application/service';
 import { getConfig } from '../../config';
+import { ProfileRepository } from '../profiles/infrastructure/repository';
 
 const JWT_SECRET = getConfig('/jwtSecret');
 
@@ -14,6 +15,6 @@ const JWT_SECRET = getConfig('/jwtSecret');
     }),
   ],
   controllers: [UserController],
-  providers: [UserService, UserRepository],
+  providers: [UserService, UserRepository, ProfileRepository],
 })
 export class UserModule {}

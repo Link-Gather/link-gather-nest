@@ -3,7 +3,7 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
 import { UserRepository } from '../../users/infrastructure/repository';
 import { AuthService } from './service';
 import { dataSource } from '../../../libs/orm';
-import { Profile, User } from '../../users/domain/model';
+import { User } from '../../users/domain/model';
 import { plainToClass } from '../../../libs/test';
 import { badRequest } from '../../../libs/exception';
 
@@ -57,16 +57,6 @@ describe('AuthService 테스트', () => {
         nickname: 'windy',
         provider: 'google',
         profileImage: 'test',
-        profiles: [
-          plainToClass(Profile, {
-            id: '1',
-            career: 1,
-            job: 'backendDeveloper',
-            introduction: 'Hello world!',
-            urls: ['https://github.com/yoon-bomi'],
-            stacks: [1, 6, 22],
-          }),
-        ],
       });
 
       jest.spyOn(userRepository, 'find').mockResolvedValueOnce([user]);
@@ -98,16 +88,6 @@ describe('AuthService 테스트', () => {
       nickname: 'arthur',
       profileImage: '',
       provider: 'link-gather',
-      profiles: [
-        plainToClass(Profile, {
-          id: 'profileId',
-          introduction: 'hello, my name is arthur',
-          career: 1,
-          job: 'backendDeveloper',
-          stacks: [1, 6, 22],
-          urls: ['https://github.com/changchanghwang'],
-        }),
-      ],
     });
     test('token이 들어오면 유저의 refreshToken을 갱신해야한다.', async () => {
       jest.spyOn(userRepository, 'find').mockResolvedValue([user]);

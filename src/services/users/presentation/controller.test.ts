@@ -7,7 +7,7 @@ import { UserController } from './controller';
 import { UserRepository } from '../infrastructure/repository';
 import { dataSource } from '../../../libs/orm';
 import { plainToClass } from '../../../libs/test';
-import { Profile, User } from '../domain/model';
+import { User } from '../domain/model';
 
 jest.mock('../application/service');
 describe('UserController test', () => {
@@ -35,16 +35,6 @@ describe('UserController test', () => {
     password: expect.not.stringMatching('qhupr22qp3ir23qrn2-23rnj1p'),
     profileImage: 'image url',
     provider: 'link-gather',
-    profiles: [
-      plainToClass(Profile, {
-        career: 1,
-        id: 'IRFa-VaY2b',
-        introduction: 'link-gather creator',
-        job: 'backendDeveloper',
-        stacks: [1, 6, 22],
-        urls: ['https://github.com/changchanghwang'],
-      }),
-    ],
   });
 
   describe('signIn test', () => {

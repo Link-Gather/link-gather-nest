@@ -5,7 +5,7 @@ import { ProjectService } from './service';
 import { dataSource } from '../../../libs/orm';
 import { RoleRepository } from '../../roles/infrastructure/repository';
 import { plainToClass } from '../../../libs/test';
-import { Profile, User } from '../../users/domain/model';
+import { User } from '../../users/domain/model';
 
 jest.mock('nanoid');
 jest.mock('../infrastructure/repository');
@@ -46,16 +46,6 @@ describe('ProjectService 테스트', () => {
     nickname: 'arthur',
     profileImage: '',
     provider: 'link-gather',
-    profiles: [
-      plainToClass(Profile, {
-        id: 'profileId',
-        introduction: 'hello, my name is arthur',
-        career: 1,
-        job: 'backendDeveloper',
-        stacks: [1, 6, 22],
-        urls: ['https://github.com/changchanghwang'],
-      }),
-    ],
   });
 
   describe('create test', () => {
