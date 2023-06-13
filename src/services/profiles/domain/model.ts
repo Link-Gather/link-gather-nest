@@ -29,7 +29,7 @@ export class Profile extends Aggregate {
   @Column('simple-array')
   urls!: string[];
 
-  @Column('simple-array')
+  @Column('simple-json')
   stacks!: number[];
 
   @Column()
