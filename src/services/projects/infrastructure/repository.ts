@@ -74,7 +74,7 @@ export class ProjectRepository extends Repository<Project, Project['id']> {
       queryBuilder.andWhere(
         new Brackets((qb) => {
           conditions.stacks!.forEach((stack) => {
-            // NOTE: 직무끼리는 OR 연산
+            // NOTE: stacks 끼리는 OR 연산
             qb.orWhere(
               new Brackets((qb) => {
                 qb.orWhere(`JSON_CONTAINS(project.stacks, '[${stack}]')`);
