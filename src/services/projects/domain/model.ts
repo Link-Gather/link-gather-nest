@@ -51,7 +51,7 @@ export class Project extends Aggregate {
   @Column()
   period!: number;
 
-  @Column('simple-array', { nullable: true })
+  @Column('simple-json', { nullable: true })
   stacks?: number[];
 
   @Column()
