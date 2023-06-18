@@ -26,19 +26,12 @@ export class ProjectService {
         },
         args.order,
       ),
-      this.projectRepository.count(
-        {
-          stacks: args.stacks,
-          purpose: args.purpose,
-          job: args.job,
-          status: args.status,
-        },
-        {
-          limit: Number(args.limit),
-          page: Number(args.page),
-        },
-        args.order,
-      ),
+      this.projectRepository.count({
+        stacks: args.stacks,
+        purpose: args.purpose,
+        job: args.job,
+        status: args.status,
+      }),
     ]);
 
     return { projects, count };
