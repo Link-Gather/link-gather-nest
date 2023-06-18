@@ -8,7 +8,6 @@ import { UserRepository } from '../infrastructure/repository';
 import { dataSource } from '../../../libs/orm';
 import { plainToClass } from '../../../libs/test';
 import { User } from '../domain/model';
-import { AuthService } from '../../auth/application/service';
 
 jest.mock('../application/service');
 describe('UserController test', () => {
@@ -19,7 +18,6 @@ describe('UserController test', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UserController],
       providers: [
-        AuthService,
         UserService,
         UserRepository,
         JwtService,

@@ -14,6 +14,7 @@ import {
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import type { Response } from 'express';
 import { validate } from 'class-validator';
+import { UserGuard } from '../../../libs/user/guard';
 import { UserService } from '../application/service';
 import {
   SignUpBodyDto,
@@ -24,7 +25,6 @@ import {
   RetrieveResponseDto,
 } from '../dto';
 import { badRequest } from '../../../libs/exception';
-import { AuthGuard } from '../../../libs/auth/guard';
 
 @Controller('users')
 @ApiTags('User')
@@ -97,13 +97,18 @@ export class UserController {
   }
 
   @Get('/self')
-  @UseGuards(AuthGuard)
   @ApiOperation({
     summary: '사용자 자신 정보 조회 API',
-    description: '로그인한 사용자 자신의 정보와 프로필을 모두 반환한다.',
+    description: '로그인한 사용자 자신의 정보와 프로필을 모두 반환한다. 로그인하지 않았으면 void 를 리턴한다.',
   })
-  async retrieve(@Req() req: Request): Result<RetrieveResponseDto> {
+  @UseGuards(UserGuard)
+  async retrieve(@Req() req: Request): Promise<void | { data: RetrieveResponseDto }> {
     const { user: actor } = req.state;
+
+    if (!actor) {
+      return undefined;
+    }
+
     const user = await this.userService.retrieve({ id: actor.id });
 
     // FIXME: nested 된 프로퍼티에 whitelist 가 동작하지 않는다.
