@@ -11,7 +11,7 @@ export class ProfileRepository extends Repository<Profile, Profile['id']> {
   entityClass = Profile;
 
   async find(
-    conditions: { stacks?: number[]; career?: number; job?: JobType },
+    conditions: { stacks?: number[]; career?: number; job?: JobType; userId?: string },
     options?: PaginationOption,
     order?: FindOrder,
   ): Promise<Profile[]> {
@@ -35,7 +35,7 @@ export class ProfileRepository extends Repository<Profile, Profile['id']> {
     });
   }
 
-  async count(conditions: { stacks?: number[]; career?: number; job?: JobType }): Promise<number> {
+  async count(conditions: { stacks?: number[]; career?: number; job?: JobType; userId?: string }): Promise<number> {
     if (conditions.stacks) {
       return this.getQuery(conditions).getCount();
     }
@@ -44,12 +44,13 @@ export class ProfileRepository extends Repository<Profile, Profile['id']> {
         ...stripUndefined({
           career: conditions.career,
           job: conditions.job,
+          userId: conditions.userId,
         }),
       },
     });
   }
 
-  private getQuery(conditions: { stacks?: number[]; career?: number; job?: JobType }) {
+  private getQuery(conditions: { stacks?: number[]; career?: number; job?: JobType; userId?: string }) {
     const queryBuilder = this.getManager().createQueryBuilder(Profile, 'profile');
     if (conditions.stacks) {
       queryBuilder.andWhere(
@@ -70,6 +71,7 @@ export class ProfileRepository extends Repository<Profile, Profile['id']> {
       ...stripUndefined({
         career: conditions.career,
         job: conditions.job,
+        userId: conditions.userId,
       }),
     };
 
