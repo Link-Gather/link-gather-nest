@@ -8,7 +8,8 @@ import { unauthorized } from '../exception';
 const JWT_SECRET = getConfig('/jwtSecret');
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+// NOTE: AuthGuard 와 다르게 token 이 없으면 undefined 를 리턴해준다.
+export class UserGuard implements CanActivate {
   constructor(
     private jwtService: JwtService,
     private userRepository: UserRepository,
@@ -48,6 +49,7 @@ export class AuthGuard implements CanActivate {
       }
     }
 
-    throw unauthorized('Authentication failed.', { errorMessage: '권한 인증에 실패했습니다.' });
+    req.state = { user: undefined };
+    return true;
   }
 }

@@ -10,7 +10,7 @@ export class ProfileRepository extends Repository<Profile, Profile['id']> {
   entityClass = Profile;
 
   async find(
-    conditions: { stacks?: number[]; career?: number; job?: JobType },
+    conditions: { stacks?: number[]; career?: number; job?: JobType; userId?: string },
     options?: PaginationOption,
     order?: FindOrder,
   ): Promise<Profile[]> {
@@ -20,6 +20,7 @@ export class ProfileRepository extends Repository<Profile, Profile['id']> {
           career: conditions.career,
           job: conditions.job,
           stacks: In(conditions.stacks),
+          userId: conditions.userId,
         }),
       },
       ...convertOptions(options),
@@ -28,7 +29,7 @@ export class ProfileRepository extends Repository<Profile, Profile['id']> {
   }
 
   async count(
-    conditions: { stacks?: number[]; career?: number; job?: JobType },
+    conditions: { stacks?: number[]; career?: number; job?: JobType; userId?: string },
     options?: PaginationOption,
     order?: FindOrder,
   ): Promise<number> {
@@ -38,6 +39,7 @@ export class ProfileRepository extends Repository<Profile, Profile['id']> {
           career: conditions.career,
           job: conditions.job,
           stacks: In(conditions.stacks),
+          userId: conditions.userId,
         }),
       },
       ...convertOptions(options),

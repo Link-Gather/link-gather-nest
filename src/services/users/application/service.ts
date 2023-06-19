@@ -91,4 +91,14 @@ export class UserService {
 
     return { accessToken, refreshToken, user };
   }
+
+  async retrieve({ id }: { id: string }) {
+    const user = await this.userRepository.findOneOrFail(id);
+    const profiles = await this.profileRepository.find({ userId: user.id });
+
+    return {
+      ...user,
+      profiles,
+    };
+  }
 }
