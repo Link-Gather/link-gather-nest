@@ -8,6 +8,7 @@ import { unauthorized } from '../exception';
 const JWT_SECRET = getConfig('/jwtSecret');
 
 @Injectable()
+// NOTE: AuthGuard 와 다르게 token 이 없으면 undefined 를 리턴해준다.
 export class UserGuard implements CanActivate {
   constructor(
     private jwtService: JwtService,
