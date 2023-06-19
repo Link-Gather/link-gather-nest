@@ -22,17 +22,11 @@ export class ProfileService {
           page: Number(args.page),
         },
       ),
-      this.profileRepository.count(
-        {
-          stacks: args.stacks?.map(Number),
-          job: args.job,
-          career: args.career ? Number(args.career) : undefined,
-        },
-        {
-          limit: Number(args.limit),
-          page: Number(args.page),
-        },
-      ),
+      this.profileRepository.count({
+        stacks: args.stacks?.map(Number),
+        job: args.job,
+        career: args.career ? Number(args.career) : undefined,
+      }),
     ]);
 
     return {
