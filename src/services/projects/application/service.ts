@@ -38,8 +38,7 @@ export class ProjectService {
   }
 
   async retrieve(id: string) {
-    const [project] = await this.projectRepository.findByIds([id]);
-    return project;
+    return this.projectRepository.findOneOrFail(id);
   }
 
   @Transactional()
