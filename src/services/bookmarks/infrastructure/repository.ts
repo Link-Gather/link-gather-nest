@@ -9,7 +9,7 @@ export class BookmarkRepository extends Repository<Bookmark, Bookmark['id']> {
   entityClass = Bookmark;
 
   async find(
-    conditions: { projectId: string; userId: string },
+    conditions: { projectId?: string; userId?: string },
     options?: PaginationOption,
     order?: FindOrder,
   ): Promise<Bookmark[]> {
