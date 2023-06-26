@@ -21,7 +21,7 @@ export class BookmarkController {
     return { data };
   }
 
-  @Post('/')
+  @Post('/:projectId')
   @UseGuards(AuthGuard)
   @ApiOperation({
     summary: '북마크 추가/삭제 API',
@@ -29,7 +29,7 @@ export class BookmarkController {
   })
   async click(@Param() param: ClickParamDto, @Req() req: Request): Promise<void> {
     const { user } = req.state;
-    const { id } = param;
-    await this.bookmarkService.click({ user }, id);
+    const { projectId } = param;
+    await this.bookmarkService.click({ user }, projectId);
   }
 }

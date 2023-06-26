@@ -5,5 +5,5 @@ export class ClickParamDto {
   @ApiProperty({ example: '5ileReaR2V', description: '프로젝트 id', required: true })
   @IsNotEmpty()
   @IsString()
-  id!: string;
+  projectId!: string;
 }

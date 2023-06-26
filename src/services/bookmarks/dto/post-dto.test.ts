@@ -5,7 +5,7 @@ import { plainToInstance } from '../../../libs/test';
 describe('post dto 테스트', () => {
   test('CreateBodyDto 테스트', async () => {
     const dto = plainToInstance(ClickParamDto, {
-      id: '1',
+      projectId: '1',
     });
 
     const errors = await validate(dto);
