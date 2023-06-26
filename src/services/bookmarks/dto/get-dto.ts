@@ -7,11 +7,6 @@ export class ListResponseDto {
   @IsNumber()
   id!: number;
 
-  @ApiProperty({ example: 'test123id', description: '유저 id' })
-  @IsNotEmpty()
-  @IsString()
-  userId!: string;
-
   @ApiProperty({ example: 'projectid1', description: '프로젝트 id' })
   @IsNotEmpty()
   @IsString()
@@ -20,7 +15,6 @@ export class ListResponseDto {
   constructor(args?: ListResponseDto) {
     if (args) {
       this.id = args.id;
-      this.userId = args.userId;
       this.projectId = args.projectId;
     }
   }

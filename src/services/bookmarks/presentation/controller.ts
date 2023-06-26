@@ -15,7 +15,7 @@ export class BookmarkController {
   @ApiOperation({ summary: '유저 북마크 목록 API', description: '로그인한 유저의 북마크 목록을 리턴한다.' })
   async list(@Req() req: Request): Result<ListResponseDto[]> {
     const { user } = req.state;
-    const bookmarks = await this.bookmarkService.list(user.id);
+    const bookmarks = await this.bookmarkService.list({ user });
 
     const data = bookmarks.map((bookmark) => new ListResponseDto(bookmark));
     return { data };

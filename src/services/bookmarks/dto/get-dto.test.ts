@@ -6,7 +6,6 @@ describe('get dto 테스트', () => {
   test('ListResponseDto 테스트', async () => {
     const dto = plainToInstance(ListResponseDto, {
       id: 1,
-      userId: 'testuserId1',
       projectId: 'testprojectid1',
     });
 
