@@ -83,4 +83,8 @@ export class Project extends Aggregate {
   private postLoad() {
     this.stacks = this.stacks?.map(Number);
   }
+
+  bookmarkCountChange(type: 'up' | 'down') {
+    this.bookMarkCount = type === 'up' ? this.bookMarkCount + 1 : this.bookMarkCount - 1;
+  }
 }

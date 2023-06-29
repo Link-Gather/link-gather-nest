@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { Aggregate } from '../../../libs/ddd/aggregate';
 
 type CtorType = {
@@ -17,11 +17,18 @@ export class Bookmark extends Aggregate {
   @Column()
   projectId!: string;
 
+  @DeleteDateColumn({ nullable: true })
+  private deletedAt?: Date;
+
   constructor(args: CtorType) {
     super();
     if (args) {
       this.userId = args.userId;
       this.projectId = args.projectId;
     }
+  }
+
+  delete() {
+    this.deletedAt = new Date();
   }
 }
