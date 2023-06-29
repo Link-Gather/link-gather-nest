@@ -30,6 +30,6 @@ export class BookmarkController {
   async click(@Param() param: ClickParamDto, @Req() req: Request): Promise<void> {
     const { user } = req.state;
     const { projectId } = param;
-    await this.bookmarkService.click({ user }, projectId);
+    await this.bookmarkService.handle({ user }, projectId);
   }
 }

@@ -72,7 +72,7 @@ describe('ProjectService 테스트', () => {
       jest.spyOn(bookmarkRepository, 'find').mockResolvedValue([]);
       jest.spyOn(projectRepository, 'findOneOrFail').mockResolvedValue(project);
 
-      await bookmarkService.click({ user }, 'testId12');
+      await bookmarkService.handle({ user }, 'testId12');
 
       expect(bookmarkRepositorySaveSpy.mock.calls).toHaveLength(1);
       expect(bookmarkRepositorySaveSpy.mock.calls[0][0]).toEqual([
@@ -119,23 +119,14 @@ describe('ProjectService 테스트', () => {
 
       jest.spyOn(bookmarkRepository, 'find').mockResolvedValue([bookmark]);
 
-      const bookmarkRepositorySaveSpy = jest.spyOn(bookmarkRepository, 'save');
-      const bookmarkRepositoryFindSpy = jest.spyOn(bookmarkRepository, 'find');
+      const bookmarkRepositoryDeleteSpy = jest.spyOn(bookmarkRepository, 'delete');
 
       const projectRepositorySaveSpy = jest.spyOn(projectRepository, 'save');
       jest.spyOn(projectRepository, 'findOneOrFail').mockResolvedValue(project);
 
-      await bookmarkService.click({ user }, 'testId12');
+      await bookmarkService.handle({ user }, 'testId12');
 
-      expect(bookmarkRepositoryFindSpy.mock.calls).toHaveLength(1);
-      expect(bookmarkRepositorySaveSpy.mock.calls[0][0]).toEqual([
-        {
-          id: 1,
-          userId: 'userId',
-          projectId: 'testid123',
-          deletedAt: new Date('2023-06-25'),
-        },
-      ]);
+      expect(bookmarkRepositoryDeleteSpy.mock.calls).toHaveLength(1);
       expect(projectRepositorySaveSpy.mock.calls[0][0]).toEqual([
         {
           id: 'testprojectid',

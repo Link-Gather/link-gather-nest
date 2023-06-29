@@ -84,7 +84,7 @@ export class Project extends Aggregate {
     this.stacks = this.stacks?.map(Number);
   }
 
-  bookmarkCountChange(type: 'up' | 'down') {
-    this.bookMarkCount = type === 'up' ? this.bookMarkCount + 1 : this.bookMarkCount - 1;
+  bookmarkCountChange(isBookmarked: boolean) {
+    this.bookMarkCount += isBookmarked ? -1 : 1;
   }
 }

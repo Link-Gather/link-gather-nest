@@ -14,25 +14,24 @@ export class BookmarkService {
   }
 
   @Transactional()
-  async click({ user }: { user: User }, projectId: string) {
+  async handle({ user }: { user: User }, projectId: string) {
     const [[bookmark], project] = await Promise.all([
       this.bookmarkRepository.find({ userId: user.id, projectId }),
       this.projectRepository.findOneOrFail(projectId),
     ]);
 
     if (bookmark) {
-      bookmark.delete();
-      project.bookmarkCountChange('down');
-
-      await Promise.all([this.bookmarkRepository.save([bookmark]), this.projectRepository.save([project])]);
+      this.bookmarkRepository.delete([bookmark.id]);
     } else {
       const newBookmark = new Bookmark({
         userId: user.id,
         projectId,
       });
-      project.bookmarkCountChange('up');
 
-      await Promise.all([this.bookmarkRepository.save([newBookmark]), this.projectRepository.save([project])]);
+      await this.bookmarkRepository.save([newBookmark]);
     }
+
+    project.bookmarkCountChange(!!bookmark);
+    await this.projectRepository.save([project]);
   }
 }
