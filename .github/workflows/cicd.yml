@@ -1,66 +1,67 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+# TODO: 추후 개선 예정
+# # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Nest.js CI/CD
+# name: Nest.js CI/CD
 
-on:
-  push:
-    branches: ['main']
+# on:
+#   push:
+#     branches: ['main']
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [16.x] # TODO: dockerfile 에서 node 버전이 바뀌면 같이 변경해야 한다.
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+#     strategy:
+#       matrix:
+#         node-version: [16.x] # TODO: dockerfile 에서 node 버전이 바뀌면 같이 변경해야 한다.
+#         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
-    steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+#     steps:
+#       - uses: actions/checkout@v3
+#       - name: Use Node.js ${{ matrix.node-version }}
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: ${{ matrix.node-version }}
+#           cache: 'npm'
 
-      - name: Cache node modules # node modules 캐싱
-        uses: actions/cache@v2
-        with:
-          path: node_modules
-          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-build-
-            ${{ runner.OS }}-
+#       - name: Cache node modules # node modules 캐싱
+#         uses: actions/cache@v2
+#         with:
+#           path: node_modules
+#           key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
+#           restore-keys: |
+#             ${{ runner.OS }}-build-
+#             ${{ runner.OS }}-
 
-      - name: package install
-        run: npm ci
+#       - name: package install
+#         run: npm ci
 
-      - name: build
-        run: npm run build
+#       - name: build
+#         run: npm run build
 
-      - name: lint & test
-        run: |
-          npm run lint
-          npm test
+#       - name: lint & test
+#         run: |
+#           npm run lint
+#           npm test
 
-      - name: zip create
-        run: zip -qq -r nest.zip ./
-        shell: bash
+#       - name: zip create
+#         run: zip -qq -r nest.zip ./
+#         shell: bash
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+#       - name: Configure AWS credentials
+#         uses: aws-actions/configure-aws-credentials@v1
+#         with:
+#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Upload to S3 # Upload build file to S3
-        run: aws s3 cp ./nest.zip s3://${{ secrets.AWS_S3_BUCKET }}/public/
+#       - name: Upload to S3 # Upload build file to S3
+#         run: aws s3 cp ./nest.zip s3://${{ secrets.AWS_S3_BUCKET }}/public/
 
-      - name: Deploy # Deploy to EC2
-        run: aws deploy create-deployment
-          --application-name link-gather-nest
-          --deployment-config-name CodeDeployDefault.AllAtOnce
-          --deployment-group-name link-gather-nest
-          --s3-location bucket=${{ secrets.AWS_S3_BUCKET }},key=public/nest.zip,bundleType=zip
+#       - name: Deploy # Deploy to EC2
+#         run: aws deploy create-deployment
+#           --application-name link-gather-nest
+#           --deployment-config-name CodeDeployDefault.AllAtOnce
+#           --deployment-group-name link-gather-nest
+#           --s3-location bucket=${{ secrets.AWS_S3_BUCKET }},key=public/nest.zip,bundleType=zip
