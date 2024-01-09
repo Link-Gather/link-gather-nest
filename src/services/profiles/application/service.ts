@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import { Transactional } from '@libs/orm';
 import { ProfileRepository } from '../infrastructure/repository';
 import { CreateBodyDto, ListQueryDto } from '../dto';
-import { Transactional } from '../../../libs/orm/transactional';
 import { User } from '../../users/domain/model';
 import { Profile } from '../domain/model';
 

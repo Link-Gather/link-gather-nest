@@ -1,5 +1,5 @@
 import * as bcrypt from 'bcrypt';
-import { getConfig } from '../../config';
+import { getConfig } from '@config';
 
 const SALT_ROUNDS = getConfig('/saltRounds');
 

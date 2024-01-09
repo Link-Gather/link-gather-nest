@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { JwtModule, JwtService } from '@nestjs/jwt';
+import { dataSource } from '@libs/orm';
+import { plainToClass } from '@libs/test';
+import { badRequest } from '@libs/exception';
 import { UserRepository } from '../../users/infrastructure/repository';
 import { AuthService } from './service';
-import { dataSource } from '../../../libs/orm';
 import { User } from '../../users/domain/model';
-import { plainToClass } from '../../../libs/test';
-import { badRequest } from '../../../libs/exception';
 
 const mockJwtService = {
   sign: jest.fn(() => 'TOKEN'),

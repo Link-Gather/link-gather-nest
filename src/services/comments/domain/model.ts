@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 import { Column, Entity, PrimaryColumn } from 'typeorm';
-import { Aggregate } from '../../../libs/ddd/aggregate';
+import { Aggregate } from '@libs/ddd';
 
 type CtorType = {
   userId: string;

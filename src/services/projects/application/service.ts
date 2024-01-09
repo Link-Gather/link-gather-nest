@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { Transactional } from '@libs/orm';
 import { CreateBodyDto, ListQueryDto } from '../dto';
 import { ProjectRepository } from '../infrastructure/repository';
 import { Project } from '../domain/model';
-import { Transactional } from '../../../libs/orm/transactional';
 import { User } from '../../users/domain/model';
 import { Role } from '../../roles/domain/model';
 import { RoleRepository } from '../../roles/infrastructure/repository';

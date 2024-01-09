@@ -1,5 +1,5 @@
-import { FindOption } from 'libs/orm';
-import { forbidden } from '../../../../libs/exception';
+import { FindOption } from '@libs/orm';
+import { forbidden } from '@libs/exception';
 import { VerificationRepository } from '../../infrastructure/repository';
 import { VerificationSpec } from './index';
 

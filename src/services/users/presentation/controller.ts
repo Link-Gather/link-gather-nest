@@ -14,7 +14,8 @@ import {
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import type { Response } from 'express';
 import { validate } from 'class-validator';
-import { UserGuard } from '../../../libs/user/guard';
+import { UserGuard } from '@libs/user';
+import { badRequest } from '@libs/exception';
 import { UserService } from '../application/service';
 import {
   SignUpBodyDto,
@@ -24,7 +25,6 @@ import {
   SignInResponseDto,
   RetrieveResponseDto,
 } from '../dto';
-import { badRequest } from '../../../libs/exception';
 
 @Controller('users')
 @ApiTags('User')

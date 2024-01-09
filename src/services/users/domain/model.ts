@@ -1,9 +1,9 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 import { nanoid } from 'nanoid';
 import { Exclude } from 'class-transformer';
-import { Aggregate } from '../../../libs/ddd/aggregate';
-import { compareHash, hashPassword } from '../../../libs/password';
-import { badRequest } from '../../../libs/exception';
+import { Aggregate } from '@libs/ddd';
+import { compareHash, hashPassword } from '@libs/password';
+import { badRequest } from '@libs/exception';
 
 export const providerType = <const>['kakao', 'github', 'google', 'link-gather'];
 export type ProviderType = (typeof providerType)[number];

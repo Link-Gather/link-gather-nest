@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { Aggregate } from '../../../libs/ddd/aggregate';
+import { Aggregate } from '@libs/ddd';
 
 type CtorType = {
   name: string;

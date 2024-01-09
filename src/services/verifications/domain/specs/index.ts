@@ -1,4 +1,4 @@
-import { FindOption } from 'libs/orm';
+import { FindOption } from '@libs/orm';
 import { VerificationRepository } from '../../infrastructure/repository';
 import { Verification } from '../model';
 

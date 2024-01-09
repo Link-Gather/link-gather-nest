@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { JwtService } from '@nestjs/jwt';
+import { dataSource } from '@libs/orm';
 import { AuthController } from './controller';
 import { VerificationService } from '../../verifications/application/service';
 import { AuthService } from '../application/service';
 import { UserRepository } from '../../users/infrastructure/repository';
 import { VerificationRepository } from '../../verifications/infrastructure/repository';
-import { dataSource } from '../../../libs/orm';
 
 jest.mock('../../verifications/application/service');
 

@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBody } from '@nestjs/swagger';
 import axios from 'axios';
-import { getConfig } from '../../../config';
+import { getConfig } from '@config';
 import { VerificationService } from '../../verifications/application/service';
 import { AuthService } from '../application/service';
 import {

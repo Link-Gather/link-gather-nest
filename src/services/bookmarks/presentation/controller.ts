@@ -1,7 +1,7 @@
 import { Controller, Get, Injectable, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { AuthGuard } from '@libs/auth';
 import { ClickParamDto, ListResponseDto } from '../dto';
-import { AuthGuard } from '../../../libs/auth/guard';
 import { BookmarkService } from '../application/service';
 
 @Controller('bookmarks')

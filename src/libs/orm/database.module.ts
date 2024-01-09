@@ -1,5 +1,5 @@
 import { DynamicModule, Scope } from '@nestjs/common';
-import { dataSource } from '.';
+import { dataSource } from './config';
 
 export class DatabaseModule {
   static manager(): DynamicModule {

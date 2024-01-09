@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Brackets } from 'typeorm';
-import { Repository } from '../../../libs/ddd';
+import { Repository } from '@libs/ddd';
+import { FindOrder, In, PaginationOption, convertOptions } from '@libs/orm';
+import { stripUndefined } from '@libs/common';
 import { Profile } from '../domain/model';
-import { FindOrder, In, PaginationOption, convertOptions } from '../../../libs/orm';
-import { stripUndefined } from '../../../libs/common';
 import { JobType } from '../../users/domain/model';
 
 @Injectable()

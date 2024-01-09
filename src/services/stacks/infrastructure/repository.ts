@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository } from '../../../libs/ddd';
+import { Repository } from '@libs/ddd';
 import { Stack } from '../domain/model';
 
 @Injectable()

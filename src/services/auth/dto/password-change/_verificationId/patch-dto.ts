@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, Matches, MaxLength, MinLength } from 'class-validator';
+import { Match } from '@libs/class-validator';
 import { passwordRegex } from '../../../../regex';
-import { Match } from '../../../../../libs/class-validator';
 
 export class PasswordChangeBodyDto {
   @ApiProperty({ example: 'asdf1234!@', description: '패스워드(8~16자리+문자+숫자+특수문자)' })

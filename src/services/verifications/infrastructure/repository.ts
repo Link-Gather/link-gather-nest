@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { stripUndefined } from '../../../libs/common';
-import { Repository } from '../../../libs/ddd';
-import { convertOptions, FindOption, FindOrder, PaginationOption } from '../../../libs/orm';
+import { stripUndefined } from '@libs/common';
+import { Repository } from '@libs/ddd';
+import { convertOptions, FindOption, FindOrder, PaginationOption } from '@libs/orm';
 import { Verification } from '../domain/model';
 import type { VerificationSpec } from '../domain/specs';
 

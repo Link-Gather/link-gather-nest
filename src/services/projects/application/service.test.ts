@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { nanoid } from 'nanoid';
+import { dataSource } from '@libs/orm';
+import { plainToClass } from '@libs/test';
 import { ProjectRepository } from '../infrastructure/repository';
 import { ProjectService } from './service';
-import { dataSource } from '../../../libs/orm';
 import { RoleRepository } from '../../roles/infrastructure/repository';
-import { plainToClass } from '../../../libs/test';
 import { User } from '../../users/domain/model';
 
 jest.mock('nanoid');

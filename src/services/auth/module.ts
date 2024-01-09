@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-import { getConfig } from '../../config';
+import { getConfig } from '@config';
 import { UserRepository } from '../users/infrastructure/repository';
 import { VerificationModule } from '../verifications';
 import { VerificationService } from '../verifications/application/service';

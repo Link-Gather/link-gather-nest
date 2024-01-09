@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { dataSource } from '@libs/orm';
+import { plainToClass } from '@libs/test';
 import { StackService } from './service';
-import { dataSource } from '../../../libs/orm';
-import { plainToClass } from '../../../libs/test';
 import { StackRepository } from '../infrastructure/repository';
 import { Stack } from '../domain/model';
 

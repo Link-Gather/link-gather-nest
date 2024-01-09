@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { forbidden } from '../../../../libs/exception';
-import { dataSource } from '../../../../libs/orm';
-import { plainToClass } from '../../../../libs/test';
+import { forbidden } from '@libs/exception';
+import { dataSource } from '@libs/orm';
+import { plainToClass } from '@libs/test';
 import { VerificationRepository } from '../../infrastructure/repository';
 import { Verification } from '../model';
 import { ValidVerificationSpec } from './valid-verification-spec';

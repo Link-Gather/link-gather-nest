@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Aggregate } from '@libs/ddd';
 import { JobType } from '../../users/domain/model';
-import { Aggregate } from '../../../libs/ddd/aggregate';
 
 export const roleType = <const>['leader', 'member'];
 export type RoleType = (typeof roleType)[number];
