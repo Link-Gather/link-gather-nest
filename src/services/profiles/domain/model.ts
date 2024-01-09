@@ -1,6 +1,6 @@
 import { AfterLoad, Column, Entity, PrimaryColumn } from 'typeorm';
 import { nanoid } from 'nanoid';
-import { Aggregate } from '../../../libs/ddd/aggregate';
+import { Aggregate } from '@libs/ddd';
 import { JobType } from '../../users/domain/model';
 
 type CtorType = {

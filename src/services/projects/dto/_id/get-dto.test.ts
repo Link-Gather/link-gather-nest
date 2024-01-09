@@ -1,6 +1,6 @@
 import { validate } from 'class-validator';
+import { plainToInstance } from '@libs/test';
 import { RetrieveParamDto, RetrieveResponseDto } from './get-dto';
-import { plainToInstance } from '../../../../libs/test';
 
 describe('get dto 테스트', () => {
   test('RetrieveParamDto 테스트', async () => {

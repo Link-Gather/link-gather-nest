@@ -2,13 +2,13 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { MailerService } from '@nestjs-modules/mailer';
 import { customAlphabet } from 'nanoid';
 import * as bcrypt from 'bcrypt';
+import { dataSource } from '@libs/orm';
+import { plainToClass } from '@libs/test';
+import { badRequest } from '@libs/exception';
 import { UserRepository } from '../../users/infrastructure/repository';
 import { VerificationService } from './service';
-import { dataSource } from '../../../libs/orm';
-import { plainToClass } from '../../../libs/test';
 import { User } from '../../users/domain/model';
 import { VerificationRepository } from '../infrastructure/repository';
-import { badRequest } from '../../../libs/exception';
 import { Verification } from '../domain/model';
 
 jest.mock('../../users/infrastructure/repository');

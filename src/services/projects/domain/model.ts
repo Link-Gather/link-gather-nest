@@ -1,6 +1,6 @@
 import { AfterLoad, Column, Entity, PrimaryColumn } from 'typeorm';
 import { nanoid } from 'nanoid';
-import { Aggregate } from '../../../libs/ddd/aggregate';
+import { Aggregate } from '@libs/ddd';
 
 export const statusType = <const>['recruiting', 'progressing', 'additionalRecruitment', 'finish', 'close'];
 export type StatusType = (typeof statusType)[number];

@@ -1,10 +1,10 @@
 import { Body, Controller, Get, Injectable, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { keyBy } from 'lodash';
+import { AuthGuard } from '@libs/auth/guard';
 import { ProfileService } from '../application/service';
 import { CreateBodyDto, ListQueryDto, ListResponseDto } from '../dto';
 import { UserService } from '../../users/application/service';
-import { AuthGuard } from '../../../libs/auth/guard';
 
 @Controller('profiles')
 @ApiTags('Profile')

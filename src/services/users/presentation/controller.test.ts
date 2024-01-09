@@ -2,11 +2,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { createMock } from '@golevelup/ts-jest';
 import { ExecutionContext } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { dataSource } from '@libs/orm';
+import { plainToClass } from '@libs/test';
 import { UserService } from '../application/service';
 import { UserController } from './controller';
 import { UserRepository } from '../infrastructure/repository';
-import { dataSource } from '../../../libs/orm';
-import { plainToClass } from '../../../libs/test';
 import { User } from '../domain/model';
 import { AuthService } from '../../auth/application/service';
 

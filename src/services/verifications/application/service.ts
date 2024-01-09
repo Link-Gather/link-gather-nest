@@ -1,8 +1,8 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
-import { getConfig } from '../../../config';
-import { badRequest } from '../../../libs/exception';
-import { Transactional } from '../../../libs/orm/transactional';
+import { getConfig } from '@config';
+import { badRequest } from '@libs/exception';
+import { Transactional } from '@libs/orm';
 import { UserRepository } from '../../users/infrastructure/repository';
 import { Verification, type VerificationType } from '../domain/model';
 import { ValidVerificationSpec } from '../domain/specs/valid-verification-spec';

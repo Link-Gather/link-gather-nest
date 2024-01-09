@@ -1,4 +1,4 @@
-import { dataSource } from '.';
+import { dataSource } from './config';
 
 // HACK: 일단 이렇게라도 해서 entityManager를 통일시켜서 트랜젝션을 건다.
 export function Transactional() {

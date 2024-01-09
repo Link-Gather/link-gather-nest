@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { convertOptions, FindOrder, In, PaginationOption } from '../../../libs/orm';
-import { Repository } from '../../../libs/ddd';
+import { convertOptions, FindOrder, In, PaginationOption } from '@libs/orm';
+import { Repository } from '@libs/ddd';
+import { stripUndefined } from '@libs/common';
 import { ProviderType, User } from '../domain/model';
-import { stripUndefined } from '../../../libs/common';
 
 @Injectable()
 export class UserRepository extends Repository<User, User['id']> {

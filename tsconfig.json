@@ -16,9 +16,14 @@
     "forceConsistentCasingInFileNames": true,
     "sourceMap": true,
     "inlineSources": true,
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "outDir": "./dist",
     "useUnknownInCatchVariables": false,
-    "typeRoots": ["./node_modules/@types", "src/@types"]
+    "typeRoots": ["./node_modules/@types", "src/@types"],
+    "paths": {
+      "@libs/*": ["src/libs/*"],
+      "@config": ["src/config"],
+      "@middlewares": ["src/middlewares"]
+    }
   }
 }

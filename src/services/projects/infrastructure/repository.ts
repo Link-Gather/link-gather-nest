@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Brackets } from 'typeorm';
-import { FindOrder, PaginationOption, convertOptions, In } from '../../../libs/orm';
-import { Repository } from '../../../libs/ddd';
+import { FindOrder, PaginationOption, convertOptions, In } from '@libs/orm';
+import { Repository } from '@libs/ddd';
+import { stripUndefined } from '@libs/common';
 import { Project, PurposeType, OrderType, StatusType } from '../domain/model';
-import { stripUndefined } from '../../../libs/common';
 import { JobType } from '../../users/domain/model';
 
 function getOrderOption(order?: OrderType): FindOrder {

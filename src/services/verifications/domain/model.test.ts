@@ -1,5 +1,5 @@
-import { forbidden } from '../../../libs/exception';
-import { plainToClass } from '../../../libs/test';
+import { forbidden } from '@libs/exception';
+import { plainToClass } from '@libs/test';
 import { Verification } from './model';
 
 describe('Verification test', () => {

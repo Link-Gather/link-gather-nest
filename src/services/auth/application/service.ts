@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { getConfig } from '../../../config';
-import { badRequest } from '../../../libs/exception';
-import { Transactional } from '../../../libs/orm/transactional';
+import { getConfig } from '@config';
+import { badRequest } from '@libs/exception';
+import { Transactional } from '@libs/orm/transactional';
 import { UserRepository } from '../../users/infrastructure/repository';
 
 const JWT_SECRET = getConfig('/jwtSecret');

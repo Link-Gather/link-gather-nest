@@ -2,12 +2,12 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { nanoid } from 'nanoid';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { dataSource } from '@libs/orm';
+import { plainToClass } from '@libs/test';
+import { unauthorized } from '@libs/exception';
 import { UserRepository } from '../infrastructure/repository';
 import { UserService } from './service';
-import { dataSource } from '../../../libs/orm';
 import { User } from '../domain/model';
-import { plainToClass } from '../../../libs/test';
-import { unauthorized } from '../../../libs/exception';
 import { ProfileRepository } from '../../profiles/infrastructure/repository';
 
 jest.mock('nanoid');

@@ -1,8 +1,8 @@
 import { customAlphabet, nanoid } from 'nanoid';
 import { Column, Entity, PrimaryColumn } from 'typeorm';
-import { addHours, addMinutes } from '../../../libs/date';
-import { Aggregate } from '../../../libs/ddd/aggregate';
-import { badRequest } from '../../../libs/exception';
+import { addHours, addMinutes } from '@libs/date';
+import { Aggregate } from '@libs/ddd';
+import { badRequest } from '@libs/exception';
 
 export const verificationType = <const>['signup', 'password'];
 export type VerificationType = (typeof verificationType)[number];

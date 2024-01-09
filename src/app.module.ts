@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { BookmarkModule } from './services/bookmarks';
+import { GuardModule } from '@libs/auth';
+import { GracefulShutdownService } from '@libs/graceful-shutdown';
+import { DatabaseModule } from '@libs/orm';
 import { AppController } from './app.controller';
-import { GuardModule } from './libs/auth';
-import { GracefulShutdownService } from './libs/graceful-shutdown';
-import { DatabaseModule } from './libs/orm/database.module';
+import { BookmarkModule } from './services/bookmarks';
 import { UserModule, ProjectModule, AuthModule, StackModule } from './services';
 import { ProfileModule } from './services/profiles';
 

@@ -1,5 +1,5 @@
 import { validate } from 'class-validator';
-import { plainToInstance } from '../../../libs/test';
+import { plainToInstance } from '@libs/test';
 import { ListQueryDto, ListResponseDto } from './get-dto';
 
 describe('get dto 테스트', () => {

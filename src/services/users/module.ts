@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
+import { getConfig } from '@config';
 import { UserRepository } from './infrastructure/repository';
 import { UserController } from './presentation/controller';
 import { UserService } from './application/service';
-import { getConfig } from '../../config';
 import { ProfileRepository } from '../profiles/infrastructure/repository';
 
 const JWT_SECRET = getConfig('/jwtSecret');

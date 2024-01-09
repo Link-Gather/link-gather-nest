@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { nanoid } from 'nanoid';
+import { dataSource } from '@libs/orm';
+import { mockDate, plainToClass, resetDate } from '@libs/test';
 import { Project } from '../../projects/domain/model';
 import { BookmarkRepository } from '../infrastructure/repository';
 import { BookmarkService } from './service';
-import { dataSource } from '../../../libs/orm';
-import { mockDate, plainToClass, resetDate } from '../../../libs/test';
 import { User } from '../../users/domain/model';
 import { Bookmark } from '../domain/model';
 import { ProjectRepository } from '../../projects/infrastructure/repository';

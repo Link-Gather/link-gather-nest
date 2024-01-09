@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { FindOrder, PaginationOption, convertOptions } from '../../../libs/orm';
-import { Repository } from '../../../libs/ddd';
+import { FindOrder, PaginationOption, convertOptions } from '@libs/orm';
+import { Repository } from '@libs/ddd';
+import { stripUndefined } from '@libs/common';
 import { Comment } from '../domain/model';
-import { stripUndefined } from '../../../libs/common';
 
 @Injectable()
 export class CommentRepository extends Repository<Comment, Comment['id']> {

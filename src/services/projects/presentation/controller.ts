@@ -1,11 +1,11 @@
 import { Body, Controller, Get, Injectable, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
-import { UserService } from 'services/users/application/service';
-import { RoleService } from 'services/roles/application/service';
 import { groupBy } from 'lodash';
+import { AuthGuard } from '@libs/auth';
+import { UserService } from '../../users/application/service';
+import { RoleService } from '../../roles/application/service';
 import { ProjectService } from '../application/service';
 import { CreateBodyDto, ListQueryDto, ListResponseDto, RetrieveResponseDto } from '../dto';
-import { AuthGuard } from '../../../libs/auth/guard';
 
 @Controller('projects')
 @ApiTags('Project')

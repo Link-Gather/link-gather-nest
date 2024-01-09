@@ -1,8 +1,8 @@
 import { nanoid } from 'nanoid';
-import { plainToClass } from '../../../libs/test';
+import { plainToClass } from '@libs/test';
+import { compareHash } from '@libs/password';
+import { badRequest } from '@libs/exception';
 import { User } from './model';
-import { compareHash } from '../../../libs/password';
-import { badRequest } from '../../../libs/exception';
 
 jest.mock('nanoid');
 jest.mock('../../../libs/password');

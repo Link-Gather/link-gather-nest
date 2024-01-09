@@ -1,5 +1,5 @@
 import { validate } from 'class-validator';
-import { plainToInstance } from '../../../libs/test';
+import { plainToInstance } from '@libs/test';
 import { CreateBodyDto } from './post-dto';
 
 describe('post dto 테스트', () => {

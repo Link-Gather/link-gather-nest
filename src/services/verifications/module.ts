@@ -1,7 +1,7 @@
 import { MailerModule } from '@nestjs-modules/mailer';
 import { Module } from '@nestjs/common';
-import { getConfig } from '../../config';
-import { isProd } from '../../libs/common';
+import { getConfig } from '@config';
+import { isProd } from '@libs/common';
 import { UserRepository } from '../users/infrastructure/repository';
 import { VerificationRepository } from './infrastructure/repository';
 

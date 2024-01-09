@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { Transactional } from '@libs/orm';
 import { ProjectRepository } from '../../projects/infrastructure/repository';
 import { BookmarkRepository } from '../infrastructure/repository';
 import { Bookmark } from '../domain/model';
-import { Transactional } from '../../../libs/orm/transactional';
 import { User } from '../../users/domain/model';
 
 @Injectable()
