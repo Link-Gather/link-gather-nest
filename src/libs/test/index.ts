@@ -17,9 +17,11 @@ let date: typeof Date;
 
 export function mockDate(value: number | string | Date) {
   const now = new Date(value);
+
+  date = global.Date;
   // @ts-expect-error
   global.Date = class Date extends global.Date {
-    constructor(...args: ConstructorParameters<typeof global.Date>) {
+    constructor(...args: ConstructorParameters<typeof date>) {
       if (args.length) {
         super(...args);
         // eslint-disable-next-line no-constructor-return

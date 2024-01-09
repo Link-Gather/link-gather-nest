@@ -37,6 +37,10 @@ export class ProjectService {
     return { projects, count };
   }
 
+  async retrieve(id: string) {
+    return this.projectRepository.findOneOrFail(id);
+  }
+
   @Transactional()
   async create({ user }: { user: User }, args: CreateBodyDto) {
     const project = new Project({
